@@ -57,22 +57,22 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 .logo-sub{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;background:linear-gradient(90deg,var(--silver-d),var(--silver),var(--gold-l),var(--silver),var(--silver-d));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-silver 4s linear infinite}
 
 /* ── SEARCH BAR ────────────────────────────────────── */
-.search-bar{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-radius:40px;padding:8px 16px;width:230px;position:relative;overflow:hidden;border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2)}
-.search-bar::before{content:'';position:absolute;inset:-1px;border-radius:41px;z-index:-1;background:linear-gradient(90deg,rgba(212,135,154,0.6),rgba(255,182,193,0.8),rgba(240,208,128,0.5),rgba(255,182,193,0.8),rgba(212,135,154,0.6));background-size:200% auto;animation:shimmer-silver 3s linear infinite}
-.search-bar::after{content:'';position:absolute;inset:1px;border-radius:40px;background:rgba(255,255,255,0.92);z-index:0}
+.search-bar{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(248,240,245,.95),rgba(238,242,248,.95));border-radius:40px;padding:8px 16px;width:230px;position:relative;overflow:hidden;border:1px solid transparent;background-clip:padding-box}
+.search-bar::before{content:'';position:absolute;inset:-1px;border-radius:41px;z-index:-1;background:linear-gradient(90deg,var(--silver-d),var(--gold-l),var(--rose-l),var(--silver));background-size:200% auto;animation:shimmer-silver 3s linear infinite}
+.search-bar::after{content:'';position:absolute;inset:0;border-radius:40px;background:linear-gradient(135deg,rgba(248,240,245,.97),rgba(238,242,248,.97));z-index:0}
 .search-bar input{position:relative;z-index:1;border:none;outline:none;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--text);background:transparent;flex:1}
 .search-bar svg{position:relative;z-index:1;color:var(--gold);flex-shrink:0}
 
 /* ── HEADER RIGHT (search + cart) ─────────────────── */
 .header-right{display:flex;align-items:center;gap:14px}
-.cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
+.cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,rgba(248,240,245,.9),rgba(238,242,248,.9));border:1px solid rgba(200,208,220,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
 .cart-btn:hover{background:rgba(201,168,76,.15);border-color:var(--gold);transform:scale(1.08)}
 .cart-btn svg{color:var(--gold)}
 .cart-count{position:absolute;top:-4px;right:-4px;background:linear-gradient(135deg,var(--rose),#E8719A);color:white;font-size:.55rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulse-badge 2s ease infinite;display:none}
 .cart-count.visible{display:flex}
 
 /* ── LANG SWITCHER ─────────────────────────────────── */
-.lang-switcher{display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-radius:30px;padding:3px;border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2)}
+.lang-switcher{display:flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(248,240,245,.9),rgba(238,242,248,.9));border-radius:30px;padding:3px;border:1px solid rgba(200,208,220,.4)}
 .lang-btn{padding:6px 16px;border:none;border-radius:26px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;background:transparent;color:var(--silver-d);transition:all .25s}
 .lang-btn.active{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold),var(--gold-d));background-size:200% auto;animation:shimmer-gold 3s linear infinite;color:white;box-shadow:0 2px 10px rgba(201,168,76,.35)}
 .lang-btn:hover:not(.active){background:rgba(200,208,220,.2);color:var(--gold-d)}
@@ -87,14 +87,14 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .page{display:none}.page.active{display:block}
 
 /* ── HERO SLIDESHOW ────────────────────────────────── */
-.hero{position:relative;min-height:520px;overflow:hidden;display:flex;align-items:center;aspect-ratio:16/9}
-.hero-slide{position:absolute;inset:0;background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#000;opacity:0;transition:opacity 1.3s cubic-bezier(.4,0,.2,1);z-index:0}
+.hero{position:relative;min-height:520px;overflow:hidden;display:flex;align-items:center}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center top;opacity:0;transition:opacity 1.3s cubic-bezier(.4,0,.2,1);z-index:0}
 .hero-slide.active{opacity:1;z-index:1}
 .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.60) 0%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.12) 100%)}
 .hero-shimmer{position:absolute;top:-10%;left:-55%;width:80%;height:120%;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.25) 30%,rgba(240,208,128,.60) 50%,rgba(201,168,76,.25) 70%,transparent 100%);z-index:8;pointer-events:none;opacity:0}
 .hero-shimmer.flash{animation:hero-flash .85s cubic-bezier(.4,0,.2,1) forwards}
 .hero-content{position:relative;z-index:9;max-width:540px;padding:60px 60px 50px;animation:fadein-up .9s ease both}
-.hero-left{flex:1;max-width:50%}.hero-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:20px;padding-right:20px}.hero-eyebrow{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:14px;font-weight:500}
+.hero-eyebrow{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:14px;font-weight:500}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1.15;color:white;margin-bottom:10px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
 .hero-title span{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 2.5s linear infinite}
 .hero-subtitle{font-size:.92rem;color:rgba(255,255,255,.88);line-height:1.7;margin-bottom:32px;font-weight:300;text-shadow:0 1px 8px rgba(0,0,0,.3)}
@@ -110,7 +110,7 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .btn-gold:hover::before{left:150%}
 
 /* ── PHONE MOCKUP ──────────────────────────────────── */
-.phone-wrap{position:absolute;right:20px;top:50%;transform:translateY(-50%);animation:float-phone 4s ease-in-out infinite,glow-phone 4s ease-in-out infinite;z-index:9;overflow:visible}
+.phone-wrap{position:absolute;right:60px;top:50%;transform:translateY(-50%);animation:float-phone 4s ease-in-out infinite,glow-phone 4s ease-in-out infinite;z-index:9}
 .phone-frame{width:215px;background:linear-gradient(145deg,#1a1a1a,#2d2d2d 50%,#1a1a1a);border-radius:38px;padding:14px 10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 0 0 2px #111,20px 40px 80px rgba(0,0,0,.5);position:relative}
 .phone-frame::before{content:'';position:absolute;top:16px;left:50%;transform:translateX(-50%);width:56px;height:6px;background:#111;border-radius:4px;z-index:2}
 .phone-screen{background:linear-gradient(160deg,#FBF0F3,#FFF7F0 50%,#F5F0FB);border-radius:26px;overflow:hidden;min-height:410px}
@@ -342,7 +342,7 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   nav.open{left:0}
   nav a{padding:15px 24px;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.1)}
   .hamburger{display:flex}
-  .hero{min-height:420px;overflow:visible}
+  .hero{min-height:420px}
   .hero-content{padding:28px 18px;max-width:100%}
   .hero-title{font-size:1.85rem}
   .hero-subtitle{font-size:.82rem}
@@ -455,19 +455,15 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
     <div class="hero-slide" style="background-image:url('images/hero3.png');background-color:#3D2418"></div>
     <div class="hero-shimmer" id="heroShimmer"></div>
     <div class="hero-content">
-      <div class="hero-left">
-        <p class="hero-eyebrow" data-i18n="hero-eyebrow">✦ Collection Exclusive 2025</p>
-        <h1 class="hero-title">JiabyShop<br><span data-i18n="hero-span1">L'Élégance</span><br><span data-i18n="hero-span2">Moderne</span></h1>
-        <p class="hero-subtitle" data-i18n="hero-sub">Découvrez des collections soigneusement<br>sélectionnées pour femme, homme et enfant.<br>Mode, beauté &amp; technologie au meilleur prix.</p>
-      </div>
-      <div class="hero-right">
-        <a href="#" class="btn-gold" onclick="showPage('nouveautes',null)">
-          <span data-i18n="hero-btn">✦ Acheter Maintenant</span>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <div class="hero-dots" id="heroDots">
-          <span class="active"></span><span></span><span></span>
-        </div>
+      <p class="hero-eyebrow" data-i18n="hero-eyebrow">✦ Collection Exclusive 2025</p>
+      <h1 class="hero-title">JiabyShop<br><span data-i18n="hero-span1">L'Élégance</span><br><span data-i18n="hero-span2">Moderne</span></h1>
+      <p class="hero-subtitle" data-i18n="hero-sub">Découvrez des collections soigneusement<br>sélectionnées pour femme, homme et enfant.<br>Mode, beauté &amp; technologie au meilleur prix.</p>
+      <a href="#" class="btn-gold" onclick="showPage('nouveautes',null)">
+        <span data-i18n="hero-btn">✦ Acheter Maintenant</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <div class="hero-dots" id="heroDots">
+        <span class="active"></span><span></span><span></span>
       </div>
     </div>
     <!-- Floating Phone -->
@@ -797,7 +793,9 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   <div class="footer-bottom">
     <p data-i18n="footer-copy">© 2025 JiabyShop — Tous droits réservés</p>
     <div class="trust-badges">
-      <img src="images/trust-badges.png" style="height:80px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(201,168,76,0.4))"/>
+      <span class="trust-badge" data-i18n="trust1">✦ Paiement Sécurisé</span>
+      <span class="trust-badge" data-i18n="trust2">✦ Livraison Rapide</span>
+      <span class="trust-badge" data-i18n="trust3">✦ Satisfait ou Remboursé</span>
     </div>
   </div>
 </footer>
