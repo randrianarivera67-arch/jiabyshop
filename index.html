@@ -94,10 +94,10 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .hero-shimmer{position:absolute;top:-10%;left:-55%;width:80%;height:120%;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.25) 30%,rgba(240,208,128,.60) 50%,rgba(201,168,76,.25) 70%,transparent 100%);z-index:8;pointer-events:none;opacity:0}
 .hero-shimmer.flash{animation:hero-flash .85s cubic-bezier(.4,0,.2,1) forwards}
 .hero-content{position:relative;z-index:9;max-width:540px;padding:60px 60px 50px;animation:fadein-up .9s ease both}
-.hero-eyebrow{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:14px;font-weight:500}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1.15;color:white;margin-bottom:10px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
+.hero-eyebrow{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:8px;font-weight:500}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;line-height:1.2;color:white;margin-bottom:6px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
 .hero-title span{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 2.5s linear infinite}
-.hero-subtitle{font-size:.92rem;color:rgba(255,255,255,.88);line-height:1.7;margin-bottom:32px;font-weight:300;text-shadow:0 1px 8px rgba(0,0,0,.3)}
+.hero-subtitle{font-size:.78rem;color:rgba(255,255,255,.88);line-height:1.6;margin-bottom:12px;font-weight:300;text-shadow:0 1px 8px rgba(0,0,0,.3)}
 .hero-dots{display:flex;gap:8px;margin-top:28px}
 .hero-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer;transition:all .3s}
 .hero-dots span.active{background:var(--gold-l);transform:scale(1.35);box-shadow:0 0 8px rgba(240,208,128,.8)}
@@ -111,9 +111,9 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 
 /* ── PHONE MOCKUP ──────────────────────────────────── */
 .phone-wrap{position:absolute;right:60px;top:50%;transform:translateY(-50%);animation:float-phone 4s ease-in-out infinite,glow-phone 4s ease-in-out infinite;z-index:9}
-.phone-frame{width:215px;background:linear-gradient(145deg,#1a1a1a,#2d2d2d 50%,#1a1a1a);border-radius:38px;padding:14px 10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 0 0 2px #111,20px 40px 80px rgba(0,0,0,.5);position:relative}
+.phone-frame{width:170px;background:linear-gradient(145deg,#1a1a1a,#2d2d2d 50%,#1a1a1a);border-radius:38px;padding:14px 10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 0 0 2px #111,20px 40px 80px rgba(0,0,0,.5);position:relative}
 .phone-frame::before{content:'';position:absolute;top:16px;left:50%;transform:translateX(-50%);width:56px;height:6px;background:#111;border-radius:4px;z-index:2}
-.phone-screen{background:linear-gradient(160deg,#FBF0F3,#FFF7F0 50%,#F5F0FB);border-radius:26px;overflow:hidden;min-height:410px}
+.phone-screen{background:linear-gradient(160deg,#FBF0F3,#FFF7F0 50%,#F5F0FB);border-radius:26px;overflow:hidden;min-height:320px}
 .ph-topbar{background:linear-gradient(90deg,#8B6914,#C9A84C,#9A7A2A);padding:10px 12px;display:flex;align-items:center;justify-content:space-between}
 .ph-logo{font-family:'Cormorant Garamond',serif;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(90deg,#fff,#FFE88A 40%,#fff 60%,#FFE88A 80%,#fff);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-silver 2.5s linear infinite}
 .ph-menu-icon{width:16px;display:flex;flex-direction:column;gap:3px}
