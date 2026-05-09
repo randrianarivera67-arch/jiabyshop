@@ -110,7 +110,7 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .btn-gold:hover::before{left:150%}
 
 /* ── PHONE MOCKUP ──────────────────────────────────── */
-.phone-wrap{position:absolute;right:60px;top:50%;transform:translateY(-50%);animation:float-phone 4s ease-in-out infinite,glow-phone 4s ease-in-out infinite;z-index:9}
+.phone-wrap{position:absolute;right:20px;top:50%;transform:translateY(-50%);animation:float-phone 4s ease-in-out infinite,glow-phone 4s ease-in-out infinite;z-index:9;overflow:visible}
 .phone-frame{width:215px;background:linear-gradient(145deg,#1a1a1a,#2d2d2d 50%,#1a1a1a);border-radius:38px;padding:14px 10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 0 0 2px #111,20px 40px 80px rgba(0,0,0,.5);position:relative}
 .phone-frame::before{content:'';position:absolute;top:16px;left:50%;transform:translateX(-50%);width:56px;height:6px;background:#111;border-radius:4px;z-index:2}
 .phone-screen{background:linear-gradient(160deg,#FBF0F3,#FFF7F0 50%,#F5F0FB);border-radius:26px;overflow:hidden;min-height:410px}
@@ -346,7 +346,7 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   .hero-content{padding:28px 18px;max-width:100%}
   .hero-title{font-size:1.85rem}
   .hero-subtitle{font-size:.82rem}
-  .phone-wrap{display:none}
+  .phone-wrap{display:flex;position:relative;right:auto;top:auto;transform:none;animation:none;justify-content:center;margin:0 auto;width:140px}
   .products-section{padding:28px 14px}
   .products-grid,.products-grid.grid-4{grid-template-columns:repeat(2,1fr);gap:12px}
   .categories-section{padding:28px 14px}
