@@ -93,8 +93,8 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.60) 0%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.12) 100%)}
 .hero-shimmer{position:absolute;top:-10%;left:-55%;width:80%;height:120%;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.25) 30%,rgba(240,208,128,.60) 50%,rgba(201,168,76,.25) 70%,transparent 100%);z-index:8;pointer-events:none;opacity:0}
 .hero-shimmer.flash{animation:hero-flash .85s cubic-bezier(.4,0,.2,1) forwards}
-.hero-content{position:relative;z-index:9;max-width:540px;padding:60px 60px 50px;animation:fadein-up .9s ease both;margin-left:auto;text-align:right}
-.hero-eyebrow{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:14px;font-weight:500}
+.hero-content{position:relative;z-index:9;width:100%;padding:60px 40px 50px;animation:fadein-up .9s ease both;display:flex;justify-content:space-between;align-items:center}
+.hero-left{flex:1;max-width:50%}.hero-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:20px;padding-right:20px}.hero-eyebrow{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:14px;font-weight:500}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1.15;color:white;margin-bottom:10px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
 .hero-title span{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 2.5s linear infinite}
 .hero-subtitle{font-size:.92rem;color:rgba(255,255,255,.88);line-height:1.7;margin-bottom:32px;font-weight:300;text-shadow:0 1px 8px rgba(0,0,0,.3)}
@@ -455,15 +455,19 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
     <div class="hero-slide" style="background-image:url('images/hero3.png');background-color:#3D2418"></div>
     <div class="hero-shimmer" id="heroShimmer"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow" data-i18n="hero-eyebrow">✦ Collection Exclusive 2025</p>
-      <h1 class="hero-title">JiabyShop<br><span data-i18n="hero-span1">L'Élégance</span><br><span data-i18n="hero-span2">Moderne</span></h1>
-      <p class="hero-subtitle" data-i18n="hero-sub">Découvrez des collections soigneusement<br>sélectionnées pour femme, homme et enfant.<br>Mode, beauté &amp; technologie au meilleur prix.</p>
-      <a href="#" class="btn-gold" onclick="showPage('nouveautes',null)">
-        <span data-i18n="hero-btn">✦ Acheter Maintenant</span>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <div class="hero-dots" id="heroDots">
-        <span class="active"></span><span></span><span></span>
+      <div class="hero-left">
+        <p class="hero-eyebrow" data-i18n="hero-eyebrow">✦ Collection Exclusive 2025</p>
+        <h1 class="hero-title">JiabyShop<br><span data-i18n="hero-span1">L'Élégance</span><br><span data-i18n="hero-span2">Moderne</span></h1>
+        <p class="hero-subtitle" data-i18n="hero-sub">Découvrez des collections soigneusement<br>sélectionnées pour femme, homme et enfant.<br>Mode, beauté &amp; technologie au meilleur prix.</p>
+      </div>
+      <div class="hero-right">
+        <a href="#" class="btn-gold" onclick="showPage('nouveautes',null)">
+          <span data-i18n="hero-btn">✦ Acheter Maintenant</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <div class="hero-dots" id="heroDots">
+          <span class="active"></span><span></span><span></span>
+        </div>
       </div>
     </div>
     <!-- Floating Phone -->
