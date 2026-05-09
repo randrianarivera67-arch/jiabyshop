@@ -87,8 +87,8 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .page{display:none}.page.active{display:block}
 
 /* ── HERO SLIDESHOW ────────────────────────────────── */
-.hero{position:relative;min-height:520px;overflow:hidden;display:flex;align-items:center}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center top;opacity:0;transition:opacity 1.3s cubic-bezier(.4,0,.2,1);z-index:0}
+.hero{position:relative;min-height:520px;overflow:hidden;display:flex;align-items:center;aspect-ratio:16/9}
+.hero-slide{position:absolute;inset:0;background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#000;opacity:0;transition:opacity 1.3s cubic-bezier(.4,0,.2,1);z-index:0}
 .hero-slide.active{opacity:1;z-index:1}
 .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.60) 0%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.12) 100%)}
 .hero-shimmer{position:absolute;top:-10%;left:-55%;width:80%;height:120%;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.25) 30%,rgba(240,208,128,.60) 50%,rgba(201,168,76,.25) 70%,transparent 100%);z-index:8;pointer-events:none;opacity:0}
