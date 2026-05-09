@@ -338,10 +338,10 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   .logo-text{font-size:1.5rem}
   .logo-sub{font-size:.44rem;letter-spacing:.18em}
   .search-bar{width:100%;max-width:260px}
-  nav{position:fixed;top:0;left:-100%;width:78%;height:100vh;flex-direction:column;justify-content:flex-start;padding:80px 0 20px;z-index:850;transition:left .3s ease;overflow-y:auto;background:linear-gradient(180deg,#8B6914,#C9A84C,#B8941E)}
-  nav.open{left:0}
+  nav{position:static;flex-direction:row;flex-wrap:wrap;height:auto;padding:0;overflow:visible}
+  nav.open{}
   nav a{padding:15px 24px;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.1)}
-  .hamburger{display:flex}
+  .hamburger{display:none}
   .hero{aspect-ratio:unset;min-height:56.25vw}
   .hero-content{padding:8px 14px;max-width:55%}
   .hero-title{font-size:1.1rem}
