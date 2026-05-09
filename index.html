@@ -87,8 +87,8 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .page{display:none}.page.active{display:block}
 
 /* ── HERO SLIDESHOW ────────────────────────────────── */
-.hero{position:relative;min-height:520px;overflow:hidden;display:flex;align-items:center}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center top;opacity:0;transition:opacity 1.3s cubic-bezier(.4,0,.2,1);z-index:0}
+.hero{position:relative;width:100%;aspect-ratio:3/1;overflow:hidden;display:flex;align-items:center}
+.hero-slide{position:absolute;inset:0;background-size:100% 100%;background-position:center;opacity:0;transition:opacity 1.3s cubic-bezier(.4,0,.2,1);z-index:0}
 .hero-slide.active{opacity:1;z-index:1}
 .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.60) 0%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.12) 100%)}
 .hero-shimmer{position:absolute;top:-10%;left:-55%;width:80%;height:120%;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.25) 30%,rgba(240,208,128,.60) 50%,rgba(201,168,76,.25) 70%,transparent 100%);z-index:8;pointer-events:none;opacity:0}
@@ -342,7 +342,7 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   nav.open{left:0}
   nav a{padding:15px 24px;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.1)}
   .hamburger{display:flex}
-  .hero{min-height:420px}
+  .hero{aspect-ratio:unset;min-height:56.25vw}
   .hero-content{padding:28px 18px;max-width:100%}
   .hero-title{font-size:1.85rem}
   .hero-subtitle{font-size:.82rem}
