@@ -65,7 +65,7 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 
 /* ── HEADER RIGHT (search + cart) ─────────────────── */
 .header-right{display:flex;align-items:center;gap:14px}
-.cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,rgba(248,240,245,.9),rgba(238,242,248,.9));border:1px solid rgba(200,208,220,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
+.cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
 .cart-btn:hover{background:rgba(201,168,76,.15);border-color:var(--gold);transform:scale(1.08)}
 .cart-btn svg{color:var(--gold)}
 .cart-count{position:absolute;top:-4px;right:-4px;background:linear-gradient(135deg,var(--rose),#E8719A);color:white;font-size:.55rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulse-badge 2s ease infinite;display:none}
