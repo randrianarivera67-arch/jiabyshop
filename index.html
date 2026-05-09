@@ -42,10 +42,10 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 
 /* ── TOP BAR ───────────────────────────────────────── */
 .top-bar{
-  background:linear-gradient(135deg,#F5E8EE 0%,#FAF0F5 30%,#EEF2F8 60%,#F8F0F5 100%);
-  background-size:300% 300%;animation:crystal-bg 8s ease infinite;
+  background-image:url('images/header-bg.png');
+  background-size:cover;background-position:center;
   padding:14px 40px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(200,208,220,.5);position:relative;
+  border-bottom:1px solid rgba(200,208,220,.3);position:relative;
 }
 .top-bar::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(200,208,220,.05) 30px,rgba(200,208,220,.05) 60px);pointer-events:none}
 .top-bar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--silver),var(--gold-l),var(--silver),transparent);background-size:200% auto;animation:shimmer-silver 3s linear infinite}
