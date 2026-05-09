@@ -342,11 +342,11 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   nav.open{left:0}
   nav a{padding:15px 24px;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.1)}
   .hamburger{display:flex}
-  .hero{min-height:420px}
+  .hero{min-height:420px;overflow:visible}
   .hero-content{padding:28px 18px;max-width:100%}
   .hero-title{font-size:1.85rem}
   .hero-subtitle{font-size:.82rem}
-  .phone-wrap{display:flex;position:relative;right:auto;top:auto;transform:none;animation:none;justify-content:center;margin:0 auto;width:140px}
+  .phone-wrap{display:flex;position:absolute;right:8px;bottom:20px;top:auto;transform:none;animation:float-phone 4s ease-in-out infinite;justify-content:center;width:110px;z-index:5}
   .products-section{padding:28px 14px}
   .products-grid,.products-grid.grid-4{grid-template-columns:repeat(2,1fr);gap:12px}
   .categories-section{padding:28px 14px}
