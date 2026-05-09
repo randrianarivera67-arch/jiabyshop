@@ -57,22 +57,22 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 .logo-sub{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;background:linear-gradient(90deg,var(--silver-d),var(--silver),var(--gold-l),var(--silver),var(--silver-d));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-silver 4s linear infinite}
 
 /* ── SEARCH BAR ────────────────────────────────────── */
-.search-bar{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(248,240,245,.95),rgba(238,242,248,.95));border-radius:40px;padding:8px 16px;width:230px;position:relative;overflow:hidden;border:1px solid transparent;background-clip:padding-box}
-.search-bar::before{content:'';position:absolute;inset:-1px;border-radius:41px;z-index:-1;background:linear-gradient(90deg,var(--silver-d),var(--gold-l),var(--rose-l),var(--silver));background-size:200% auto;animation:shimmer-silver 3s linear infinite}
-.search-bar::after{content:'';position:absolute;inset:0;border-radius:40px;background:linear-gradient(135deg,rgba(248,240,245,.97),rgba(238,242,248,.97));z-index:0}
+.search-bar{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-radius:40px;padding:8px 16px;width:230px;position:relative;overflow:hidden;border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2)}
+.search-bar::before{content:'';position:absolute;inset:-1px;border-radius:41px;z-index:-1;background:linear-gradient(90deg,rgba(212,135,154,0.6),rgba(255,182,193,0.8),rgba(240,208,128,0.5),rgba(255,182,193,0.8),rgba(212,135,154,0.6));background-size:200% auto;animation:shimmer-silver 3s linear infinite}
+.search-bar::after{content:'';position:absolute;inset:1px;border-radius:40px;background:rgba(255,255,255,0.92);z-index:0}
 .search-bar input{position:relative;z-index:1;border:none;outline:none;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--text);background:transparent;flex:1}
 .search-bar svg{position:relative;z-index:1;color:var(--gold);flex-shrink:0}
 
 /* ── HEADER RIGHT (search + cart) ─────────────────── */
 .header-right{display:flex;align-items:center;gap:14px}
-.cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,rgba(248,240,245,.9),rgba(238,242,248,.9));border:1px solid rgba(200,208,220,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
+.cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
 .cart-btn:hover{background:rgba(201,168,76,.15);border-color:var(--gold);transform:scale(1.08)}
 .cart-btn svg{color:var(--gold)}
 .cart-count{position:absolute;top:-4px;right:-4px;background:linear-gradient(135deg,var(--rose),#E8719A);color:white;font-size:.55rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulse-badge 2s ease infinite;display:none}
 .cart-count.visible{display:flex}
 
 /* ── LANG SWITCHER ─────────────────────────────────── */
-.lang-switcher{display:flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(248,240,245,.9),rgba(238,242,248,.9));border-radius:30px;padding:3px;border:1px solid rgba(200,208,220,.4)}
+.lang-switcher{display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-radius:30px;padding:3px;border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2)}
 .lang-btn{padding:6px 16px;border:none;border-radius:26px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;background:transparent;color:var(--silver-d);transition:all .25s}
 .lang-btn.active{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold),var(--gold-d));background-size:200% auto;animation:shimmer-gold 3s linear infinite;color:white;box-shadow:0 2px 10px rgba(201,168,76,.35)}
 .lang-btn:hover:not(.active){background:rgba(200,208,220,.2);color:var(--gold-d)}
