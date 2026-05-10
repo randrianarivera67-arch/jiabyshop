@@ -78,8 +78,8 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 .lang-btn:hover:not(.active){background:rgba(200,208,220,.2);color:var(--gold-d)}
 
 /* ── NAVIGATION ────────────────────────────────────── */
-nav{background:linear-gradient(90deg,#8B6914,#C9A84C 30%,#B8941E 60%,#9A7A2A);display:flex;justify-content:center;flex-wrap:wrap;box-shadow:0 3px 12px rgba(155,120,40,.35)}
-nav a{color:white;text-decoration:none;padding:12px 18px;font-size:1rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;position:relative;transition:background .2s;cursor:pointer}
+nav{background:linear-gradient(90deg,#8B6914,#C9A84C 30%,#B8941E 60%,#9A7A2A);display:flex;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;box-shadow:0 3px 12px rgba(155,120,40,.35);scrollbar-width:none;-ms-overflow-style:none}nav::-webkit-scrollbar{display:none}
+nav a{color:white;text-decoration:none;padding:10px 14px;font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;position:relative;transition:background .2s;cursor:pointer}
 nav a:hover,nav a.active{background:rgba(255,255,255,.18)}
 nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:28px;height:2.5px;background:white;border-radius:2px}
 
@@ -94,10 +94,10 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .hero-shimmer{position:absolute;top:-10%;left:-55%;width:80%;height:120%;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.25) 30%,rgba(240,208,128,.60) 50%,rgba(201,168,76,.25) 70%,transparent 100%);z-index:8;pointer-events:none;opacity:0}
 .hero-shimmer.flash{animation:hero-flash .85s cubic-bezier(.4,0,.2,1) forwards}
 .hero-content{position:relative;z-index:9;max-width:540px;padding:60px 60px 50px;animation:fadein-up .9s ease both}
-.hero-eyebrow{font-size:1rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:8px;font-weight:500}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;line-height:1.2;color:white;margin-bottom:6px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
+.hero-eyebrow{font-size:.75rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,208,128,.9);margin-bottom:8px;font-weight:500}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;line-height:1.2;color:white;margin-bottom:6px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
 .hero-title span{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 2.5s linear infinite}
-.hero-subtitle{font-size:1rem;color:rgba(255,255,255,.88);line-height:1.6;margin-bottom:12px;font-weight:300;text-shadow:0 1px 8px rgba(0,0,0,.3)}
+.hero-subtitle{font-size:.85rem;color:rgba(255,255,255,.88);line-height:1.6;margin-bottom:12px;font-weight:300;text-shadow:0 1px 8px rgba(0,0,0,.3)}
 .hero-dots{display:flex;gap:8px;margin-top:28px}
 .hero-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer;transition:all .3s}
 .hero-dots span.active{background:var(--gold-l);transform:scale(1.35);box-shadow:0 0 8px rgba(240,208,128,.8)}
@@ -135,11 +135,11 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 /* ── PRODUCTS SECTION ──────────────────────────────── */
 .products-section{padding:55px 50px;background:white}
 .section-title-wrap{display:flex;align-items:center;gap:16px;margin-bottom:28px}
-.section-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:linear-gradient(90deg,var(--dark),var(--gold-d),var(--dark));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:linear-gradient(90deg,var(--dark),var(--gold-d),var(--dark));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
 .section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
 .see-all{font-size:.95rem;color:var(--gold);text-decoration:none;white-space:nowrap;font-weight:500;letter-spacing:.06em;transition:color .2s}
 .see-all:hover{color:var(--gold-d)}
-.products-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:15px}
+.products-grid{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:12px;padding-bottom:10px;scrollbar-width:none;-ms-overflow-style:none}.products-grid::-webkit-scrollbar{display:none}.products-grid .product-card{min-width:160px;flex-shrink:0}
 .products-grid.grid-4{grid-template-columns:repeat(4,1fr)}
 .product-card{background:white;border:1px solid rgba(201,168,76,.14);border-radius:14px;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s;cursor:pointer}
 .product-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(201,168,76,.2),0 4px 12px rgba(0,0,0,.06);border-color:rgba(201,168,76,.4)}
@@ -148,10 +148,10 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .product-badge{position:absolute;top:8px;left:8px;background:linear-gradient(90deg,var(--rose),#E8719A);color:white;font-size:.53rem;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;z-index:1}
 .product-badge.sale-badge{background:linear-gradient(90deg,#C01050,#E8196A)}
 .product-info{padding:11px 12px 14px}
-.product-name{font-size:1rem;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:5px;min-height:30px}
-.product-price{font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:10px;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.product-name{font-size:.85rem;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:5px;min-height:30px}
+.product-price{font-size:.95rem;font-weight:700;color:var(--dark);margin-bottom:10px;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .price-orig{font-size:.9rem;color:var(--muted);text-decoration:line-through;margin-bottom:2px}
-.btn-add{width:100%;padding:10px 0;border:none;border-radius:30px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;position:relative;overflow:hidden;background:linear-gradient(90deg,var(--gold-d),var(--gold) 30%,var(--gold-l) 55%,var(--gold) 75%,var(--gold-d));background-size:200% auto;color:white;box-shadow:0 3px 12px rgba(201,168,76,.3);animation:shimmer-gold 3s linear infinite;transition:transform .2s,box-shadow .2s}
+.btn-add{width:100%;padding:8px 0;border:none;border-radius:30px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;position:relative;overflow:hidden;background:linear-gradient(90deg,var(--gold-d),var(--gold) 30%,var(--gold-l) 55%,var(--gold) 75%,var(--gold-d));background-size:200% auto;color:white;box-shadow:0 3px 12px rgba(201,168,76,.3);animation:shimmer-gold 3s linear infinite;transition:transform .2s,box-shadow .2s}
 .btn-add:hover{transform:scale(1.04);box-shadow:0 6px 20px rgba(201,168,76,.5)}
 .btn-add:active{transform:scale(.96)}
 .btn-add::before{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transform:skewX(-20deg);transition:left .5s}
@@ -168,10 +168,10 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .cat-card-3{background:linear-gradient(135deg,#1a2035 0%,#1e3a6e 60%,#2a5cbf 100%);box-shadow:0 8px 30px rgba(26,32,53,.4)}
 .cat-card-4{background:linear-gradient(135deg,#C01050 0%,#E8196A 50%,#FF4D8D 100%);box-shadow:0 8px 30px rgba(192,16,80,.35)}
 .cat-icon{font-size:2.4rem;display:block;margin-bottom:14px;position:relative;z-index:2}
-.cat-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:5px;position:relative;z-index:2}
+.cat-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;margin-bottom:5px;position:relative;z-index:2}
 .cat-card-1 .cat-title,.cat-card-2 .cat-title{color:var(--dark)}
 .cat-card-3 .cat-title,.cat-card-4 .cat-title{color:white}
-.cat-sub{font-size:.95rem;letter-spacing:.06em;font-weight:400;position:relative;z-index:2;opacity:.8}
+.cat-sub{font-size:.78rem;letter-spacing:.06em;font-weight:400;position:relative;z-index:2;opacity:.8}
 .cat-card-1 .cat-sub,.cat-card-2 .cat-sub{color:var(--dark)}
 .cat-card-3 .cat-sub,.cat-card-4 .cat-sub{color:rgba(255,255,255,.85)}
 .cat-arrow{position:absolute;bottom:16px;right:20px;font-size:1.2rem;z-index:2;transition:transform .3s}
@@ -229,8 +229,8 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .elec-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(100,150,220,.2)}
 .elec-img{height:155px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:linear-gradient(135deg,#f0f4ff,#e8f0fe)}
 .elec-info{padding:14px}
-.elec-name{font-size:1rem;font-weight:500;margin-bottom:6px;min-height:35px}
-.elec-price{font-size:1.1rem;font-weight:700;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.elec-name{font-size:.85rem;font-weight:500;margin-bottom:6px;min-height:35px}
+.elec-price{font-size:.95rem;font-weight:700;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
 .spec-tag{display:inline-block;background:rgba(100,150,220,.1);border-radius:10px;padding:2px 8px;font-size:.58rem;color:#5070c0;margin-right:4px;margin-bottom:4px}
 
 /* ── PROMO PAGE ────────────────────────────────────── */
@@ -261,14 +261,14 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .contact-info-col h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;margin-bottom:22px;color:var(--dark)}
 .info-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;padding:16px;background:white;border-radius:14px;border:1px solid rgba(200,208,220,.3)}
 .info-icon{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold-d),var(--gold));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.info-item p{font-size:1rem;color:var(--text);line-height:1.5}
+.info-item p{font-size:.85rem;color:var(--text);line-height:1.5}
 .info-item strong{display:block;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
 
 /* ── FOOTER ────────────────────────────────────────── */
 footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba(255,255,255,.75);padding:50px 60px 30px}
 .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;margin-bottom:40px}
 .footer-col h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;background:linear-gradient(90deg,var(--gold-l),var(--silver-l),var(--gold-l));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 4s linear infinite}
-.footer-col p,.footer-col a{font-size:1rem;color:rgba(255,255,255,.6);display:block;margin-bottom:7px;text-decoration:none;transition:color .25s}
+.footer-col p,.footer-col a{font-size:.82rem;color:rgba(255,255,255,.6);display:block;margin-bottom:7px;text-decoration:none;transition:color .25s}
 .footer-col a:hover{color:var(--gold-l)}
 .social-icons{display:flex;gap:10px;margin-top:10px}
 .social-icon{width:34px;height:34px;border-radius:50%;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:.82rem;cursor:pointer;transition:all .25s;text-decoration:none;color:rgba(255,255,255,.7)}
