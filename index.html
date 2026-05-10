@@ -110,7 +110,7 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .btn-gold:hover::before{left:150%}
 
 /* ── PHONE MOCKUP ──────────────────────────────────── */
-.phone-wrap{position:absolute;right:60px;top:50%;transform:translateY(-50%);animation:float-phone 4s ease-in-out infinite,glow-phone 4s ease-in-out infinite;z-index:9}
+.phone-wrap{position:absolute;right:60px;top:50%;transform:translateY(-50%);animation:float-phone 4s ease-in-out infinite,glow-phone 4s ease-in-out infinite;z-index:9}@media(max-width:900px){.phone-wrap{display:none!important}}
 .phone-frame{width:170px;background:linear-gradient(145deg,#1a1a1a,#2d2d2d 50%,#1a1a1a);border-radius:38px;padding:14px 10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 0 0 2px #111,20px 40px 80px rgba(0,0,0,.5);position:relative}
 .phone-frame::before{content:'';position:absolute;top:16px;left:50%;transform:translateX(-50%);width:56px;height:6px;background:#111;border-radius:4px;z-index:2}
 .phone-screen{background:linear-gradient(160deg,#FBF0F3,#FFF7F0 50%,#F5F0FB);border-radius:26px;overflow:hidden;min-height:320px}
@@ -225,7 +225,7 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .elec-cat:hover,.elec-cat.active{background:linear-gradient(90deg,var(--gold-d),var(--gold));border-color:transparent;color:white;box-shadow:0 4px 16px rgba(201,168,76,.4)}
 .elec-products{padding:50px 50px;background:linear-gradient(180deg,#f8f9fc,white)}
 .elec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
-.elec-card{background:white;border:1px solid rgba(100,150,220,.14);border-radius:16px;overflow:hidden;transition:transform .3s,box-shadow .3s;cursor:pointer;min-width:calc(33vw - 12px);max-width:145px;flex-shrink:0}
+.elec-card{background:white;border:1px solid rgba(100,150,220,.14);border-radius:14px;overflow:hidden;cursor:pointer;min-width:calc(32vw - 8px);flex-shrink:0}
 .elec-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(100,150,220,.2)}
 .elec-img{height:155px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:linear-gradient(135deg,#f0f4ff,#e8f0fe)}
 .elec-info{padding:14px}
