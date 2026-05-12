@@ -421,6 +421,62 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   .bsubpage-hero-icon{font-size:2.2rem}
 }
 
+/* ── MODAL CRÉER BOUTIQUE ─────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal-box{background:white;border-radius:24px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-header{padding:24px 24px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.modal-close{width:32px;height:32px;border-radius:50%;background:rgba(200,208,220,.3);border:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:20px 24px 24px}
+.cat-choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.cat-choice{padding:16px 8px;border-radius:16px;border:2px solid rgba(200,208,220,.3);cursor:pointer;text-align:center;transition:all .25s;background:white}
+.cat-choice:hover{border-color:var(--gold);background:rgba(201,168,76,.05)}
+.cat-choice.selected{border-color:var(--gold);background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(240,208,128,.08))}
+.cat-choice-icon{font-size:1.8rem;margin-bottom:6px}
+.cat-choice-label{font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.cat-choice.selected .cat-choice-label{color:var(--gold-d)}
+.form-input{width:100%;padding:12px 16px;border:1.5px solid rgba(200,208,220,.5);border-radius:12px;font-family:'Jost',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;margin-bottom:12px;color:var(--text)}
+.form-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.form-label{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+.step-indicator{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.step-dot{width:8px;height:8px;border-radius:50%;background:rgba(200,208,220,.4);transition:all .3s}
+.step-dot.active{background:var(--gold);transform:scale(1.3)}
+.step-dot.done{background:var(--gold-d)}
+
+/* ── COMPTE BOUTIQUE ───────────────────────────────── */
+.compte-hero{background:linear-gradient(135deg,var(--dark),#3D2418);padding:28px 20px;position:relative;overflow:hidden}
+.compte-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(201,168,76,.15),transparent 60%)}
+.compte-avatar-wrap{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+.compte-avatar{width:70px;height:70px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:2rem;background:linear-gradient(135deg,#1a1a2e,#2d2d2d);box-shadow:0 0 20px rgba(201,168,76,.4)}
+.compte-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:white}
+.compte-cat{font-size:.72rem;color:var(--gold-l);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.compte-verified{background:linear-gradient(90deg,var(--gold-d),var(--gold));color:white;font-size:.6rem;padding:3px 10px;border-radius:20px;font-weight:700;margin-top:4px;display:inline-block}
+.compte-stats-bar{display:flex;gap:0;background:white;border-bottom:1px solid rgba(201,168,76,.15)}
+.cstat{flex:1;text-align:center;padding:14px 8px;border-right:1px solid rgba(201,168,76,.1)}
+.cstat:last-child{border-right:none}
+.cstat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cstat span{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.compte-tabs{display:flex;background:white;border-bottom:2px solid rgba(201,168,76,.12);overflow-x:auto;scrollbar-width:none}
+.compte-tabs::-webkit-scrollbar{display:none}
+.ctab{padding:14px 20px;border:none;background:transparent;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;position:relative;transition:color .2s}
+.ctab.active{color:var(--gold-d)}
+.ctab.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold-d),var(--gold));border-radius:2px}
+.compte-content{padding:20px 16px;min-height:400px}
+.add-product-form{background:linear-gradient(135deg,#fdf9f4,#fff);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:20px;margin-bottom:20px}
+.add-product-form h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.product-list-item{display:flex;align-items:center;gap:12px;padding:12px;background:white;border:1px solid rgba(201,168,76,.12);border-radius:12px;margin-bottom:10px}
+.pli-img{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#FBF0F3,#FFF7F0);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.pli-info{flex:1}
+.pli-name{font-size:.82rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.pli-price{font-size:.78rem;font-weight:700;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pli-lieu{font-size:.68rem;color:var(--muted)}
+.pli-del{background:none;border:none;color:rgba(200,0,60,.5);cursor:pointer;font-size:.85rem;padding:4px;transition:color .2s}
+.pli-del:hover{color:rgba(200,0,60,1)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state-icon{font-size:3rem;margin-bottom:12px;opacity:.4}
+.empty-state p{font-size:.85rem}
+
 /* ── BOUTIQUE PAGE ─────────────────────────────────── */
 .boutique-hero{background:linear-gradient(135deg,#F9EEF0 0%,#FFF8F0 50%,#F0F0FF 100%);padding:40px 24px 30px;text-align:center;position:relative;overflow:hidden}
 .boutique-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.12),transparent 60%)}
@@ -1024,6 +1080,9 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" placeholder="Rechercher une boutique..." id="boutiqueSearch" oninput="filterBoutiques(this.value)"/>
       </div>
+      <button class="btn-gold" style="margin-top:16px;position:relative;z-index:1" onclick="openCreateModal()">
+        ✦ Créer votre Boutique
+      </button>
     </div>
   </div>
   <!-- Boutique Tab Nav -->
@@ -1789,6 +1848,190 @@ function filterBoutiques(val){
 }
 
 /* ════════════════════════════════════════════════════
+   CRÉER BOUTIQUE — MODAL
+════════════════════════════════════════════════════ */
+let selectedCat='mode';
+let selectedEmoji='🛍️';
+let myBoutique=null;
+let myProducts=[];
+
+try{
+  const saved=localStorage.getItem('jiabyshop_boutique');
+  if(saved){myBoutique=JSON.parse(saved);}
+  const savedP=localStorage.getItem('jiabyshop_products');
+  if(savedP){myProducts=JSON.parse(savedP);}
+}catch(e){}
+
+function openCreateModal(){
+  if(myBoutique){showPage('compte-boutique',null);loadCompteBoutique();return;}
+  document.getElementById('createModal').classList.add('show');
+  goStep(1);
+}
+function closeCreateModal(){
+  document.getElementById('createModal').classList.remove('show');
+}
+
+function selectCat(cat,el){
+  selectedCat=cat;
+  document.querySelectorAll('.cat-choice').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectEmoji(el){
+  selectedEmoji=el.textContent;
+  document.querySelectorAll('#emoji-picker span').forEach(s=>s.style.borderColor='transparent');
+  el.style.borderColor='var(--gold)';
+}
+
+function goStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('modal-step'+i).style.display=i===n?'block':'none';
+    const dot=document.getElementById('step'+i+'dot');
+    dot.className='step-dot'+(i<n?' done':i===n?' active':'');
+  });
+  if(n===3){
+    document.getElementById('confirm-name').textContent=document.getElementById('b-name').value||'Ma Boutique';
+    document.getElementById('confirm-emoji').textContent=selectedEmoji;
+    document.getElementById('confirm-cat').textContent=selectedCat.toUpperCase();
+    document.getElementById('confirm-desc').textContent=document.getElementById('b-desc').value||'—';
+    document.getElementById('confirm-contact').textContent='📞 '+( document.getElementById('b-contact').value||'—');
+  }
+}
+
+function createBoutique(){
+  const name=document.getElementById('b-name').value.trim()||'Ma Boutique';
+  myBoutique={name,cat:selectedCat,emoji:selectedEmoji,
+    desc:document.getElementById('b-desc').value.trim(),
+    contact:document.getElementById('b-contact').value.trim(),
+    createdAt:new Date().toLocaleDateString('fr-FR')};
+  try{localStorage.setItem('jiabyshop_boutique',JSON.stringify(myBoutique));}catch(e){}
+  closeCreateModal();
+  showPage('compte-boutique',null);
+  loadCompteBoutique();
+  showToast('✅','Boutique créée avec succès !');
+}
+
+/* ════════════════════════════════════════════════════
+   COMPTE BOUTIQUE
+════════════════════════════════════════════════════ */
+function loadCompteBoutique(){
+  if(!myBoutique) return;
+  document.getElementById('ca-avatar').textContent=myBoutique.emoji;
+  document.getElementById('ca-name').textContent=myBoutique.name;
+  document.getElementById('ca-cat').textContent=myBoutique.cat.toUpperCase();
+  document.getElementById('cs-products').textContent=myProducts.length;
+  document.getElementById('cs-ventes').textContent=Math.floor(Math.random()*50);
+  document.getElementById('cs-vues').textContent=Math.floor(Math.random()*500+100);
+  switchCompteTab('produits',document.querySelector('.ctab'));
+}
+
+function switchCompteTab(tab,el){
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const c=document.getElementById('compte-content');
+  if(tab==='produits'){
+    if(myProducts.length===0){
+      c.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📦</div><p>Aucun produit encore.<br>Ajoutez votre premier produit !</p></div>`;
+    }else{
+      c.innerHTML=myProducts.map((p,i)=>`
+        <div class="product-list-item">
+          <div class="pli-img">${p.emoji||'📦'}</div>
+          <div class="pli-info">
+            <div class="pli-name">${p.name}</div>
+            <div class="pli-price">${fmt(p.price)} Ar</div>
+            <div class="pli-lieu">📍 ${p.lieu||'—'}</div>
+          </div>
+          <button class="pli-del" onclick="deleteProduct(${i})">✕</button>
+        </div>`).join('');
+    }
+  } else if(tab==='ajouter'){
+    c.innerHTML=`
+      <div class="add-product-form">
+        <h4>➕ Nouveau Produit</h4>
+        <label class="form-label">Nom du produit *</label>
+        <input class="form-input" id="p-name" placeholder="Ex: Robe Élégante..."/>
+        <label class="form-label">Prix (Ar) *</label>
+        <input class="form-input" id="p-price" type="number" placeholder="Ex: 150000"/>
+        <label class="form-label">Lieu / Localisation</label>
+        <input class="form-input" id="p-lieu" placeholder="Ex: Analakely, Antananarivo"/>
+        <label class="form-label">Contact</label>
+        <input class="form-input" id="p-contact" placeholder="+261 34 ..."/>
+        <label class="form-label">Emoji produit</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px" id="p-emoji-picker">
+          ${['👗','👜','👟','💻','📱','⌚','💄','🌸','⚽','🏋️','🏠','🛋️','🍕','📚','🎮','💎'].map(e=>`<span onclick="selectPEmoji(this)" style="cursor:pointer;font-size:1.5rem;padding:5px;border-radius:8px;border:2px solid transparent;transition:all .2s">${e}</span>`).join('')}
+        </div>
+        <label class="form-label">URL Photo (optionnel)</label>
+        <input class="form-input" id="p-photo" placeholder="https://..."/>
+        <button class="btn-gold" style="width:100%;justify-content:center" onclick="addProduct()">✦ Ajouter le Produit</button>
+      </div>`;
+  } else if(tab==='profil'){
+    c.innerHTML=`
+      <div class="add-product-form">
+        <h4>⚙️ Profil Boutique</h4>
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:3rem">${myBoutique?myBoutique.emoji:'🛍️'}</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--dark)">${myBoutique?myBoutique.name:'—'}</div>
+          <div style="font-size:.72rem;color:var(--gold-d);text-transform:uppercase">${myBoutique?myBoutique.cat:'—'}</div>
+        </div>
+        <label class="form-label">Description</label>
+        <input class="form-input" value="${myBoutique?myBoutique.desc:''}" id="edit-desc"/>
+        <label class="form-label">Contact</label>
+        <input class="form-input" value="${myBoutique?myBoutique.contact:''}" id="edit-contact"/>
+        <button class="btn-gold" style="width:100%;justify-content:center;margin-bottom:12px" onclick="saveProfil()">✦ Enregistrer</button>
+        <button style="width:100%;padding:10px;border:1.5px solid rgba(200,0,60,.3);border-radius:30px;color:rgba(200,0,60,.7);background:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase" onclick="deleteBoutique()">🗑 Supprimer ma boutique</button>
+      </div>`;
+  }
+}
+
+let selectedPEmoji='📦';
+function selectPEmoji(el){
+  selectedPEmoji=el.textContent;
+  document.querySelectorAll('#p-emoji-picker span').forEach(s=>s.style.borderColor='transparent');
+  el.style.borderColor='var(--gold)';
+}
+
+function addProduct(){
+  const name=document.getElementById('p-name').value.trim();
+  const price=parseInt(document.getElementById('p-price').value)||0;
+  if(!name||!price){showToast('⚠️','Nom et prix requis !');return;}
+  const prod={name,price,lieu:document.getElementById('p-lieu').value.trim(),
+    contact:document.getElementById('p-contact').value.trim(),
+    photo:document.getElementById('p-photo').value.trim(),
+    emoji:selectedPEmoji,date:new Date().toLocaleDateString('fr-FR')};
+  myProducts.push(prod);
+  try{localStorage.setItem('jiabyshop_products',JSON.stringify(myProducts));}catch(e){}
+  document.getElementById('cs-products').textContent=myProducts.length;
+  showToast('✅','Produit ajouté !');
+  switchCompteTab('produits',document.querySelectorAll('.ctab')[0]);
+  document.querySelectorAll('.ctab')[0].classList.add('active');
+  document.querySelectorAll('.ctab')[1].classList.remove('active');
+}
+
+function deleteProduct(i){
+  myProducts.splice(i,1);
+  try{localStorage.setItem('jiabyshop_products',JSON.stringify(myProducts));}catch(e){}
+  document.getElementById('cs-products').textContent=myProducts.length;
+  switchCompteTab('produits',document.querySelectorAll('.ctab')[0]);
+}
+
+function saveProfil(){
+  if(myBoutique){
+    myBoutique.desc=document.getElementById('edit-desc').value.trim();
+    myBoutique.contact=document.getElementById('edit-contact').value.trim();
+    try{localStorage.setItem('jiabyshop_boutique',JSON.stringify(myBoutique));}catch(e){}
+    showToast('✅','Profil mis à jour !');
+  }
+}
+
+function deleteBoutique(){
+  if(confirm('Supprimer votre boutique ?')){
+    myBoutique=null;myProducts=[];
+    try{localStorage.removeItem('jiabyshop_boutique');localStorage.removeItem('jiabyshop_products');}catch(e){}
+    showPage('boutique',null);
+  }
+}
+
+/* ════════════════════════════════════════════════════
    INIT
 ════════════════════════════════════════════════════ */
 renderAll();
@@ -1796,6 +2039,117 @@ updateCartUI();
 addRippleToButtons();
 renderBoutiques(BOUTIQUES);
 </script>
+
+<!-- ══ MODAL CRÉER BOUTIQUE ════════════════════════ -->
+<div class="modal-overlay" id="createModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>✦ Créer votre Boutique</h3>
+      <button class="modal-close" onclick="closeCreateModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="step-indicator">
+        <div class="step-dot active" id="step1dot"></div>
+        <div class="step-dot" id="step2dot"></div>
+        <div class="step-dot" id="step3dot"></div>
+      </div>
+
+      <!-- STEP 1: Choix catégorie -->
+      <div id="modal-step1">
+        <p style="font-size:.85rem;color:var(--muted);margin-bottom:4px;text-align:center">Choisissez votre catégorie</p>
+        <div class="cat-choice-grid">
+          <div class="cat-choice" onclick="selectCat('mode',this)">
+            <div class="cat-choice-icon"><svg viewBox="0 0 50 60" fill="none" width="32" height="32" style="filter:drop-shadow(0 0 6px #ffb3c6)"><path d="M25 4 C15 4 10 12 10 20 L8 52 L42 52 L40 20 C40 12 35 4 25 4Z" stroke="#ffb3c6" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+            <div class="cat-choice-label">Mode</div>
+          </div>
+          <div class="cat-choice" onclick="selectCat('elec',this)">
+            <div class="cat-choice-icon"><svg viewBox="0 0 50 60" fill="none" width="32" height="32" style="filter:drop-shadow(0 0 6px #60a5fa)"><rect x="8" y="5" width="34" height="50" rx="5" stroke="#60a5fa" stroke-width="2"/><circle cx="25" cy="47" r="3" stroke="#60a5fa" stroke-width="1.5"/></svg></div>
+            <div class="cat-choice-label">Tech</div>
+          </div>
+          <div class="cat-choice" onclick="selectCat('beaute',this)">
+            <div class="cat-choice-icon"><svg viewBox="0 0 30 60" fill="none" width="32" height="32" style="filter:drop-shadow(0 0 6px #ffb3c6)"><rect x="8" y="8" width="14" height="35" rx="7" stroke="#ffb3c6" stroke-width="2"/><line x1="15" y1="43" x2="15" y2="55" stroke="#ffb3c6" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+            <div class="cat-choice-label">Beauté</div>
+          </div>
+          <div class="cat-choice" onclick="selectCat('sport',this)">
+            <div class="cat-choice-icon"><svg viewBox="0 0 50 50" fill="none" width="32" height="32" style="filter:drop-shadow(0 0 6px #60a5fa)"><circle cx="25" cy="25" r="20" stroke="#60a5fa" stroke-width="2"/><path d="M5 25 L45 25" stroke="#60a5fa" stroke-width="1.5"/><path d="M25 5 C20 12 15 25 15 25 C15 25 20 38 25 45" stroke="#60a5fa" stroke-width="1.5"/><path d="M25 5 C30 12 35 25 35 25 C35 25 30 38 25 45" stroke="#60a5fa" stroke-width="1.5"/></svg></div>
+            <div class="cat-choice-label">Sport</div>
+          </div>
+          <div class="cat-choice" onclick="selectCat('maison',this)">
+            <div class="cat-choice-icon"><svg viewBox="0 0 50 50" fill="none" width="32" height="32" style="filter:drop-shadow(0 0 6px rgba(201,168,76,.9))"><path d="M5 22 L25 5 L45 22 L45 47 L5 47 Z" stroke="#C9A84C" stroke-width="2" fill="none"/><rect x="18" y="32" width="14" height="15" rx="2" stroke="#C9A84C" stroke-width="1.5"/></svg></div>
+            <div class="cat-choice-label">Maison</div>
+          </div>
+        </div>
+        <button class="btn-gold" style="width:100%;justify-content:center;margin-top:8px" onclick="goStep(2)">Suivant →</button>
+      </div>
+
+      <!-- STEP 2: Infos boutique -->
+      <div id="modal-step2" style="display:none">
+        <label class="form-label">Nom de la boutique *</label>
+        <input class="form-input" id="b-name" placeholder="Ex: Elegance Mada..." maxlength="40"/>
+        <label class="form-label">Description</label>
+        <input class="form-input" id="b-desc" placeholder="Décrivez votre boutique..." maxlength="100"/>
+        <label class="form-label">Contact (téléphone / WhatsApp)</label>
+        <input class="form-input" id="b-contact" placeholder="+261 34 ..."/>
+        <label class="form-label">Emoji / Icône boutique</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="emoji-picker">
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">🛍️</span>
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">👗</span>
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">📱</span>
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">💄</span>
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">⚽</span>
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">🏠</span>
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">✨</span>
+          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">💎</span>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn-gold" style="background:rgba(200,208,220,.3);animation:none;color:var(--muted);box-shadow:none;flex:1;justify-content:center" onclick="goStep(1)">← Retour</button>
+          <button class="btn-gold" style="flex:2;justify-content:center" onclick="goStep(3)">Suivant →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Confirmation -->
+      <div id="modal-step3" style="display:none;text-align:center">
+        <div style="font-size:3rem;margin-bottom:12px" id="confirm-emoji">🛍️</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--dark);margin-bottom:4px" id="confirm-name">Ma Boutique</div>
+        <div style="font-size:.75rem;color:var(--gold-d);margin-bottom:16px;text-transform:uppercase;letter-spacing:.1em" id="confirm-cat">Mode</div>
+        <div style="background:linear-gradient(135deg,#fdf9f4,#fff);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left">
+          <p style="font-size:.78rem;color:var(--muted)" id="confirm-desc"></p>
+          <p style="font-size:.78rem;color:var(--muted);margin-top:6px" id="confirm-contact"></p>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn-gold" style="background:rgba(200,208,220,.3);animation:none;color:var(--muted);box-shadow:none;flex:1;justify-content:center" onclick="goStep(2)">← Modifier</button>
+          <button class="btn-gold" style="flex:2;justify-content:center" onclick="createBoutique()">✦ Créer ma Boutique</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE COMPTE BOUTIQUE ══════════════════════════ -->
+<div class="page" id="page-compte-boutique">
+  <div class="compte-hero">
+    <div class="compte-avatar-wrap">
+      <div class="compte-avatar" id="ca-avatar">🛍️</div>
+      <div>
+        <div class="compte-name" id="ca-name">Ma Boutique</div>
+        <div class="compte-cat" id="ca-cat">MODE</div>
+        <div class="compte-verified">✦ Boutique Créée</div>
+      </div>
+    </div>
+  </div>
+  <div class="compte-stats-bar">
+    <div class="cstat"><strong id="cs-products">0</strong><span>Produits</span></div>
+    <div class="cstat"><strong id="cs-ventes">0</strong><span>Ventes</span></div>
+    <div class="cstat"><strong>⭐ 5.0</strong><span>Note</span></div>
+    <div class="cstat"><strong id="cs-vues">0</strong><span>Vues</span></div>
+  </div>
+  <div class="compte-tabs">
+    <button class="ctab active" onclick="switchCompteTab('produits',this)">📦 Produits</button>
+    <button class="ctab" onclick="switchCompteTab('ajouter',this)">➕ Ajouter</button>
+    <button class="ctab" onclick="switchCompteTab('profil',this)">⚙️ Profil</button>
+  </div>
+  <div class="compte-content" id="compte-content"></div>
+</div>
 
 <!-- ══ BOTTOM NAV (mobile) ═══════════════════════════ -->
 <svg width="0" height="0" style="position:absolute">
