@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=1280"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JiabyShop — Modernité & Élégance</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
@@ -34,6 +34,7 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 }
 @keyframes slide-in-right{from{transform:translateX(100%)}to{transform:translateX(0)}}
 @keyframes toast-in{0%{transform:translateX(110%);opacity:0}15%{transform:translateX(0);opacity:1}85%{transform:translateX(0);opacity:1}100%{transform:translateX(110%);opacity:0}}
+@keyframes bn-shimmer{0%{stop-color:#9A7A2A}33%{stop-color:#F0D080}66%{stop-color:#C9A84C}100%{stop-color:#9A7A2A}}
 @keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
@@ -44,27 +45,28 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 .top-bar{
   background-image:url('images/header-bg.png');
   background-size:cover;background-position:center;
-  padding:14px 40px;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;display:flex;align-items:center;justify-content:space-between;
   border-bottom:1px solid rgba(200,208,220,.3);position:relative;
+  gap:12px;min-width:0;overflow:hidden;
 }
 .top-bar::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(200,208,220,.05) 30px,rgba(200,208,220,.05) 60px);pointer-events:none}
 .top-bar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--silver),var(--gold-l),var(--silver),transparent);background-size:200% auto;animation:shimmer-silver 3s linear infinite}
 
 /* ── LOGO ──────────────────────────────────────────── */
-.logo-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.logo-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;flex-shrink:0}
 .crown-svg{width:40px;height:27px;animation:crown-pulse 2.5s ease-in-out infinite}
 .logo-text{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:linear-gradient(90deg,var(--gold-d) 0%,var(--silver-l) 20%,var(--gold) 35%,var(--gold-l) 50%,var(--gold) 65%,var(--silver-l) 80%,var(--gold-d) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 3s linear infinite}
 .logo-sub{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;background:linear-gradient(90deg,var(--silver-d),var(--silver),var(--gold-l),var(--silver),var(--silver-d));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-silver 4s linear infinite}
 
 /* ── SEARCH BAR ────────────────────────────────────── */
-.search-bar{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-radius:40px;padding:8px 16px;width:230px;position:relative;overflow:hidden;border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2)}
+.search-bar{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border-radius:40px;padding:8px 16px;width:200px;max-width:100%;min-width:0;position:relative;overflow:hidden;border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2)}
 .search-bar::before{content:'';position:absolute;inset:-1px;border-radius:41px;z-index:-1;background:linear-gradient(90deg,rgba(212,135,154,0.6),rgba(255,182,193,0.8),rgba(240,208,128,0.5),rgba(255,182,193,0.8),rgba(212,135,154,0.6));background-size:200% auto;animation:shimmer-silver 3s linear infinite}
 .search-bar::after{content:'';position:absolute;inset:1px;border-radius:40px;background:rgba(255,255,255,0.92);z-index:0}
 .search-bar input{position:relative;z-index:1;border:none;outline:none;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--text);background:transparent;flex:1}
 .search-bar svg{position:relative;z-index:1;color:var(--gold);flex-shrink:0}
 
 /* ── HEADER RIGHT (search + cart) ─────────────────── */
-.header-right{display:flex;align-items:center;gap:14px}
+.header-right{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:1}
 .cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
 .cart-btn:hover{background:rgba(201,168,76,.15);border-color:var(--gold);transform:scale(1.08)}
 .cart-btn svg{color:var(--gold)}
@@ -327,12 +329,301 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:800}
 .nav-overlay.show{display:block}
 
+
+
+/* ── BOUTIQUE TAB NAV ──────────────────────────────── */
+.boutique-tab-nav{
+  display:flex;gap:0;background:white;
+  border-bottom:2px solid rgba(201,168,76,.12);
+  overflow-x:auto;scrollbar-width:none;position:sticky;top:var(--header-h);z-index:50;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+}
+.boutique-tab-nav::-webkit-scrollbar{display:none}
+.btab{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:14px 20px;border:none;background:transparent;cursor:pointer;
+  white-space:nowrap;position:relative;transition:all .25s;flex-shrink:0;
+  font-family:'Jost',sans-serif;min-width:72px;
+}
+.btab::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));
+  background-size:200% auto;transform:scaleX(0);transition:transform .3s;
+  animation:none;
+}
+.btab.active::after{transform:scaleX(1);animation:shimmer-gold 2s linear infinite}
+.btab-icon{display:flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:12px;transition:all .25s;
+  background:rgba(200,208,220,.08);}
+.btab-icon svg{stroke:var(--muted);transition:all .25s}
+.btab.active .btab-icon{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(240,208,128,.1));}
+.btab.active .btab-icon svg{stroke:var(--gold);filter:drop-shadow(0 0 4px rgba(201,168,76,.5))}
+.btab-label{font-size:.65rem;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;transition:color .25s}
+.btab.active .btab-label{
+  background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));
+  background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;animation:shimmer-gold 2s linear infinite;
+}
+.btab:hover:not(.active) .btab-icon{background:rgba(201,168,76,.08)}
+.btab:hover:not(.active) .btab-icon svg{stroke:var(--gold-d)}
+.btab:hover:not(.active) .btab-label{color:var(--gold-d)}
+.boutique-tab-content{min-height:400px}
+@media(max-width:768px){
+  .btab{padding:10px 12px;min-width:60px}
+  .btab-icon{width:30px;height:30px;border-radius:10px}
+  .btab-label{font-size:.58rem}
+  .boutique-tab-nav{top:65px}
+}
+
+
+/* ── BOUTIQUE TABS ─────────────────────────────────── */
+.boutique-tab-nav{
+  display:flex;gap:4px;padding:12px 16px;
+  background:white;
+  border-bottom:1px solid rgba(201,168,76,.12);
+  overflow-x:auto;scrollbar-width:none;
+  position:sticky;top:var(--header-h,116px);z-index:50;
+}
+.boutique-tab-nav::-webkit-scrollbar{display:none}
+.btab{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:10px 16px;border:none;border-radius:14px;cursor:pointer;
+  background:transparent;font-family:'Jost',sans-serif;
+  font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);transition:all .3s;white-space:nowrap;flex-shrink:0;
+  position:relative;
+}
+.btab svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:all .3s}
+.btab.active{background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(240,208,128,.08));color:var(--gold-d)}
+.btab.active svg{stroke:url(#bn-gold-grad);filter:drop-shadow(0 0 6px rgba(201,168,76,.5))}
+.btab.active::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:24px;height:2.5px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));border-radius:2px}
+.btab:not(.active):hover{background:rgba(201,168,76,.06);color:var(--gold-d)}
+.btab:not(.active):hover svg{stroke:var(--gold)}
+
+/* BOUTIQUE SUBPAGES */
+.boutique-subpage{display:none;animation:fadeInUp .35s ease both}
+.boutique-subpage.active{display:block}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.bsubpage-hero{
+  padding:32px 24px;text-align:center;position:relative;overflow:hidden;
+}
+.bsubpage-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.15),transparent 60%);pointer-events:none}
+.bsubpage-hero-icon{font-size:3rem;margin-bottom:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.2))}
+.bsubpage-hero h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--dark);margin-bottom:6px}
+.bsubpage-hero p{font-size:.82rem;color:var(--muted);max-width:320px;margin:0 auto}
+@media(max-width:768px){
+  .boutique-tab-nav{padding:10px 12px;gap:2px;top:0}
+  .btab{padding:8px 12px;font-size:.58rem}
+  .btab svg{width:20px;height:20px}
+  .bsubpage-hero{padding:22px 16px}
+  .bsubpage-hero h2{font-size:1.3rem}
+  .bsubpage-hero-icon{font-size:2.2rem}
+}
+
+/* ── BOUTIQUE PAGE ─────────────────────────────────── */
+.boutique-hero{background:linear-gradient(135deg,#F9EEF0 0%,#FFF8F0 50%,#F0F0FF 100%);padding:40px 24px 30px;text-align:center;position:relative;overflow:hidden}
+.boutique-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.12),transparent 60%)}
+.boutique-hero-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--dark);margin-bottom:8px;position:relative;z-index:1}
+.boutique-hero-title span{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 3s linear infinite}
+.boutique-hero-sub{color:var(--muted);font-size:.85rem;margin-bottom:20px;position:relative;z-index:1}
+.boutique-search-bar{display:flex;align-items:center;gap:8px;background:white;border:1.5px solid rgba(201,168,76,.3);border-radius:40px;padding:10px 18px;max-width:360px;margin:0 auto;position:relative;z-index:1;box-shadow:0 4px 16px rgba(201,168,76,.12)}
+.boutique-search-bar svg{color:var(--gold);flex-shrink:0}
+.boutique-search-bar input{border:none;outline:none;font-family:'Jost',sans-serif;font-size:.85rem;flex:1;color:var(--text);background:transparent}
+.boutique-cats{display:flex;gap:8px;padding:16px 16px 8px;overflow-x:auto;scrollbar-width:none}
+.boutique-cats::-webkit-scrollbar{display:none}
+.bcat{padding:8px 18px;border-radius:30px;border:1.5px solid rgba(201,168,76,.25);background:white;color:var(--muted);font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .25s;letter-spacing:.06em;text-transform:uppercase}
+.bcat.active{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold));background-size:200% auto;animation:shimmer-gold 3s linear infinite;color:white;border-color:transparent;box-shadow:0 4px 14px rgba(201,168,76,.35)}
+.boutique-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:16px}
+.boutique-card{background:white;border:1px solid rgba(201,168,76,.14);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;position:relative}
+.boutique-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(201,168,76,.18)}
+.boutique-banner{height:90px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.boutique-verified{position:absolute;top:8px;right:8px;background:linear-gradient(135deg,var(--gold-d),var(--gold));color:white;font-size:.55rem;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:.06em;text-transform:uppercase}
+.boutique-avatar{width:56px;height:56px;border-radius:50%;border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,.12);position:absolute;bottom:-20px;left:20px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;background:linear-gradient(135deg,#FBF0F3,#FFF7F0)}
+.boutique-info{padding:28px 16px 16px}
+.boutique-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:4px}
+.boutique-cat-tag{font-size:.68rem;color:var(--gold-d);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.boutique-desc{font-size:.78rem;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.boutique-stats{display:flex;gap:16px;margin-bottom:12px}
+.b-stat{text-align:center}
+.b-stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.b-stat span{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.boutique-rating{display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.b-stars{color:var(--gold);font-size:.85rem}
+.b-rating-num{font-size:.75rem;color:var(--muted)}
+.btn-visit{width:100%;padding:9px 0;border:none;border-radius:30px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(90deg,var(--gold-d),var(--gold) 30%,var(--gold-l) 55%,var(--gold) 75%,var(--gold-d));background-size:200% auto;color:white;box-shadow:0 3px 12px rgba(201,168,76,.3);animation:shimmer-gold 3s linear infinite;transition:transform .2s}
+.btn-visit:hover{transform:scale(1.03)}
+@media(max-width:768px){.boutique-grid{grid-template-columns:1fr;padding:12px}.boutique-hero{padding:28px 16px 22px}.boutique-hero-title{font-size:1.5rem}}
+
+
+/* SEARCH DESKTOP/MOBILE TOGGLE */
+.top-bar-row1{display:flex;align-items:center;justify-content:space-between;width:100%}
+.top-bar-row2{display:none}
+.search-mobile{display:none}
+@media(max-width:768px){
+  .search-desktop{display:none!important}
+  .top-bar-row2{display:block}
+  .search-mobile{display:flex!important;width:100%}
+}
+
 /* ── RESPONSIVE ────────────────────────────────────── */
+@media(max-width:768px){
+  /* BODY */
+  body{padding-bottom:70px}
 
+  /* HEADER */
+  .top-bar{padding:8px 12px 0;flex-wrap:wrap;gap:0;align-items:center}
+  .top-bar-row1{display:flex;align-items:center;justify-content:space-between;width:100%;padding-bottom:8px}
+  .top-bar-row2{width:100%;padding:0 0 8px}
+  .top-bar-row2 .search-bar{width:100%;max-width:100%;border-radius:30px;padding:8px 14px}
+  .logo-text{font-size:1.4rem;letter-spacing:.06em}
+  .logo-sub{display:none}
+  .crown-svg{width:24px;height:17px}
+  .search-bar{width:100%}
+  .search-bar input{font-size:.8rem}
+  .cart-btn{width:36px;height:36px;flex-shrink:0}
+  .lang-btn{padding:5px 10px;font-size:.68rem}
+  .header-right{gap:8px}
 
+  /* NAV - horizontal scroll */
+  nav{padding:0}
+  nav a{padding:10px 12px;font-size:.72rem;white-space:nowrap}
+
+  /* HERO */
+  .hero{aspect-ratio:unset;height:52vw;min-height:180px;max-height:280px}
+  .hero-content{padding:14px 16px 10px;max-width:55%}
+  .hero-eyebrow{font-size:.55rem;letter-spacing:.2em;margin-bottom:4px}
+  .hero-title{font-size:1.1rem;line-height:1.2;margin-bottom:4px}
+  .hero-subtitle{font-size:.65rem;line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .btn-gold{padding:8px 16px;font-size:.65rem;gap:6px}
+  .hero-dots{margin-top:10px;gap:5px}
+  .hero-dots span{width:7px;height:7px}
+  .phone-wrap{display:none!important}
+
+  /* CATEGORIES */
+  .categories-section{padding:24px 12px 20px}
+  .cat-grid{grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  .cat-card{padding:20px 16px;border-radius:16px}
+  .cat-icon{font-size:1.8rem;margin-bottom:8px}
+  .cat-title{font-size:.88rem}
+  .cat-sub{font-size:.68rem}
+  .cat-arrow{font-size:1rem;bottom:12px;right:14px}
+
+  /* PRODUCTS */
+  .products-section{padding:20px 12px}
+  .products-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:10px!important;overflow-x:unset!important;flex-wrap:unset!important}
+  .products-grid .product-card{min-width:unset!important;max-width:unset!important;flex-shrink:unset!important;width:100%}
+  .product-card{border-radius:12px}
+  .product-img{height:110px;font-size:2.2rem}
+  .product-info{padding:8px 10px 10px}
+  .product-name{font-size:.75rem;min-height:unset}
+  .product-price{font-size:.82rem;margin-bottom:7px}
+  .btn-add{padding:7px 0;font-size:.65rem}
+  .section-title{font-size:.95rem}
+  .section-title-wrap{margin-bottom:16px}
+
+  /* PROMO BANNER */
+  .promo-banner{margin:0 12px 24px;padding:20px;flex-direction:column;gap:12px;text-align:center;border-radius:16px}
+  .promo-banner-text h2{font-size:1.3rem}
+  .promo-banner-text p{font-size:.8rem}
+  .promo-banner-pct{font-size:3rem}
+  .promo-banner-pct span{font-size:1.4rem}
+
+  /* NEWSLETTER */
+  .newsletter-section{padding:30px 16px}
+  .newsletter-section h2{font-size:1.5rem}
+  .newsletter-section p{font-size:.85rem;margin-bottom:18px}
+  .newsletter-form{flex-direction:column;gap:8px}
+  .newsletter-form input{border-radius:30px;padding:12px 18px}
+
+  /* COLLECTION HEROES */
+  .collection-hero{padding:28px 16px 22px;flex-direction:column}
+  .collection-hero .hero-text-wrap h1{font-size:1.7rem}
+  .collection-hero .hero-emoji{display:none}
+
+  /* ELEC */
+  .elec-hero{padding:28px 16px 22px}
+  .elec-hero h1{font-size:1.8rem}
+  .elec-products{padding:20px 12px}
+  .elec-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .elec-card{min-width:unset;border-radius:12px}
+  .elec-img{height:110px;font-size:2.5rem}
+  .elec-info{padding:10px}
+  .elec-name{font-size:.78rem;min-height:unset}
+  .elec-price{font-size:.85rem}
+  .elec-cats{gap:8px;overflow-x:auto;flex-wrap:nowrap;justify-content:flex-start;padding-bottom:4px}
+  .elec-cat{padding:7px 14px;font-size:.7rem;white-space:nowrap}
+
+  /* PROMO PAGE */
+  .promo-hero-section{padding:30px 16px}
+  .promo-hero-section h1{font-size:2rem}
+  .countdown{gap:10px}
+  .cd-block{padding:12px 14px;min-width:60px;border-radius:12px}
+  .cd-block span{font-size:1.8rem}
+
+  /* CONTACT */
+  .contact-hero-section{padding:30px 16px}
+  .contact-hero-section h1{font-size:1.8rem}
+  .contact-section{padding:20px 12px}
+  .contact-grid{grid-template-columns:1fr;gap:20px}
+  .form-row{grid-template-columns:1fr}
+
+  /* FOOTER */
+  footer{padding:28px 16px 20px}
+  .footer-grid{grid-template-columns:1fr;gap:20px}
+  .footer-bottom{flex-direction:column;text-align:center;gap:10px}
+  .trust-badges{justify-content:center}
+
+  /* CART */
+  .cart-sidebar{width:100%;right:-100%}
+  .cart-sidebar.open{right:0}
+
+  /* TOAST */
+  .toast{bottom:82px;right:12px;left:12px;min-width:unset}
+}
+
+/* BOTTOM NAV — mobile seulement */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;height:62px;
+  background:white;
+  border-top:1px solid rgba(201,168,76,.2);
+  box-shadow:0 -4px 20px rgba(0,0,0,.08);
+  z-index:700;
+  align-items:center;justify-content:space-around;
+  padding:0 4px;
+}
+.bottom-nav::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--rose-l),var(--gold),transparent);
+  background-size:200% auto;animation:shimmer-gold 3s linear infinite;
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:8px 10px;border-radius:12px;transition:all .2s;
+  border:none;background:none;flex:1;
+}
+.bn-item.active .bn-icon{color:var(--gold)}
+.bn-item.active .bn-label{color:var(--gold)}
+.bn-icon{display:flex;align-items:center;justify-content:center;width:26px;height:26px;transition:all .25s}
+.bn-icon svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:all .25s}
+.bn-item.active .bn-icon svg{stroke:url(#bn-gold-grad);filter:drop-shadow(0 0 4px rgba(201,168,76,.6))}
+.bn-item:not(.active):hover .bn-icon svg{stroke:var(--gold);opacity:.7}
+.bn-label{font-size:.58rem;font-weight:600;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;transition:color .2s}
+.bn-cart{position:relative}
+.bn-cart-badge{
+  position:absolute;top:-2px;right:-2px;
+  background:linear-gradient(135deg,var(--rose),#E8719A);
+  color:white;font-size:.48rem;font-weight:700;
+  width:14px;height:14px;border-radius:50%;
+  display:none;align-items:center;justify-content:center;
+  border:1.5px solid white;
+}
+.bn-cart-badge.show{display:flex}
+@media(max-width:768px){.bottom-nav{display:flex}}
 
 </style>
-<link rel="apple-touch-icon" href="icon.png"><link rel="icon" href="icon.png"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.png"></head>
+<link rel="icon" href="icon.png"><link rel="apple-touch-icon" href="icon.png"><link rel="manifest" href="manifest.json"></head>
 <body>
 
 <!-- OVERLAYS -->
@@ -342,40 +633,49 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 <!-- ══ SITE HEADER (STICKY) ══════════════════════════ -->
 <div class="site-header">
 <header class="top-bar">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="hamburger" id="hamburger" onclick="toggleNav()">
-      <span></span><span></span><span></span>
+  <!-- ROW 1: hamburger + logo + cart -->
+  <div class="top-bar-row1">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="hamburger" id="hamburger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="lang-switcher">
+        <button class="lang-btn" id="btn-mg" onclick="setLang('mg')">MG</button>
+        <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+      </div>
     </div>
-    <div class="lang-switcher">
-      <button class="lang-btn" id="btn-mg" onclick="setLang('mg')">MG</button>
-      <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+    <div class="logo-wrap" onclick="showPage('accueil',null)">
+      <svg class="crown-svg" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="cg" x1="0" y1="0" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#9A7A2A"/><stop offset="25%" stop-color="#C9A84C"/>
+          <stop offset="50%" stop-color="#F0D080"/><stop offset="75%" stop-color="#C8D0DC"/>
+          <stop offset="100%" stop-color="#C9A84C"/>
+        </linearGradient></defs>
+        <polygon points="8,40 8,18 24,30 40,6 56,30 72,18 72,40" fill="url(#cg)" stroke="#B8941E" stroke-width="1"/>
+        <rect x="8" y="40" width="64" height="5" rx="2" fill="url(#cg)"/>
+        <circle cx="8" cy="18" r="4" fill="#F0D080"/><circle cx="40" cy="6" r="4" fill="#F0D080"/><circle cx="72" cy="18" r="4" fill="#F0D080"/>
+      </svg>
+      <span class="logo-text">JiabyShop</span>
+      <span class="logo-sub" data-i18n="logo-sub">Modernité &amp; Élégance au Quotidien</span>
+    </div>
+    <div class="header-right">
+      <!-- Search hidden on mobile row1, shown in row2 -->
+      <div class="search-bar search-desktop">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" data-i18n-placeholder="search" placeholder="Recherche..."/>
+      </div>
+      <button class="cart-btn" onclick="toggleCart()" aria-label="Panier">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
     </div>
   </div>
-
-  <div class="logo-wrap" onclick="showPage('accueil',null)">
-    <svg class="crown-svg" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="cg" x1="0" y1="0" x2="80" y2="0" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#9A7A2A"/><stop offset="25%" stop-color="#C9A84C"/>
-        <stop offset="50%" stop-color="#F0D080"/><stop offset="75%" stop-color="#C8D0DC"/>
-        <stop offset="100%" stop-color="#C9A84C"/>
-      </linearGradient></defs>
-      <polygon points="8,40 8,18 24,30 40,6 56,30 72,18 72,40" fill="url(#cg)" stroke="#B8941E" stroke-width="1"/>
-      <rect x="8" y="40" width="64" height="5" rx="2" fill="url(#cg)"/>
-      <circle cx="8" cy="18" r="4" fill="#F0D080"/><circle cx="40" cy="6" r="4" fill="#F0D080"/><circle cx="72" cy="18" r="4" fill="#F0D080"/>
-    </svg>
-    <span class="logo-text">JiabyShop</span>
-    <span class="logo-sub" data-i18n="logo-sub">Modernité &amp; Élégance au Quotidien</span>
-  </div>
-
-  <div class="header-right">
-    <div class="search-bar">
+  <!-- ROW 2: Search bar full width (mobile only) -->
+  <div class="top-bar-row2">
+    <div class="search-bar search-mobile">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" data-i18n-placeholder="search" placeholder="Recherche..."/>
     </div>
-    <button class="cart-btn" onclick="toggleCart()" aria-label="Panier">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <span class="cart-count" id="cartCount">0</span>
-    </button>
   </div>
 </header>
 
@@ -711,6 +1011,52 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   </section>
 </div>
 
+
+<!-- ── PAGE BOUTIQUE ──────────────────────────────── -->
+<div class="page" id="page-boutique">
+  <div class="boutique-hero">
+    <div class="boutique-hero-content">
+      <h1 class="boutique-hero-title">&#x2736; <span>Boutiques</span> JiabyShop</h1>
+      <p class="boutique-hero-sub">Decouvrez tous nos vendeurs officiels verifies</p>
+      <div class="boutique-search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Rechercher une boutique..." id="boutiqueSearch" oninput="filterBoutiques(this.value)"/>
+      </div>
+    </div>
+  </div>
+  <!-- Boutique Tab Nav -->
+  <div class="boutique-tab-nav">
+    <button class="btab active" data-tab="all" onclick="switchBoutiqueTab('all',this)">
+      <span class="btab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
+      <span class="btab-label">Tout</span>
+    </button>
+    <button class="btab" data-tab="mode" onclick="switchBoutiqueTab('mode',this)">
+      <span class="btab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></span>
+      <span class="btab-label">Mode</span>
+    </button>
+    <button class="btab" data-tab="elec" onclick="switchBoutiqueTab('elec',this)">
+      <span class="btab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+      <span class="btab-label">Tech</span>
+    </button>
+    <button class="btab" data-tab="beaute" onclick="switchBoutiqueTab('beaute',this)">
+      <span class="btab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+      <span class="btab-label">Beaute</span>
+    </button>
+    <button class="btab" data-tab="maison" onclick="switchBoutiqueTab('maison',this)">
+      <span class="btab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+      <span class="btab-label">Maison</span>
+    </button>
+    <button class="btab" data-tab="sport" onclick="switchBoutiqueTab('sport',this)">
+      <span class="btab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+      <span class="btab-label">Sport</span>
+    </button>
+  </div>
+
+  <!-- Boutique Tab Content -->
+  <div class="boutique-tab-content" id="boutiqueTabContent">
+    <div class="boutique-grid" id="boutiqueGrid"></div>
+  </div>
+</div>
 </main><!-- /mainContent -->
 
 <!-- ══ FOOTER ═══════════════════════════════════════ -->
@@ -986,6 +1332,9 @@ function updateCartUI(){
   const badge=document.getElementById('cartCount');
   badge.textContent=count;
   badge.classList.toggle('visible',count>0);
+  // Bottom nav badge
+  const bnBadge=document.getElementById('bnCartBadge');
+  if(bnBadge){bnBadge.textContent=count;bnBadge.classList.toggle('show',count>0);}
   // Items
   const itemsEl=document.getElementById('cartItemsEl');
   const footerEl=document.getElementById('cartFooter');
@@ -1094,6 +1443,11 @@ function showPage(pageId,el){
   // Restart slideshow if going to accueil
   if(pageId==='accueil') startSlideshow();
   else clearInterval(slideTimer);
+}
+function bnNav(pageId,el){
+  showPage(pageId,null);
+  document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
 }
 
 /* ════════════════════════════════════════════════════
@@ -1320,5 +1674,49 @@ renderAll();
 updateCartUI();
 addRippleToButtons();
 </script>
+
+<!-- ══ BOTTOM NAV (mobile) ═══════════════════════════ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="bn-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9A7A2A"/>
+      <stop offset="50%" stop-color="#F0D080"/>
+      <stop offset="100%" stop-color="#C9A84C"/>
+    </linearGradient>
+  </defs>
+</svg>
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-item active" id="bn-home" onclick="bnNav('accueil',this)">
+    <span class="bn-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </span>
+    <span class="bn-label" data-i18n="nav-home">Accueil</span>
+  </button>
+  <button class="bn-item" id="bn-boutique" onclick="bnNav('boutique',this)">
+    <span class="bn-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l1-6h16l1 6"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v12h14V9"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+    </span>
+    <span class="bn-label">Boutique</span>
+  </button>
+  <button class="bn-item" id="bn-elec" onclick="bnNav('electronique',this)">
+    <span class="bn-icon">
+      <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+    </span>
+    <span class="bn-label" data-i18n="nav-elec">Tech</span>
+  </button>
+  <button class="bn-item bn-cart" id="bn-cart-btn" onclick="toggleCart()">
+    <span class="bn-icon">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </span>
+    <span class="bn-cart-badge" id="bnCartBadge">0</span>
+    <span class="bn-label" data-i18n="cart-label">Panier</span>
+  </button>
+  <button class="bn-item" id="bn-promo" onclick="bnNav('promo',this)">
+    <span class="bn-icon">
+      <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+    </span>
+    <span class="bn-label" data-i18n="nav-promo">Promos</span>
+  </button>
+</nav>
 </body>
 </html>
