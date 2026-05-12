@@ -686,6 +686,8 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   <a href="#" data-i18n="nav-homme" onclick="showPage('homme',this)">Homme</a>
   <a href="#" data-i18n="nav-enfant" onclick="showPage('enfant',this)">Enfant</a>
   <a href="#" data-i18n="nav-elec" onclick="showPage('electronique',this)">Électronique</a>
+  <a href="#" onclick="showPage('sport',this)">Sport</a>
+  <a href="#" onclick="showPage('beaute',this)">Beauté</a>
   <a href="#" data-i18n="nav-new" onclick="showPage('nouveautes',this)">Nouveautés</a>
   <a href="#" data-i18n="nav-promo" onclick="showPage('promo',this)">Promotions</a>
   <a href="#" data-i18n="nav-contact" onclick="showPage('contact',this)">Contact</a>
@@ -1026,7 +1028,7 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   </div>
   <!-- Boutique Tab Nav -->
   <div class="boutique-tab-nav">
-    <button class="btab active" data-tab="all" onclick="switchBoutiqueTab('all',this)">
+    <button class="btab active" data-tab="all" onclick="switchBoutiqueTab('all',this);return false">
       <span class="btab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
       <span class="btab-label">Tout</span>
     </button>
@@ -1057,6 +1059,42 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
     <div class="boutique-grid" id="boutiqueGrid"></div>
   </div>
 </div>
+<!-- ── PAGE SPORT ─────────────────────────────────── -->
+<div class="page" id="page-sport">
+  <div class="collection-hero" style="background:linear-gradient(135deg,#1a2035 0%,#0f3460 60%,#16213e 100%)">
+    <div class="hero-text-wrap">
+      <h1 style="background:linear-gradient(90deg,var(--gold-d),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Sport</h1>
+      <p style="color:rgba(255,255,255,.75)">Équipements sportifs, vêtements de sport et accessoires pour tous les niveaux.</p>
+    </div>
+    <div class="hero-emoji" style="opacity:.15">⚽</div>
+  </div>
+  <section class="products-section">
+    <div class="section-title-wrap">
+      <h2 class="section-title">Collection Sport</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="products-grid grid-4" id="sport-grid"></div>
+  </section>
+</div>
+
+<!-- ── PAGE BEAUTÉ ────────────────────────────────── -->
+<div class="page" id="page-beaute">
+  <div class="collection-hero" style="background:linear-gradient(135deg,#F9EEF0,#FFF5F7,#F5E8FF)">
+    <div class="hero-text-wrap">
+      <h1 style="background:linear-gradient(90deg,#8B1A30,#D4879A,#C9A84C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Beauté</h1>
+      <p style="color:var(--muted)">Cosmétiques, parfums, soins visage et corps. Sublimez votre beauté naturelle.</p>
+    </div>
+    <div class="hero-emoji">💄</div>
+  </div>
+  <section class="products-section">
+    <div class="section-title-wrap">
+      <h2 class="section-title">Collection Beauté</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="products-grid grid-4" id="beaute-grid"></div>
+  </section>
+</div>
+
 </main><!-- /mainContent -->
 
 <!-- ══ FOOTER ═══════════════════════════════════════ -->
@@ -1204,6 +1242,26 @@ const CATALOG = {
     {e:'🎧',n:'AirPods Pro 3',nm:'AirPods Pro 3',p:1099000,b:'Nouveau',bm:'Vaovao'},
     {e:'👠',n:'Mules Tendance SS25',nm:'Kiraro Tendance SS25',p:149000,b:'Nouveau',bm:'Vaovao'},
   ],
+  sport:[
+    {e:'⚽',n:'Ballon Football Pro',nm:'Balon Football Pro',p:89000,b:'Top',bm:'Tsara'},
+    {e:'🏋️',n:'Haltères Set 20kg',nm:'Halteres 20kg',p:299000},
+    {e:'👟',n:'Chaussures Running',nm:'Kiraro Running',p:249000,b:'Nouveau',bm:'Vaovao'},
+    {e:'🎽',n:'Maillot Sport Pro',nm:'Akanjo Sport Pro',p:79000},
+    {e:'🏊',n:'Lunettes Natation',nm:'Fanasitrana Milomano',p:49000},
+    {e:'🎾',n:'Raquette Tennis',nm:'Raquette Tennis',p:189000,b:'Top',bm:'Tsara'},
+    {e:'🚴',n:'Casque Vélo Premium',nm:'Casque Velo',p:129000},
+    {e:'🧘',n:'Tapis Yoga Premium',nm:'Tapis Yoga',p:99000},
+  ],
+  beaute:[
+    {e:'💄',n:'Rouge à Lèvres Luxe',nm:'Rouge Levres Luxe',p:59000,b:'Tendance',bm:'Malaza'},
+    {e:'🧴',n:'Crème Hydratante Premium',nm:'Creme Hydratante',p:89000},
+    {e:'💅',n:'Vernis Longue Durée',nm:'Vernis Longe Duree',p:29000,b:'Nouveau',bm:'Vaovao'},
+    {e:'🌸',n:'Parfum Rose Éclat',nm:'Havoana Rose',p:149000,b:'Top',bm:'Tsara'},
+    {e:'🧖',n:'Masque Visage Or',nm:'Masque Visage Or',p:79000},
+    {e:'💋',n:'Palette Maquillage Pro',nm:'Palette Maquillage',p:199000,b:'Tendance',bm:'Malaza'},
+    {e:'🪞',n:'Sérum Anti-Âge',nm:'Serum Anti Age',p:249000},
+    {e:'🌿',n:'Huile Corps Naturelle',nm:'Huile Corps',p:69000},
+  ],
   promo:[
     {e:'📱',n:'Samsung Galaxy S25',nm:'Samsung Galaxy S25',p:1490000,orig:2490000,sale:40},
     {e:'👗',n:"Robe d'Été Florale",nm:'Akanjo Lohataona',p:179000,orig:299000,sale:40},
@@ -1273,6 +1331,8 @@ function renderAll(){
     ['enfant-grid','enfant'],
     ['nouveautes-grid','nouveautes'],
     ['promo-grid','promo'],
+    ['sport-grid','sport'],
+    ['beaute-grid','beaute'],
   ];
   grids.forEach(([id,key])=>{
     const el=document.getElementById(id);
@@ -1668,11 +1728,66 @@ function setLang(l){
 }
 
 /* ════════════════════════════════════════════════════
+   BOUTIQUE TABS
+════════════════════════════════════════════════════ */
+const BOUTIQUES=[
+  {name:'Boutique Elegance',cat:'mode',emoji:'👗',banner:'linear-gradient(135deg,#F9EEF0,#F2C8D0)',desc:'Mode femme & homme haut de gamme',products:128,sales:2400,rating:4.8,verified:true},
+  {name:'TechMada Store',cat:'elec',emoji:'📱',banner:'linear-gradient(135deg,#1a2035,#1e3a6e)',desc:'Smartphones, laptops & accessoires tech',products:89,sales:1850,rating:4.9,verified:true},
+  {name:'BeautyGlow',cat:'beaute',emoji:'💄',banner:'linear-gradient(135deg,#FFF0F5,#F5E8FF)',desc:'Cosmétiques & soins premium',products:245,sales:3200,rating:4.7,verified:true},
+  {name:'SportZone Mada',cat:'sport',emoji:'⚽',banner:'linear-gradient(135deg,#0f3460,#16213e)',desc:'Équipements sportifs professionnels',products:167,sales:980,rating:4.6,verified:true},
+  {name:'Maison Luxe',cat:'maison',emoji:'🏠',banner:'linear-gradient(135deg,#F5E8D0,#E8C890)',desc:'Décoration & mobilier de prestige',products:93,sales:720,rating:4.5,verified:false},
+  {name:'KidsWorld',cat:'mode',emoji:'🧸',banner:'linear-gradient(135deg,#FFF5E8,#FFFBF0)',desc:'Mode & jouets pour enfants',products:312,sales:4100,rating:4.9,verified:true},
+];
+
+let currentBoutiqueTab='all';
+function switchBoutiqueTab(tab,el){
+  currentBoutiqueTab=tab;
+  document.querySelectorAll('.btab').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const filtered=tab==='all'?BOUTIQUES:BOUTIQUES.filter(b=>b.cat===tab);
+  renderBoutiques(filtered);
+}
+
+function renderBoutiques(list){
+  const grid=document.getElementById('boutiqueGrid');
+  if(!grid) return;
+  grid.innerHTML=list.map(b=>`
+    <div class="boutique-card">
+      <div class="boutique-banner" style="background:${b.banner}">
+        <span style="font-size:2.5rem">${b.emoji}</span>
+        ${b.verified?'<span class="boutique-verified">✦ Vérifié</span>':''}
+      </div>
+      <div class="boutique-avatar">${b.emoji}</div>
+      <div class="boutique-info">
+        <div class="boutique-name">${b.name}</div>
+        <div class="boutique-cat-tag">${b.cat.toUpperCase()}</div>
+        <div class="boutique-desc">${b.desc}</div>
+        <div class="boutique-stats">
+          <div class="b-stat"><strong>${b.products}</strong><span>Produits</span></div>
+          <div class="b-stat"><strong>${b.sales.toLocaleString()}</strong><span>Ventes</span></div>
+          <div class="b-stat"><strong>${b.rating}</strong><span>Note</span></div>
+        </div>
+        <div class="boutique-rating">
+          <span class="b-stars">${'★'.repeat(Math.floor(b.rating))}${'☆'.repeat(5-Math.floor(b.rating))}</span>
+          <span class="b-rating-num">(${b.rating}/5)</span>
+        </div>
+        <button class="btn-visit" onclick="alert('Boutique ${b.name} — Bientôt disponible!')">Visiter la Boutique →</button>
+      </div>
+    </div>`).join('');
+}
+
+function filterBoutiques(val){
+  const filtered=BOUTIQUES.filter(b=>b.name.toLowerCase().includes(val.toLowerCase())||b.desc.toLowerCase().includes(val.toLowerCase()));
+  renderBoutiques(filtered);
+}
+
+/* ════════════════════════════════════════════════════
    INIT
 ════════════════════════════════════════════════════ */
 renderAll();
 updateCartUI();
 addRippleToButtons();
+renderBoutiques(BOUTIQUES);
 </script>
 
 <!-- ══ BOTTOM NAV (mobile) ═══════════════════════════ -->
