@@ -482,6 +482,41 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 .profil-avatar-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s}
 .profil-avatar-upload:hover .profil-avatar-overlay{opacity:1}
 
+/* ── PAGE LOGIN PREMIUM ───────────────────────────── */
+.login-page{min-height:100vh;background:linear-gradient(135deg,#1a0a05 0%,#2C1A10 30%,#3D2418 60%,#1a0a05 100%);display:flex;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden}
+.login-page::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,168,76,.12),transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(212,135,154,.08),transparent 60%)}
+.login-crystals{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.login-crystal{position:absolute;width:120px;height:120px;background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(212,135,154,.04));border:1px solid rgba(201,168,76,.1);border-radius:20px;transform:rotate(45deg)}
+.lc1{top:-40px;left:-40px;width:200px;height:200px}
+.lc2{bottom:-60px;right:-60px;width:240px;height:240px;background:linear-gradient(135deg,rgba(212,135,154,.06),rgba(201,168,76,.04))}
+.lc3{top:20%;right:5%;width:80px;height:80px;opacity:.5}
+.lc4{bottom:25%;left:3%;width:60px;height:60px;opacity:.4}
+.login-box{background:rgba(255,255,255,.03);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.2);border-radius:28px;padding:40px 32px;width:100%;max-width:400px;position:relative;z-index:1;box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05)}
+.login-box::before{content:'';position:absolute;inset:0;border-radius:28px;background:linear-gradient(135deg,rgba(201,168,76,.05),transparent 50%,rgba(212,135,154,.03));pointer-events:none}
+.login-logo-wrap{text-align:center;margin-bottom:32px}
+.login-crown{width:50px;height:34px;margin:0 auto 8px;animation:crown-pulse 2.5s ease-in-out infinite}
+.login-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:linear-gradient(90deg,var(--gold-d),var(--silver-l),var(--gold),var(--gold-l),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer-gold 3s linear infinite}
+.login-sub{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-top:4px}
+.login-tabs{display:flex;background:rgba(255,255,255,.04);border-radius:30px;padding:3px;margin-bottom:24px;border:1px solid rgba(201,168,76,.15)}
+.login-tab{flex:1;padding:10px;border:none;background:transparent;border-radius:26px;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;transition:all .25s}
+.login-tab.active{background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));color:white;box-shadow:0 2px 12px rgba(201,168,76,.3)}
+.login-form{display:flex;flex-direction:column;gap:14px}
+.login-input-wrap{position:relative}
+.login-input{width:100%;padding:13px 16px 13px 44px;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.2);border-radius:14px;font-family:'Jost',sans-serif;font-size:.88rem;color:white;outline:none;transition:all .25s}
+.login-input::placeholder{color:rgba(255,255,255,.3)}
+.login-input:focus{border-color:var(--gold);background:rgba(255,255,255,.08);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.login-input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:rgba(201,168,76,.6);font-size:.95rem}
+.login-btn{width:100%;padding:14px;border:none;border-radius:30px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold),var(--gold-d));background-size:200% auto;color:white;box-shadow:0 4px 20px rgba(201,168,76,.4);animation:shimmer-gold 3s linear infinite;transition:transform .2s;margin-top:4px}
+.login-btn:hover{transform:scale(1.02)}
+.login-btn.rose{background:linear-gradient(90deg,#C01050,#D4879A,#F2C8D0,#D4879A,#C01050);background-size:200% auto;animation:shimmer-rose 3s linear infinite;box-shadow:0 4px 20px rgba(212,135,154,.4)}
+.login-divider{display:flex;align-items:center;gap:12px;margin:4px 0}
+.login-divider span{font-size:.7rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.15)}
+.login-error{background:rgba(200,0,60,.15);border:1px solid rgba(200,0,60,.3);border-radius:10px;padding:10px 14px;font-size:.78rem;color:#ff6b8a;display:none}
+.login-error.show{display:block}
+.login-success{background:rgba(0,180,80,.1);border:1px solid rgba(0,180,80,.25);border-radius:10px;padding:10px 14px;font-size:.78rem;color:#4ade80;display:none}
+.login-success.show{display:block}
+
 /* ── MODAL CRÉER BOUTIQUE ─────────────────────────── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-overlay.show{display:flex}
@@ -744,6 +779,45 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 @media(max-width:768px){.bottom-nav{display:flex}}
 
 </style>
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBIgfZKdpkYaJ2Vd0olgxTqFDiWuA4jmyQ",
+  authDomain: "jiabyshop.firebaseapp.com",
+  projectId: "jiabyshop",
+  storageBucket: "jiabyshop.firebasestorage.app",
+  messagingSenderId: "263859368911",
+  appId: "1:263859368911:web:50d576c4a9fa5e0a2998ba"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Expose globally
+window.fbAuth = auth;
+window.fbDb = db;
+window.fbFunctions = {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  collection, addDoc, getDocs, doc,
+  updateDoc, deleteDoc, onSnapshot,
+  query, orderBy, where
+};
+
+// Auth state listener
+onAuthStateChanged(auth, user => {
+  window.currentUser = user;
+  updateAuthUI(user);
+  if(user) loadFirestoreProducts();
+});
+</script>
 <link rel="icon" href="icon.png"><link rel="apple-touch-icon" href="icon.png"><link rel="manifest" href="manifest.json"></head>
 <body>
 
@@ -812,6 +886,7 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
   <a href="#" data-i18n="nav-new" onclick="showPage('nouveautes',this)">Nouveautés</a>
   <a href="#" data-i18n="nav-promo" onclick="showPage('promo',this)">Promotions</a>
   <a href="#" data-i18n="nav-contact" onclick="showPage('contact',this)">Contact</a>
+  <a href="#" id="auth-nav-btn" onclick="showPage('login',this)">🔑 Se Connecter</a>
 </nav>
 </div><!-- /site-header -->
 
@@ -2326,6 +2401,13 @@ function addProduct(){
   document.getElementById('cs-products').textContent=myProducts.length;
   // Diffusion automatique
   injectBoutiqueProducts();
+  // Save any Firestore raha logged in
+  if(window.currentUser){
+    saveProductToFirestore({
+      ...prod,
+      boutiqueName:myBoutique?myBoutique.name:'',
+    });
+  }
   showToast('✅','Produit ajouté et diffusé !');
   switchCompteTab('produits',document.querySelectorAll('.ctab')[0]);
   document.querySelectorAll('.ctab')[0].classList.add('active');
@@ -2404,6 +2486,129 @@ function deleteBoutique(){
     try{localStorage.removeItem('jiabyshop_boutique');localStorage.removeItem('jiabyshop_products');}catch(e){}
     showPage('boutique',null);
   }
+}
+
+/* ════════════════════════════════════════════════════
+   AUTH FUNCTIONS
+════════════════════════════════════════════════════ */
+function switchLoginTab(tab){
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-register').classList.toggle('active',tab==='register');
+  document.getElementById('login-form-wrap').style.display=tab==='login'?'block':'none';
+  document.getElementById('register-form-wrap').style.display=tab==='register'?'block':'none';
+}
+
+async function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-password').value;
+  const errEl=document.getElementById('login-error');
+  errEl.classList.remove('show');
+  if(!email||!pass){errEl.textContent='Email sy password ilaina!';errEl.classList.add('show');return;}
+  try{
+    await window.fbFunctions.signInWithEmailAndPassword(window.fbAuth,email,pass);
+    showPage('accueil',null);
+    showToast('✅','Tonga soa! '+email);
+  }catch(e){
+    errEl.textContent=e.code==='auth/invalid-credential'?'Email na password diso!':e.message;
+    errEl.classList.add('show');
+  }
+}
+
+async function doRegister(){
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const pass=document.getElementById('reg-password').value;
+  const errEl=document.getElementById('reg-error');
+  const sucEl=document.getElementById('reg-success');
+  errEl.classList.remove('show');sucEl.classList.remove('show');
+  if(!name||!email||!pass){errEl.textContent='Feno ny saha rehetra!';errEl.classList.add('show');return;}
+  if(pass.length<6){errEl.textContent='Password kely loatra (min 6)!';errEl.classList.add('show');return;}
+  try{
+    const cred=await window.fbFunctions.createUserWithEmailAndPassword(window.fbAuth,email,pass);
+    // Save user profile
+    await window.fbFunctions.addDoc(
+      window.fbFunctions.collection(window.fbDb,'users'),
+      {uid:cred.user.uid,name,email,createdAt:new Date().toISOString()}
+    );
+    sucEl.textContent='✅ Compte noforonina! Tongasoa '+name+'!';
+    sucEl.classList.add('show');
+    setTimeout(()=>showPage('accueil',null),1500);
+  }catch(e){
+    errEl.textContent=e.code==='auth/email-already-in-use'?'Email efa misy!':e.message;
+    errEl.classList.add('show');
+  }
+}
+
+async function doLogout(){
+  await window.fbFunctions.signOut(window.fbAuth);
+  showToast('👋','Voasoratra nivoaka!');
+  showPage('accueil',null);
+}
+
+function updateAuthUI(user){
+  // Update hamburger menu sy nav
+  const authBtn=document.getElementById('auth-nav-btn');
+  if(authBtn){
+    authBtn.textContent=user?'👤 Mon Compte':'🔑 Se Connecter';
+    authBtn.onclick=user?()=>showPage('compte-boutique',null):()=>showPage('login',null);
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   FIRESTORE — LOAD PRODUITS RÉELS
+════════════════════════════════════════════════════ */
+async function loadFirestoreProducts(){
+  if(!window.fbDb) return;
+  try{
+    const snap=await window.fbFunctions.getDocs(
+      window.fbFunctions.collection(window.fbDb,'produits')
+    );
+    const firestoreProds=[];
+    snap.forEach(d=>firestoreProds.push({id:d.id,...d.data()}));
+    if(firestoreProds.length>0){
+      injectFirestoreProducts(firestoreProds);
+    }
+  }catch(e){console.log('Firestore:',e);}
+}
+
+function injectFirestoreProducts(prods){
+  prods.forEach(p=>{
+    const card=boutiqueProdCard({
+      name:p.name,
+      price:p.price,
+      photos:p.photos||[],
+      emoji:p.emoji||'📦',
+      boutique:p.boutiqueName||'',
+      cat:p.cat||'mode',
+      lieu:p.lieu||'',
+      contact:p.contact||'',
+      desc:p.desc||'',
+    });
+    // Inject ao trending
+    const tGrid=document.getElementById('trending-grid');
+    if(tGrid) tGrid.innerHTML=card+tGrid.innerHTML;
+    // Inject ao category
+    const catMap={mode:'fashion-grid',elec:'elec-grid',beaute:'beaute-grid',sport:'sport-grid'};
+    const cGrid=document.getElementById(catMap[p.cat]||'fashion-grid');
+    if(cGrid) cGrid.innerHTML=card+cGrid.innerHTML;
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   FIRESTORE — SAVE PRODUIT
+════════════════════════════════════════════════════ */
+async function saveProductToFirestore(prod){
+  if(!window.fbDb||!window.currentUser) return;
+  try{
+    await window.fbFunctions.addDoc(
+      window.fbFunctions.collection(window.fbDb,'produits'),{
+        ...prod,
+        ownerId:window.currentUser.uid,
+        ownerEmail:window.currentUser.email,
+        createdAt:new Date().toISOString()
+      }
+    );
+  }catch(e){console.log('Save error:',e);}
 }
 
 /* ════════════════════════════════════════════════════
@@ -2528,6 +2733,78 @@ injectBoutiqueProducts();
         <div style="display:flex;gap:10px">
           <button class="btn-gold" style="background:rgba(200,208,220,.3);animation:none;color:var(--muted);box-shadow:none;flex:1;justify-content:center" onclick="goStep(2)">← Modifier</button>
           <button class="btn-gold" style="flex:2;justify-content:center" onclick="createBoutique()">✦ Créer ma Boutique</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE LOGIN ══════════════════════════════════ -->
+<div class="page" id="page-login">
+  <div class="login-page">
+    <div class="login-crystals">
+      <div class="login-crystal lc1"></div>
+      <div class="login-crystal lc2"></div>
+      <div class="login-crystal lc3"></div>
+      <div class="login-crystal lc4"></div>
+    </div>
+    <div class="login-box">
+      <div class="login-logo-wrap">
+        <svg class="login-crown" viewBox="0 0 80 50" fill="none">
+          <defs><linearGradient id="cg2" x1="0" y1="0" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#9A7A2A"/><stop offset="50%" stop-color="#F0D080"/><stop offset="100%" stop-color="#C9A84C"/>
+          </linearGradient></defs>
+          <polygon points="8,40 8,18 24,30 40,6 56,30 72,18 72,40" fill="url(#cg2)" stroke="#B8941E" stroke-width="1"/>
+          <rect x="8" y="40" width="64" height="5" rx="2" fill="url(#cg2)"/>
+          <circle cx="8" cy="18" r="4" fill="#F0D080"/><circle cx="40" cy="6" r="4" fill="#F0D080"/><circle cx="72" cy="18" r="4" fill="#F0D080"/>
+        </svg>
+        <div class="login-title">JiabyShop</div>
+        <div class="login-sub">Modernité &amp; Élégance</div>
+      </div>
+
+      <div class="login-tabs">
+        <button class="login-tab active" id="tab-login" onclick="switchLoginTab('login')">Se Connecter</button>
+        <button class="login-tab" id="tab-register" onclick="switchLoginTab('register')">Créer un compte</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="login-form-wrap">
+        <div class="login-form">
+          <div class="login-input-wrap">
+            <span class="login-input-icon">✉️</span>
+            <input class="login-input" type="email" id="login-email" placeholder="Adresse email"/>
+          </div>
+          <div class="login-input-wrap">
+            <span class="login-input-icon">🔒</span>
+            <input class="login-input" type="password" id="login-password" placeholder="Mot de passe"/>
+          </div>
+          <div class="login-error" id="login-error"></div>
+          <button class="login-btn" onclick="doLogin()">✦ Se Connecter</button>
+          <div class="login-divider"><span>ou</span></div>
+          <button class="login-btn rose" onclick="showPage('accueil',null)">Continuer sans compte →</button>
+        </div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="register-form-wrap" style="display:none">
+        <div class="login-form">
+          <div class="login-input-wrap">
+            <span class="login-input-icon">👤</span>
+            <input class="login-input" type="text" id="reg-name" placeholder="Votre nom complet"/>
+          </div>
+          <div class="login-input-wrap">
+            <span class="login-input-icon">✉️</span>
+            <input class="login-input" type="email" id="reg-email" placeholder="Adresse email"/>
+          </div>
+          <div class="login-input-wrap">
+            <span class="login-input-icon">🔒</span>
+            <input class="login-input" type="password" id="reg-password" placeholder="Mot de passe (min 6 caractères)"/>
+          </div>
+          <div class="login-error" id="reg-error"></div>
+          <div class="login-success" id="reg-success"></div>
+          <button class="login-btn" onclick="doRegister()">✦ Créer mon compte</button>
+          <div class="login-divider"><span>ou</span></div>
+          <button class="login-btn rose" onclick="showPage('accueil',null)">Continuer sans compte →</button>
         </div>
       </div>
     </div>
