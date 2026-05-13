@@ -158,6 +158,12 @@ nav a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:tra
 .btn-add:active{transform:scale(.96)}
 .btn-add::before{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transform:skewX(-20deg);transition:left .5s}
 .btn-add:hover::before{left:130%}
+.btn-buy{width:100%;padding:8px 0;border:none;border-radius:30px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;position:relative;overflow:hidden;background:linear-gradient(90deg,#C01050 0%,#D4879A 25%,#F2C8D0 50%,#D4879A 75%,#C01050 100%);background-size:200% auto;color:white;box-shadow:0 3px 12px rgba(212,135,154,.4);animation:shimmer-rose 3s linear infinite;transition:transform .2s,box-shadow .2s;margin-top:6px}
+.btn-buy:hover{transform:scale(1.04);box-shadow:0 6px 20px rgba(212,135,154,.6)}
+.btn-buy:active{transform:scale(.96)}
+.btn-buy::before{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .5s}
+.btn-buy:hover::before{left:130%}
+@keyframes shimmer-rose{0%{background-position:-200% center}100%{background-position:200% center}}
 
 /* ── CATEGORY GRID ─────────────────────────────────── */
 .categories-section{padding:50px 50px 40px;background:linear-gradient(180deg,#fff 0%,#faf5f0 100%)}
@@ -1448,6 +1454,11 @@ function addToCart(name,price,emoji){
   saveCart();
   updateCartUI();
   showToast(emoji,name);
+}
+
+function buyNow(name,price,emoji){
+  addToCart(name,price,emoji);
+  toggleCart();
 }
 
 function removeFromCart(i){
