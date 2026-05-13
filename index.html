@@ -507,6 +507,10 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 .empty-state-icon{font-size:3rem;margin-bottom:12px;opacity:.4}
 .empty-state p{font-size:.85rem}
 
+/* footer hidden amin'ny compte-boutique */
+#page-compte-boutique ~ footer{display:none}
+.page#page-compte-boutique.active ~ footer{display:none}
+
 /* ── BOUTIQUE PAGE ─────────────────────────────────── */
 .boutique-hero{background:linear-gradient(135deg,#F9EEF0 0%,#FFF8F0 50%,#F0F0FF 100%);padding:40px 24px 30px;text-align:center;position:relative;overflow:hidden}
 .boutique-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.12),transparent 60%)}
@@ -1603,6 +1607,9 @@ function showPage(pageId,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const pg=document.getElementById('page-'+pageId);
   if(pg) pg.classList.add('active');
+  // Hidden footer amin'ny compte-boutique
+  const footer=document.querySelector('footer');
+  if(footer) footer.style.display=pageId==='compte-boutique'?'none':'';
   document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
   if(el) el.classList.add('active');
   else{
