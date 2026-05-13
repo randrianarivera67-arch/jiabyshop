@@ -780,11 +780,10 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 
 </style>
 <!-- Firebase SDK -->
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyBIgfZKdpkYaJ2Vd0olgxTqFDiWuA4jmyQ",
   authDomain: "jiabyshop.firebaseapp.com",
@@ -793,26 +792,12 @@ const firebaseConfig = {
   messagingSenderId: "263859368911",
   appId: "1:263859368911:web:50d576c4a9fa5e0a2998ba"
 };
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// Expose globally
-window.fbAuth = auth;
-window.fbDb = db;
-window.fbFunctions = {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  collection, addDoc, getDocs, doc,
-  updateDoc, deleteDoc, onSnapshot,
-  query, orderBy, where
-};
+firebase.initializeApp(firebaseConfig);
+window.fbAuth = firebase.auth();
+window.fbDb = firebase.firestore();
 
 // Auth state listener
-onAuthStateChanged(auth, user => {
+firebase.auth().onAuthStateChanged(user => {
   window.currentUser = user;
   updateAuthUI(user);
   if(user) loadFirestoreProducts();
@@ -2505,7 +2490,7 @@ async function doLogin(){
   errEl.classList.remove('show');
   if(!email||!pass){errEl.textContent='Email sy password ilaina!';errEl.classList.add('show');return;}
   try{
-    await window.fbFunctions.signInWithEmailAndPassword(window.fbAuth,email,pass);
+    await window.fbAuth.signInWithEmailAndPassword(email,pass);
     showPage('accueil',null);
     showToast('✅','Tonga soa! '+email);
   }catch(e){
@@ -2524,12 +2509,9 @@ async function doRegister(){
   if(!name||!email||!pass){errEl.textContent='Feno ny saha rehetra!';errEl.classList.add('show');return;}
   if(pass.length<6){errEl.textContent='Password kely loatra (min 6)!';errEl.classList.add('show');return;}
   try{
-    const cred=await window.fbFunctions.createUserWithEmailAndPassword(window.fbAuth,email,pass);
+    const cred=await window.fbAuth.createUserWithEmailAndPassword(email,pass);
     // Save user profile
-    await window.fbFunctions.addDoc(
-      window.fbFunctions.collection(window.fbDb,'users'),
-      {uid:cred.user.uid,name,email,createdAt:new Date().toISOString()}
-    );
+    await window.fbDb.collection('users').add({uid:cred.user.uid,name,email,createdAt:new Date().toISOString()});
     sucEl.textContent='✅ Compte noforonina! Tongasoa '+name+'!';
     sucEl.classList.add('show');
     setTimeout(()=>showPage('accueil',null),1500);
@@ -2540,7 +2522,7 @@ async function doRegister(){
 }
 
 async function doLogout(){
-  await window.fbFunctions.signOut(window.fbAuth);
+  await window.fbAuth.signOut();
   showToast('👋','Voasoratra nivoaka!');
   showPage('accueil',null);
 }
@@ -2550,7 +2532,7 @@ function updateAuthUI(user){
   const authBtn=document.getElementById('auth-nav-btn');
   if(authBtn){
     authBtn.textContent=user?'👤 Mon Compte':'🔑 Se Connecter';
-    authBtn.onclick=user?()=>showPage('compte-boutique',null):()=>showPage('login',null);
+    authBtn.onclick=user?function(){showPage('compte-boutique',null)}:function(){showPage('login',null)};
   }
 }
 
@@ -2560,9 +2542,7 @@ function updateAuthUI(user){
 async function loadFirestoreProducts(){
   if(!window.fbDb) return;
   try{
-    const snap=await window.fbFunctions.getDocs(
-      window.fbFunctions.collection(window.fbDb,'produits')
-    );
+    const snap=await window.fbDb.collection('produits').get();
     const firestoreProds=[];
     snap.forEach(d=>firestoreProds.push({id:d.id,...d.data()}));
     if(firestoreProds.length>0){
@@ -2600,14 +2580,12 @@ function injectFirestoreProducts(prods){
 async function saveProductToFirestore(prod){
   if(!window.fbDb||!window.currentUser) return;
   try{
-    await window.fbFunctions.addDoc(
-      window.fbFunctions.collection(window.fbDb,'produits'),{
-        ...prod,
-        ownerId:window.currentUser.uid,
-        ownerEmail:window.currentUser.email,
-        createdAt:new Date().toISOString()
-      }
-    );
+    await window.fbDb.collection('produits').add({
+      ...prod,
+      ownerId:window.currentUser.uid,
+      ownerEmail:window.currentUser.email,
+      createdAt:new Date().toISOString()
+    });
   }catch(e){console.log('Save error:',e);}
 }
 
