@@ -1416,6 +1416,18 @@ async function uploadToTelegram(file){
   const fd2=await fr.json();
   return `https://api.telegram.org/file/bot${TG_TOKEN}/${fd2.result.file_path}`;
 }
+async function uploadToTelegramDoc(file){
+  const fd=new FormData();
+  fd.append('chat_id',TG_CHAT);
+  fd.append('document',file);
+  const r=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendDocument`,{method:'POST',body:fd});
+  const d=await r.json();
+  if(!d.ok) throw new Error('Upload doc failed: '+JSON.stringify(d));
+  const fileId=d.result.document.file_id;
+  const fr=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/getFile?file_id=${fileId}`);
+  const fd2=await fr.json();
+  return `https://api.telegram.org/file/bot${TG_TOKEN}/${fd2.result.file_path}`;
+}
 
 /* ════════════════════════════════════════════════════
    PRODUCT CATALOG
@@ -2989,5 +3001,143 @@ injectBoutiqueProducts();
     <span class="bn-label" data-i18n="nav-promo">Promos</span>
   </button>
 </nav>
+
+<!-- MODAL CREER BOUTIQUE -->
+<div id="modal-creer-boutique" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);overflow-y:auto;-webkit-overflow-scrolling:touch">
+  <div style="background:#fff;max-width:480px;margin:16px auto 40px;border-radius:22px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="background:linear-gradient(135deg,#B8860B,#DAA520,#B8860B);padding:20px 22px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:#fff">Créer ma Boutique</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.8);margin-top:3px">Demande soumise à validation admin</div>
+      </div>
+      <button onclick="closeCreerBoutiqueModal()" style="background:rgba(255,255,255,.22);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.5rem;display:flex;align-items:center;justify-content:center">×</button>
+    </div>
+    <div style="padding:22px 20px 26px">
+      <div style="margin-bottom:14px">
+        <label style="font-size:.78rem;font-weight:700;color:#333;display:block;margin-bottom:5px">Nom de la boutique *</label>
+        <input id="cb-nom" type="text" placeholder="Ex: Jiaby Fashion" style="width:100%;padding:12px 13px;border:1.5px solid rgba(201,168,76,.35);border-radius:12px;font-size:.9rem;box-sizing:border-box;outline:none;font-family:inherit">
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:.78rem;font-weight:700;color:#333;display:block;margin-bottom:5px">Description *</label>
+        <textarea id="cb-desc" placeholder="Décrivez votre boutique..." rows="3" style="width:100%;padding:12px 13px;border:1.5px solid rgba(201,168,76,.35);border-radius:12px;font-size:.9rem;box-sizing:border-box;outline:none;resize:none;font-family:inherit"></textarea>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:.78rem;font-weight:700;color:#333;display:block;margin-bottom:5px">Catégorie *</label>
+        <select id="cb-cat" style="width:100%;padding:12px 13px;border:1.5px solid rgba(201,168,76,.35);border-radius:12px;font-size:.9rem;box-sizing:border-box;outline:none;background:#fff;font-family:inherit;color:#333">
+          <option value="">Choisir...</option>
+          <option value="mode">Mode &amp; Vêtements</option>
+          <option value="beaute">Beauté &amp; Soins</option>
+          <option value="electronique">Électronique &amp; Tech</option>
+          <option value="maison">Maison &amp; Déco</option>
+          <option value="alimentation">Alimentation</option>
+          <option value="sport">Sport &amp; Fitness</option>
+          <option value="bijoux">Bijoux &amp; Accessoires</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div style="margin-bottom:13px">
+        <label style="font-size:.78rem;font-weight:700;color:#333;display:block;margin-bottom:5px">🪪 Photo CIN — Recto *</label>
+        <div id="cb-recto-prev" onclick="document.getElementById('cb-recto-inp').click()" style="width:100%;height:118px;border:2px dashed rgba(201,168,76,.45);border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#FDFAF5;overflow:hidden">
+          <span style="font-size:2.2rem">🪪</span>
+          <span style="font-size:.73rem;color:#aaa;margin-top:5px">Appuyer pour ajouter le recto</span>
+        </div>
+        <input id="cb-recto-inp" type="file" accept="image/*" style="display:none" onchange="previewCIN('recto',this)">
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="font-size:.78rem;font-weight:700;color:#333;display:block;margin-bottom:5px">🪪 Photo CIN — Verso *</label>
+        <div id="cb-verso-prev" onclick="document.getElementById('cb-verso-inp').click()" style="width:100%;height:118px;border:2px dashed rgba(201,168,76,.45);border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#FDFAF5;overflow:hidden">
+          <span style="font-size:2.2rem">🪪</span>
+          <span style="font-size:.73rem;color:#aaa;margin-top:5px">Appuyer pour ajouter le verso</span>
+        </div>
+        <input id="cb-verso-inp" type="file" accept="image/*" style="display:none" onchange="previewCIN('verso',this)">
+      </div>
+      <div style="background:rgba(201,168,76,.09);border:1px solid rgba(201,168,76,.28);border-radius:11px;padding:12px 14px;margin-bottom:18px;font-size:.75rem;color:#666;line-height:1.55">
+        ⏳ Votre demande sera examinée par l'équipe JiabyShop sous 24–48h.
+      </div>
+      <button id="cb-submit-btn" onclick="submitCreerBoutique()" style="width:100%;padding:14px;background:linear-gradient(135deg,#B8860B,#DAA520);border:none;border-radius:14px;color:#fff;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;letter-spacing:.04em">
+        Envoyer la demande
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+function openCreerBoutiqueModal(){
+  var user=firebase.auth().currentUser;
+  if(!user){alert('Connectez-vous d\'abord.');return;}
+  window.fbDb.collection('boutique_requests').doc(user.uid).get().then(function(doc){
+    if(doc.exists){
+      var s=doc.data().status;
+      if(s==='pending'){alert('⏳ Demande déjà en cours de validation.');return;}
+      if(s==='approved'){alert('✅ Votre boutique est déjà approuvée !');return;}
+    }
+    ['cb-nom','cb-desc'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('cb-cat').value='';
+    ['recto','verso'].forEach(function(s){
+      document.getElementById('cb-'+s+'-prev').innerHTML='<span style="font-size:2.2rem">🪪</span><span style="font-size:.73rem;color:#aaa;margin-top:5px">Appuyer pour ajouter le '+s+'</span>';
+      document.getElementById('cb-'+s+'-inp').value='';
+    });
+    var btn=document.getElementById('cb-submit-btn');
+    btn.disabled=false;btn.textContent='Envoyer la demande';
+    document.getElementById('modal-creer-boutique').style.display='block';
+    document.body.style.overflow='hidden';
+  }).catch(function(){
+    document.getElementById('modal-creer-boutique').style.display='block';
+    document.body.style.overflow='hidden';
+  });
+}
+function closeCreerBoutiqueModal(){
+  document.getElementById('modal-creer-boutique').style.display='none';
+  document.body.style.overflow='';
+}
+function previewCIN(side,input){
+  if(!input.files||!input.files[0])return;
+  var reader=new FileReader();
+  reader.onload=function(e){document.getElementById('cb-'+side+'-prev').innerHTML='<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover">';};
+  reader.readAsDataURL(input.files[0]);
+}
+async function submitCreerBoutique(){
+  var user=firebase.auth().currentUser;if(!user)return;
+  var nom=document.getElementById('cb-nom').value.trim();
+  var desc=document.getElementById('cb-desc').value.trim();
+  var cat=document.getElementById('cb-cat').value;
+  var rf=document.getElementById('cb-recto-inp').files[0];
+  var vf=document.getElementById('cb-verso-inp').files[0];
+  if(!nom||!desc||!cat){alert('Remplissez tous les champs.');return;}
+  if(!rf||!vf){alert('Ajoutez les deux photos CIN.');return;}
+  var btn=document.getElementById('cb-submit-btn');
+  btn.disabled=true;btn.textContent='⏳ Envoi en cours...';
+  try{
+    var urls=await Promise.all([uploadToTelegramDoc(rf),uploadToTelegramDoc(vf)]);
+    var uName=user.displayName||'';var uEmail=user.email||'';
+    try{var us=await window.fbDb.collection('users').where('uid','==',user.uid).limit(1).get();if(!us.empty){var ud=us.docs[0].data();uName=ud.name||uName;}}catch(e){}
+    await window.fbDb.collection('boutique_requests').doc(user.uid).set({
+      uid:user.uid,userName:uName,userEmail:uEmail,
+      boutiqueName:nom,boutiqueDesc:desc,boutiqueCategory:cat,
+      cinRecto:urls[0],cinVerso:urls[1],
+      status:'pending',createdAt:new Date().toISOString()
+    });
+    closeCreerBoutiqueModal();
+    alert('✅ Demande envoyée ! Validation sous 24–48h.');
+  }catch(err){
+    console.error(err);alert('Erreur. Réessayez.');
+    btn.disabled=false;btn.textContent='Envoyer la demande';
+  }
+}
+(function(){
+  function attach(){
+    var found=false;
+    document.querySelectorAll('button,div,a,span').forEach(function(el){
+      if(!found&&el.children.length<=2&&(el.textContent||'').trim()==='Créer une boutique'){
+        el.style.cursor='pointer';
+        el.addEventListener('click',function(e){e.stopPropagation();openCreerBoutiqueModal();});
+        found=true;
+      }
+    });
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(attach,600);});}
+  else{setTimeout(attach,600);}
+})();
+</script>
+
 </body>
 </html>
