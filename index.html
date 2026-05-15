@@ -66,9 +66,18 @@ body{font-family:'Jost',sans-serif;background:#fff;color:var(--text);overflow-x:
 .search-bar svg{position:relative;z-index:1;color:var(--gold);flex-shrink:0}
 
 /* ── HEADER RIGHT (search + cart) ─────────────────── */
-.header-right{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:1}
+.header-right{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:1;position:relative}
 .cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border:1.5px solid rgba(212,135,154,0.5);box-shadow:0 0 0 3px rgba(212,135,154,0.15),0 2px 12px rgba(212,135,154,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
 .cart-btn:hover{background:rgba(201,168,76,.15);border-color:var(--gold);transform:scale(1.08)}
+.header-account-dropdown{position:absolute;top:50px;right:52px;background:white;border:1.5px solid rgba(201,168,76,.25);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15);min-width:195px;z-index:9999;display:none;overflow:hidden}
+.header-account-dropdown.open{display:block;animation:fadeInUp .2s ease}
+.had-head{padding:10px 14px 6px;font-size:.65rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-bottom:1px solid rgba(200,208,220,.25)}
+.had-item{display:flex;align-items:center;gap:10px;padding:11px 14px;font-family:'Jost',sans-serif;font-size:.83rem;color:var(--text);cursor:pointer;transition:background .15s}
+.had-item:hover{background:rgba(201,168,76,.08)}
+.had-item svg{color:var(--gold);flex-shrink:0}
+.had-logout{display:flex;align-items:center;gap:10px;padding:11px 14px;font-family:'Jost',sans-serif;font-size:.83rem;color:#C01050;cursor:pointer;transition:background .15s;border-top:1px solid rgba(200,208,220,.25)}
+.had-logout:hover{background:rgba(192,16,80,.06)}
+.had-logout svg{color:#C01050;flex-shrink:0}
 .cart-btn svg{color:var(--gold)}
 .cart-count{position:absolute;top:-4px;right:-4px;background:linear-gradient(135deg,var(--rose),#E8719A);color:white;font-size:.55rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulse-badge 2s ease infinite;display:none}
 .cart-count.visible{display:flex}
@@ -844,7 +853,19 @@ firebase.auth().onAuthStateChanged(user => {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" data-i18n-placeholder="search" placeholder="Recherche..."/>
       </div>
-      <button id="header-account-btn" class="cart-btn" onclick="window.currentUser?showPage('compte-boutique'):showPage('login')" aria-label="Mon compte"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+      <button id="header-account-btn" class="cart-btn" onclick="toggleAccountDropdown(event)" aria-label="Mon compte"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+      <div class="header-account-dropdown" id="headerAccountDropdown">
+        <div class="had-head">Mon Compte</div>
+        <div id="had-boutique-list"></div>
+        <div class="had-item" id="had-create-btn" onclick="closeAccountDropdown();openCreateModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Créer une boutique</span>
+        </div>
+        <div class="had-logout" onclick="hadLogout()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Déconnexion</span>
+        </div>
+      </div>
       <button class="cart-btn" onclick="toggleCart()" aria-label="Panier">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
         <span class="cart-count" id="cartCount">0</span>
@@ -2089,15 +2110,51 @@ let selectedEmoji='🛍️';
 let myBoutique=null;
 let myProducts=[];
 
+
+/* ═══ MULTI-BOUTIQUE ═══════════════════════════════ */
+let myBoutiques=[];
+let activeBoutiqueIdx=0;
+function toggleAccountDropdown(e){
+  e.stopPropagation();
+  if(!window.currentUser){showPage('login',null);return;}
+  const d=document.getElementById('headerAccountDropdown');
+  if(d.classList.contains('open')){d.classList.remove('open');return;}
+  const list=document.getElementById('had-boutique-list');
+  list.innerHTML='';
+  const icons={mode:'👗',elec:'📱',beaute:'💄',sport:'⚽',maison:'🏠'};
+  myBoutiques.forEach(function(b,i){
+    const el=document.createElement('div');
+    el.className='had-item';
+    if(i===activeBoutiqueIdx)el.style.background='rgba(201,168,76,.1)';
+    el.innerHTML='<span style="font-size:1rem">'+(icons[b.cat]||'🛍️')+'</span><span>'+b.name+'</span>';
+    el.onclick=function(){activeBoutiqueIdx=i;closeAccountDropdown();showPage('compte-boutique',null);loadCompteBoutique();};
+    list.appendChild(el);
+  });
+  const cb=document.getElementById('had-create-btn');
+  if(cb)cb.style.display=myBoutiques.length>=3?'none':'flex';
+  d.classList.add('open');
+}
+function closeAccountDropdown(){
+  const d=document.getElementById('headerAccountDropdown');
+  if(d)d.classList.remove('open');
+}
+function hadLogout(){
+  closeAccountDropdown();
+  window.fbAuth.signOut().then(function(){showToast('👋','Au revoir !');});
+}
+document.addEventListener('click',function(){closeAccountDropdown();});
+
 try{
-  const saved=localStorage.getItem('jiabyshop_boutique');
-  if(saved){myBoutique=JSON.parse(saved);}
+  const saved=localStorage.getItem('jiabyshop_boutiques');
+  if(saved){myBoutiques=JSON.parse(saved);}
+  else{const old=localStorage.getItem('jiabyshop_boutique');if(old){myBoutiques=[JSON.parse(old)];}}
   const savedP=localStorage.getItem('jiabyshop_products');
   if(savedP){myProducts=JSON.parse(savedP);}
 }catch(e){}
 
 function openCreateModal(){
-  if(myBoutique){showPage('compte-boutique',null);loadCompteBoutique();return;}
+  if(!window.currentUser){showPage('login',null);return;}
+  if(myBoutiques.length>=3){showToast('⚠️','Maximum 3 boutiques atteint !');return;}
   document.getElementById('createModal').classList.add('show');
   goStep(1);
 }
@@ -2125,7 +2182,6 @@ function goStep(n){
   });
   if(n===3){
     document.getElementById('confirm-name').textContent=document.getElementById('b-name').value||'Ma Boutique';
-    document.getElementById('confirm-emoji').textContent=selectedEmoji;
     document.getElementById('confirm-cat').textContent=selectedCat.toUpperCase();
     document.getElementById('confirm-desc').textContent=document.getElementById('b-desc').value||'—';
     document.getElementById('confirm-contact').textContent='📞 '+( document.getElementById('b-contact').value||'—');
@@ -2134,11 +2190,12 @@ function goStep(n){
 
 function createBoutique(){
   const name=document.getElementById('b-name').value.trim()||'Ma Boutique';
-  myBoutique={name,cat:selectedCat,emoji:selectedEmoji,
+  const newB={id:Date.now(),name,cat:selectedCat,
     desc:document.getElementById('b-desc').value.trim(),
     contact:document.getElementById('b-contact').value.trim(),
     createdAt:new Date().toLocaleDateString('fr-FR')};
-  try{localStorage.setItem('jiabyshop_boutique',JSON.stringify(myBoutique));}catch(e){}
+  myBoutiques.push(newB);activeBoutiqueIdx=myBoutiques.length-1;
+  try{localStorage.setItem('jiabyshop_boutiques',JSON.stringify(myBoutiques));}catch(e){}
   closeCreateModal();
   showPage('compte-boutique',null);
   loadCompteBoutique();
@@ -2149,8 +2206,10 @@ function createBoutique(){
    COMPTE BOUTIQUE
 ════════════════════════════════════════════════════ */
 function loadCompteBoutique(){
-  if(!myBoutique) return;
-  document.getElementById('ca-avatar').textContent=myBoutique.emoji;
+  if(!myBoutiques.length) return;
+  const myBoutique=myBoutiques[activeBoutiqueIdx]||myBoutiques[0];
+  const catIcons={mode:'👗',elec:'📱',beaute:'💄',sport:'⚽',maison:'🏠'};
+  document.getElementById('ca-avatar').textContent=catIcons[myBoutique.cat]||'🛍️';
   document.getElementById('ca-name').textContent=myBoutique.name;
   document.getElementById('ca-cat').textContent=myBoutique.cat.toUpperCase();
   document.getElementById('cs-products').textContent=myProducts.length;
@@ -2694,17 +2753,7 @@ injectBoutiqueProducts();
         <input class="form-input" id="b-desc" placeholder="Décrivez votre boutique..." maxlength="100"/>
         <label class="form-label">Contact (téléphone / WhatsApp)</label>
         <input class="form-input" id="b-contact" placeholder="+261 34 ..."/>
-        <label class="form-label">Emoji / Icône boutique</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="emoji-picker">
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">🛍️</span>
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">👗</span>
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">📱</span>
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">💄</span>
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">⚽</span>
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">🏠</span>
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">✨</span>
-          <span onclick="selectEmoji(this)" style="cursor:pointer;font-size:1.6rem;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .2s">💎</span>
-        </div>
+        
         <div style="display:flex;gap:10px">
           <button class="btn-gold" style="background:rgba(200,208,220,.3);animation:none;color:var(--muted);box-shadow:none;flex:1;justify-content:center" onclick="goStep(1)">← Retour</button>
           <button class="btn-gold" style="flex:2;justify-content:center" onclick="goStep(3)">Suivant →</button>
@@ -2713,7 +2762,6 @@ injectBoutiqueProducts();
 
       <!-- STEP 3: Confirmation -->
       <div id="modal-step3" style="display:none;text-align:center">
-        <div style="font-size:3rem;margin-bottom:12px" id="confirm-emoji">🛍️</div>
         <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--dark);margin-bottom:4px" id="confirm-name">Ma Boutique</div>
         <div style="font-size:.75rem;color:var(--gold-d);margin-bottom:16px;text-transform:uppercase;letter-spacing:.1em" id="confirm-cat">Mode</div>
         <div style="background:linear-gradient(135deg,#fdf9f4,#fff);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left">
