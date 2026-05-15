@@ -591,8 +591,8 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 .empty-state p{font-size:.85rem}
 
 /* footer hidden amin'ny compte-boutique sy login */
-#page-compte-boutique ~ footer,#page-login ~ footer{display:none}
-.page#page-compte-boutique.active ~ footer,.page#page-login.active ~ footer{display:none}
+body:has(#page-compte-boutique.active) footer,
+body:has(#page-login.active) footer{display:none!important}
 
 /* ── BOUTIQUE PAGE ─────────────────────────────────── */
 .boutique-hero{background:linear-gradient(135deg,#F9EEF0 0%,#FFF8F0 50%,#F0F0FF 100%);padding:40px 24px 30px;text-align:center;position:relative;overflow:hidden}
