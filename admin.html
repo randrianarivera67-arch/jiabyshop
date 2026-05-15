@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Boutiques — JiabyShop</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F0E8;min-height:100vh}
+.gate-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.gate{background:#fff;max-width:380px;width:100%;border-radius:22px;padding:36px 28px;box-shadow:0 12px 48px rgba(0,0,0,.12);text-align:center}
+.gate h2{font-size:1.3rem;color:#B8860B;margin-bottom:6px;font-weight:700}
+.gate p{color:#888;font-size:.84rem;margin-bottom:22px;line-height:1.5}
+.gate input{width:100%;padding:13px;border:1.5px solid #ddd;border-radius:12px;font-size:.92rem;margin-bottom:12px;outline:none;text-align:center;font-family:inherit}
+.gate input:focus{border-color:#DAA520}
+.gate-btn{width:100%;padding:13px;background:linear-gradient(135deg,#B8860B,#DAA520);border:none;border-radius:12px;color:#fff;font-size:.94rem;font-weight:700;cursor:pointer;font-family:inherit}
+.gate-err{color:#ef4444;font-size:.8rem;margin-top:10px;min-height:20px}
+.adm-header{background:linear-gradient(135deg,#B8860B,#DAA520,#B8860B);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(184,134,11,.3)}
+.adm-header h1{color:#fff;font-size:1.1rem;font-weight:700}
+.refresh-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:7px 14px;border-radius:20px;cursor:pointer;font-size:.78rem;font-weight:600;font-family:inherit}
+.container{max-width:860px;margin:0 auto;padding:20px 16px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:#fff;border-radius:14px;padding:16px 12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat-num{font-size:1.8rem;font-weight:800}
+.stat-label{font-size:.7rem;color:#999;margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
+.filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.fbtn{padding:8px 16px;border:1.5px solid #ddd;border-radius:20px;background:#fff;cursor:pointer;font-size:.79rem;font-weight:600;font-family:inherit}
+.fbtn.active{background:#B8860B;border-color:#B8860B;color:#fff}
+.card{background:#fff;border-radius:17px;padding:20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-left:5px solid #ddd}
+.card.pending{border-left-color:#F59E0B}
+.card.approved{border-left-color:#10B981}
+.card.rejected{border-left-color:#EF4444}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px}
+.card-title{font-weight:700;font-size:1rem;color:#222}
+.card-date{font-size:.72rem;color:#999;margin-top:3px}
+.badge{display:inline-block;padding:4px 11px;border-radius:20px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
+.badge.pending{background:#FEF3C7;color:#92400E}
+.badge.approved{background:#D1FAE5;color:#065F46}
+.badge.rejected{background:#FEE2E2;color:#991B1B}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.info-cell{background:#F8F6F2;border-radius:9px;padding:9px 11px}
+.info-lbl{font-size:.67rem;color:#aaa;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
+.info-val{font-size:.83rem;color:#333;font-weight:600;word-break:break-all}
+.card-desc{font-size:.82rem;color:#666;line-height:1.55;margin:8px 0;background:#FDFAF5;border-radius:9px;padding:9px 11px}
+.cin-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.cin-lbl{font-size:.68rem;color:#aaa;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.cin-img{width:100%;height:130px;object-fit:cover;border-radius:11px;border:1.5px solid #eee;cursor:zoom-in}
+.cin-empty{width:100%;height:130px;background:#f5f5f5;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:.78rem;border:1.5px dashed #ddd}
+.actions{display:flex;gap:10px;margin-top:14px}
+.btn-ok{flex:1;padding:11px;background:linear-gradient(135deg,#059669,#10B981);border:none;border-radius:11px;color:#fff;font-weight:700;cursor:pointer;font-size:.86rem;font-family:inherit}
+.btn-ko{flex:1;padding:11px;background:linear-gradient(135deg,#DC2626,#EF4444);border:none;border-radius:11px;color:#fff;font-weight:700;cursor:pointer;font-size:.86rem;font-family:inherit}
+.note-ok{margin-top:8px;background:#F0FDF4;border-radius:8px;padding:9px 11px;font-size:.76rem;color:#166534;border:1px solid #BBF7D0}
+.note-ko{margin-top:8px;background:#FEF2F2;border-radius:8px;padding:9px 11px;font-size:.76rem;color:#991B1B;border:1px solid #FECACA}
+.empty{text-align:center;padding:60px 20px;color:#bbb;font-size:.9rem}
+.lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
+.lb.open{display:flex}
+.lb img{max-width:92vw;max-height:88vh;border-radius:14px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.info-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate-wrap">
+  <div class="gate">
+    <div style="font-size:3rem;margin-bottom:12px">👑</div>
+    <h2>JiabyShop Admin</h2>
+    <p>Entrez la clé secrète pour accéder au panneau de validation des boutiques</p>
+    <input type="password" id="sinp" placeholder="Clé secrète..." onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="gate-btn" onclick="checkGate()">Accéder au panneau</button>
+    <div class="gate-err" id="gerr"></div>
+  </div>
+</div>
+
+<div id="panel" style="display:none">
+  <div class="adm-header">
+    <h1>👑 Demandes Boutique</h1>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span id="ts" style="color:rgba(255,255,255,.7);font-size:.72rem"></span>
+      <button class="refresh-btn" onclick="load()">↺ Actualiser</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="s0" style="color:#B8860B">0</div><div class="stat-label">Total</div></div>
+      <div class="stat"><div class="stat-num" id="s1" style="color:#F59E0B">0</div><div class="stat-label">En attente</div></div>
+      <div class="stat"><div class="stat-num" id="s2" style="color:#10B981">0</div><div class="stat-label">Approuvées</div></div>
+      <div class="stat"><div class="stat-num" id="s3" style="color:#EF4444">0</div><div class="stat-label">Rejetées</div></div>
+    </div>
+    <div class="filters">
+      <button class="fbtn active" onclick="filt('all',this)">Toutes</button>
+      <button class="fbtn" onclick="filt('pending',this)">⏳ En attente</button>
+      <button class="fbtn" onclick="filt('approved',this)">✅ Approuvées</button>
+      <button class="fbtn" onclick="filt('rejected',this)">❌ Rejetées</button>
+    </div>
+    <div id="list"><div class="empty">⏳ Chargement...</div></div>
+  </div>
+</div>
+
+<div class="lb" id="lb" onclick="this.classList.remove('open')">
+  <img id="lbimg" src="" alt="">
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyBIgfZKdpkYaJ2Vd0olgxTqFDiWuA4jmyQ",
+  authDomain:"jiabyshop.firebaseapp.com",
+  projectId:"jiabyshop",
+  storageBucket:"jiabyshop.firebasestorage.app",
+  messagingSenderId:"263859368911",
+  appId:"1:263859368911:web:50d576c4a9fa5e0a2998ba"
+});
+var db=firebase.firestore();
+var SECRET='jiabyshop_admin_2025';
+var all=[],cur='all';
+var cats={mode:'Mode & Vêtements',beaute:'Beauté & Soins',electronique:'Électronique',maison:'Maison & Déco',alimentation:'Alimentation',sport:'Sport & Fitness',bijoux:'Bijoux & Accessoires',autre:'Autre'};
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function checkGate(){
+  if(document.getElementById('sinp').value===SECRET){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('panel').style.display='block';
+    load();
+  }else{document.getElementById('gerr').textContent='❌ Clé incorrecte';document.getElementById('sinp').value='';}
+}
+
+async function load(){
+  document.getElementById('list').innerHTML='<div class="empty">⏳ Chargement...</div>';
+  try{
+    var snap=await db.collection('boutique_requests').orderBy('createdAt','desc').get();
+    all=[];snap.forEach(function(d){all.push(Object.assign({id:d.id},d.data()));});
+    stats();render();
+    document.getElementById('ts').textContent='Màj '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){document.getElementById('list').innerHTML='<div class="empty">Erreur: '+esc(e.message)+'</div>';}
+}
+
+function stats(){
+  document.getElementById('s0').textContent=all.length;
+  document.getElementById('s1').textContent=all.filter(function(r){return r.status==='pending';}).length;
+  document.getElementById('s2').textContent=all.filter(function(r){return r.status==='approved';}).length;
+  document.getElementById('s3').textContent=all.filter(function(r){return r.status==='rejected';}).length;
+}
+
+function filt(f,btn){
+  cur=f;document.querySelectorAll('.fbtn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');render();
+}
+
+function render(){
+  var f=cur==='all'?all:all.filter(function(r){return r.status===cur;});
+  if(!f.length){document.getElementById('list').innerHTML='<div class="empty">📭 Aucune demande</div>';return;}
+  document.getElementById('list').innerHTML=f.map(card).join('');
+}
+
+function card(r){
+  var dt=r.createdAt?new Date(r.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+  var cR=r.cinRecto?'<img class="cin-img" src="'+esc(r.cinRecto)+'" onclick="openLb(this.src)">':"<div class='cin-empty'>—</div>";
+  var cV=r.cinVerso?'<img class="cin-img" src="'+esc(r.cinVerso)+'" onclick="openLb(this.src)">':"<div class='cin-empty'>—</div>";
+  var bLabel=r.status==='pending'?'En attente':r.status==='approved'?'Approuvée':'Rejetée';
+  var act='';
+  if(r.status==='pending'){
+    act='<div class="actions"><button class="btn-ok" onclick="approve(\''+r.id+'\',\''+esc(r.uid||r.id)+'\',this)">✅ Valider</button><button class="btn-ko" onclick="reject(\''+r.id+'\',this)">❌ Rejeter</button></div>';
+  }else if(r.status==='approved'){
+    act='<div class="note-ok">✅ Approuvée le '+(r.approvedAt?new Date(r.approvedAt).toLocaleDateString('fr-FR'):'—')+'</div>';
+  }else{
+    act='<div class="note-ko">❌ Rejetée'+(r.adminNote?' — '+esc(r.adminNote):'')+'</div>';
+  }
+  return '<div class="card '+esc(r.status)+'">'+
+    '<div class="card-header"><div><div class="card-title">🏪 '+esc(r.boutiqueName||'Sans nom')+'</div><div class="card-date">'+dt+'</div></div>'+
+    '<span class="badge '+esc(r.status)+'">'+bLabel+'</span></div>'+
+    '<div class="info-grid">'+
+    '<div class="info-cell"><div class="info-lbl">Propriétaire</div><div class="info-val">'+esc(r.userName||'—')+'</div></div>'+
+    '<div class="info-cell"><div class="info-lbl">Email</div><div class="info-val" style="font-size:.75rem">'+esc(r.userEmail||'—')+'</div></div>'+
+    '<div class="info-cell"><div class="info-lbl">Catégorie</div><div class="info-val">'+(cats[r.boutiqueCategory]||esc(r.boutiqueCategory||'—'))+'</div></div>'+
+    '<div class="info-cell"><div class="info-lbl">UID</div><div class="info-val" style="font-size:.62rem">'+esc(r.uid||r.id||'—')+'</div></div>'+
+    '</div><div class="card-desc">'+esc(r.boutiqueDesc||'—')+'</div>'+
+    '<div class="cin-row"><div><div class="cin-lbl">CIN Recto</div>'+cR+'</div><div><div class="cin-lbl">CIN Verso</div>'+cV+'</div></div>'+
+    act+'</div>';
+}
+
+async function approve(id,uid,btn){
+  if(!confirm('Valider cette boutique ?'))return;
+  btn.disabled=true;btn.textContent='⏳...';
+  var r=all.find(function(x){return x.id===id;});if(!r)return;
+  try{
+    var b=db.batch();
+    b.update(db.collection('boutique_requests').doc(id),{status:'approved',approvedAt:new Date().toISOString()});
+    b.set(db.collection('boutiques').doc(uid),{uid:uid,boutiqueName:r.boutiqueName,boutiqueDesc:r.boutiqueDesc,boutiqueCategory:r.boutiqueCategory,ownerName:r.userName,ownerEmail:r.userEmail,status:'active',createdAt:new Date().toISOString()});
+    await b.commit();
+    var i=all.findIndex(function(x){return x.id===id;});
+    if(i>=0){all[i].status='approved';all[i].approvedAt=new Date().toISOString();}
+    stats();render();alert('✅ Boutique validée !');
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='✅ Valider';}
+}
+
+async function reject(id,btn){
+  var note=prompt('Raison du rejet (optionnel):');if(note===null)return;
+  btn.disabled=true;btn.textContent='⏳...';
+  try{
+    await db.collection('boutique_requests').doc(id).update({status:'rejected',adminNote:note||'',rejectedAt:new Date().toISOString()});
+    var i=all.findIndex(function(x){return x.id===id;});
+    if(i>=0){all[i].status='rejected';all[i].adminNote=note||'';}
+    stats();render();
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='❌ Rejeter';}
+}
+
+function openLb(url){document.getElementById('lbimg').src=url;document.getElementById('lb').classList.add('open');}
+</script>
+</body>
+</html>
