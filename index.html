@@ -2532,7 +2532,7 @@ function updateAuthUI(user){
   // Update hamburger menu sy nav
   const authBtn=document.getElementById('auth-nav-btn');
   if(authBtn){
-    authBtn.textContent=user?'👤 Mon Compte':'🔑 Se Connecter';
+    authBtn.textContent=user?'Mon Compte':'🔑 Se Connecter';
     authBtn.onclick=user?function(){showPage('compte-boutique',null)}:function(){showPage('login',null)};
   }
   const hBtn=document.getElementById('header-account-btn');
