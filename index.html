@@ -590,9 +590,9 @@ footer{background:linear-gradient(135deg,#2C1A10,#3D2418 50%,#2C1A10);color:rgba
 .empty-state-icon{font-size:3rem;margin-bottom:12px;opacity:.4}
 .empty-state p{font-size:.85rem}
 
-/* footer hidden amin'ny compte-boutique */
-#page-compte-boutique ~ footer{display:none}
-.page#page-compte-boutique.active ~ footer{display:none}
+/* footer hidden amin'ny compte-boutique sy login */
+#page-compte-boutique ~ footer,#page-login ~ footer{display:none}
+.page#page-compte-boutique.active ~ footer,.page#page-login.active ~ footer{display:none}
 
 /* ── BOUTIQUE PAGE ─────────────────────────────────── */
 .boutique-hero{background:linear-gradient(135deg,#F9EEF0 0%,#FFF8F0 50%,#F0F0FF 100%);padding:40px 24px 30px;text-align:center;position:relative;overflow:hidden}
@@ -2178,6 +2178,17 @@ function closeAccountDropdown(){
   const ov=document.getElementById('hadOverlay');
   if(ov)ov.classList.remove('show');
 }
+function updateHeaderAccountBtn(url){
+  const hbtn=document.getElementById('header-account-btn');
+  if(!hbtn)return;
+  if(url){
+    hbtn.innerHTML='<img src="'+url+'" style="width:34px;height:34px;object-fit:cover;border-radius:50%;display:block"/>';
+    hbtn.style.padding='2px';hbtn.style.overflow='hidden';
+  } else {
+    hbtn.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+    hbtn.style.padding='';hbtn.style.overflow='';
+  }
+}
 function hadHandlePhoto(input){
   if(!input.files||!input.files[0])return;
   const reader=new FileReader();
@@ -2185,6 +2196,7 @@ function hadHandlePhoto(input){
     const url=e.target.result;
     const av=document.getElementById('had-avatar-img');
     if(av)av.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>';
+    updateHeaderAccountBtn(url);
     try{localStorage.setItem('jiabyshop_profile_photo',url);}catch(ex){}
   };
   reader.readAsDataURL(input.files[0]);
@@ -2642,7 +2654,7 @@ function updateAuthUI(user){
   // Update hamburger menu sy nav
   const authBtn=document.getElementById('auth-nav-btn');
   if(authBtn){
-    authBtn.textContent=user?'Mon Compte':'🔑 Se Connecter';
+    authBtn.textContent=user?'Ma Boutique':'Se Connecter';
     authBtn.onclick=user?function(){showPage('compte-boutique',null)}:function(){showPage('login',null)};
   }
   const hBtn=document.getElementById('header-account-btn');
@@ -2651,11 +2663,12 @@ function updateAuthUI(user){
       hBtn.style.background='linear-gradient(135deg,rgba(201,168,76,.2),rgba(212,135,154,.15))';
       hBtn.style.borderColor='var(--gold)';
       hBtn.style.boxShadow='0 0 0 3px rgba(201,168,76,.2),0 2px 12px rgba(201,168,76,.25)';
-      hBtn.querySelector('svg').style.color='var(--gold-d)';
+      const sv=hBtn.querySelector('svg');if(sv)sv.style.color='var(--gold-d)';
     } else {
       hBtn.style.cssText='';
     }
   }
+  try{const pp=localStorage.getItem('jiabyshop_profile_photo');updateHeaderAccountBtn(user&&pp?pp:null);}catch(ex){}
 }
 
 /* ════════════════════════════════════════════════════
