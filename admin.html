@@ -129,6 +129,15 @@ function checkGate(){
 
 async function load(){
   document.getElementById('list').innerHTML='<div class="empty">⏳ Chargement...</div>';
+  // Attendre auth si pas encore pret
+  if(!firebase.auth().currentUser){
+    await new Promise(function(resolve){
+      var unsub=firebase.auth().onAuthStateChanged(function(u){
+        if(u){unsub();resolve();}
+      });
+      setTimeout(resolve,5000); // timeout 5s
+    });
+  }
   try{
     var snap=await db.collection('boutique_requests').orderBy('createdAt','desc').get();
     all=[];snap.forEach(function(d){all.push(Object.assign({id:d.id},d.data()));});
