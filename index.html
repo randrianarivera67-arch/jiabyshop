@@ -2095,26 +2095,93 @@ const BOUTIQUES=[
 ];
 
 let currentBoutiqueTab='all';
+let BOUTIQUES_FS=[];
+let boutiquesLoaded=false;
+
+const CAT_BANNERS={
+  mode:'linear-gradient(135deg,#F9EEF0,#F2C8D0)',
+  elec:'linear-gradient(135deg,#1a2035,#1e3a6e)',
+  beaute:'linear-gradient(135deg,#FFF0F5,#F5E8FF)',
+  maison:'linear-gradient(135deg,#F5E8D0,#E8C890)',
+  alimentation:'linear-gradient(135deg,#E8F5E4,#D5EFD0)',
+  sport:'linear-gradient(135deg,#0f3460,#16213e)',
+  bijoux:'linear-gradient(135deg,#FBF0F3,#F5E0EA)',
+  autre:'linear-gradient(135deg,#FBF5E6,#F0E8C8)'
+};
+const CAT_EMOJIS={mode:'👗',elec:'📱',beaute:'💄',maison:'🏠',alimentation:'🍽️',sport:'⚽',bijoux:'💍',autre:'🛍️'};
+
+async function loadBoutiquesFromFirestore(){
+  if(boutiquesLoaded) return;
+  const grid=document.getElementById('boutiqueGrid');
+  if(grid) grid.innerHTML='<div style="text-align:center;padding:40px;color:#C9A84C;font-size:.9rem">⏳ Chargement des boutiques...</div>';
+  try{
+    const snap=await window.fbDb.collection('boutiques').where('status','==','active').get();
+    BOUTIQUES_FS=[];
+    snap.forEach(function(doc){
+      const d=doc.data();
+      BOUTIQUES_FS.push({
+        id:doc.id,
+        name:d.boutiqueName||'Sans nom',
+        cat:d.boutiqueCategory||'autre',
+        desc:d.boutiqueDesc||'',
+        emoji:CAT_EMOJIS[d.boutiqueCategory]||'🛍️',
+        banner:CAT_BANNERS[d.boutiqueCategory]||CAT_BANNERS.autre,
+        owner:d.ownerName||'',
+        profilPhoto:d.profilPhoto||null,
+        profilFileId:d.profilFileId||null,
+        verified:true,
+        products:0,sales:0,rating:5.0,
+        fromFirestore:true
+      });
+    });
+    boutiquesLoaded=true;
+    _renderCurrentTab();
+  }catch(e){
+    boutiquesLoaded=true;
+    _renderCurrentTab();
+  }
+}
+
+function _renderCurrentTab(){
+  const all=[...BOUTIQUES_FS,...BOUTIQUES];
+  const filtered=currentBoutiqueTab==='all'?all:all.filter(b=>b.cat===currentBoutiqueTab);
+  renderBoutiques(filtered);
+}
+
 function switchBoutiqueTab(tab,el){
   currentBoutiqueTab=tab;
   document.querySelectorAll('.btab').forEach(b=>b.classList.remove('active'));
   if(el) el.classList.add('active');
-  const filtered=tab==='all'?BOUTIQUES:BOUTIQUES.filter(b=>b.cat===tab);
-  renderBoutiques(filtered);
+  if(!boutiquesLoaded){loadBoutiquesFromFirestore();return;}
+  _renderCurrentTab();
 }
 
 function renderBoutiques(list){
   const grid=document.getElementById('boutiqueGrid');
   if(!grid) return;
-  grid.innerHTML=list.map(b=>`
-    <div class="boutique-card">
-      <div class="boutique-banner" style="background:${b.banner}">
+  if(!list.length){
+    grid.innerHTML='<div style="text-align:center;padding:60px 20px;color:#aaa"><div style="font-size:3rem;margin-bottom:12px">🏪</div><div style="font-size:.9rem">Aucune boutique dans cette catégorie</div></div>';
+    return;
+  }
+  grid.innerHTML=list.map(b=>{
+    const avStyle=b.profilPhoto
+      ?'background:transparent;overflow:hidden'
+      :'background:linear-gradient(135deg,#1a1a2e,#2d2d2d)';
+    const avContent=b.profilPhoto
+      ?`<img src="${b.profilPhoto}" data-fb="${b.profilFileId||''}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="if(this.dataset.fb){fetch('https://api.telegram.org/bot'+TG_TOKEN+'/getFile?file_id='+this.dataset.fb).then(r=>r.json()).then(d=>{if(d.ok)this.src='https://api.telegram.org/file/bot'+TG_TOKEN+'/'+d.result.file_path});}">`
+      :(BOUTIQUE_ICONS&&BOUTIQUE_ICONS[b.cat]||b.emoji);
+    const officielBadge=b.fromFirestore?'<span style="position:absolute;top:8px;left:8px;background:linear-gradient(135deg,#059669,#10B981);color:white;font-size:.52rem;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:.06em;text-transform:uppercase">✦ Officiel</span>':'';
+    const verifiedBadge=b.verified?'<span class="boutique-verified">✦ Vérifié</span>':'';
+    const ownerLine=b.owner?`<div style="font-size:.68rem;color:#aaa;margin-bottom:4px">par ${b.owner}</div>`:'';
+    return `<div class="boutique-card">
+      <div class="boutique-banner" style="background:${b.banner};position:relative">
         <span style="font-size:2.5rem">${b.emoji}</span>
-        ${b.verified?'<span class="boutique-verified">✦ Vérifié</span>':''}
+        ${verifiedBadge}${officielBadge}
       </div>
-      <div class="boutique-avatar" style="background:linear-gradient(135deg,#1a1a2e,#2d2d2d)">${BOUTIQUE_ICONS[b.cat]||b.emoji}</div>
+      <div class="boutique-avatar" style="${avStyle}">${avContent}</div>
       <div class="boutique-info">
         <div class="boutique-name">${b.name}</div>
+        ${ownerLine}
         <div class="boutique-cat-tag">${b.cat.toUpperCase()}</div>
         <div class="boutique-desc">${b.desc}</div>
         <div class="boutique-stats">
@@ -2128,11 +2195,14 @@ function renderBoutiques(list){
         </div>
         <button class="btn-visit" onclick="alert('Boutique ${b.name} — Bientôt disponible!')">Visiter la Boutique →</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function filterBoutiques(val){
-  const filtered=BOUTIQUES.filter(b=>b.name.toLowerCase().includes(val.toLowerCase())||b.desc.toLowerCase().includes(val.toLowerCase()));
+  const all=[...BOUTIQUES_FS,...BOUTIQUES];
+  const v=val.toLowerCase();
+  const filtered=all.filter(b=>b.name.toLowerCase().includes(v)||b.desc.toLowerCase().includes(v)||(b.owner&&b.owner.toLowerCase().includes(v)));
   renderBoutiques(filtered);
 }
 
