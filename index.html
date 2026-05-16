@@ -2284,13 +2284,36 @@ function loadCompteBoutique(){
   if(!myBoutiques.length) return;
   const myBoutique=myBoutiques[activeBoutiqueIdx]||myBoutiques[0];
   const catIcons={mode:'👗',elec:'📱',beaute:'💄',sport:'⚽',maison:'🏠'};
-  document.getElementById('ca-avatar').textContent=catIcons[myBoutique.cat]||'🛍️';
+  const _av=document.getElementById('ca-avatar');
+  if(myBoutique.profilPhoto){
+    const _fid=myBoutique.profilFileId||'';
+    _av.innerHTML=`<img src="${myBoutique.profilPhoto}" class="profil-avatar-img" onerror="handleAvatarError(this,'${_fid}')"/>`;
+  }else{
+    _av.textContent=catIcons[myBoutique.cat]||'🛍️';
+  }
   document.getElementById('ca-name').textContent=myBoutique.name;
   document.getElementById('ca-cat').textContent=myBoutique.cat.toUpperCase();
   document.getElementById('cs-products').textContent=myProducts.length;
   document.getElementById('cs-ventes').textContent=Math.floor(Math.random()*50);
   document.getElementById('cs-vues').textContent=Math.floor(Math.random()*500+100);
   switchCompteTab('produits',document.querySelector('.ctab'));
+  // Sync photo depuis Firestore
+  const _user=firebase.auth().currentUser;
+  if(_user){
+    window.fbDb.collection('boutiques').doc(_user.uid).get().then(function(doc){
+      if(!doc.exists)return;
+      const data=doc.data();
+      if(data.profilPhoto&&data.profilFileId){
+        const b=myBoutiques[activeBoutiqueIdx];
+        if(b){b.profilPhoto=data.profilPhoto;b.profilFileId=data.profilFileId;}
+        try{localStorage.setItem('jiabyshop_boutiques',JSON.stringify(myBoutiques));}catch(e){}
+        const _av2=document.getElementById('ca-avatar');
+        if(_av2&&data.profilPhoto){
+          _av2.innerHTML=`<img src="${data.profilPhoto}" class="profil-avatar-img" onerror="handleAvatarError(this,'${data.profilFileId}')"/>`;
+        }
+      }
+    }).catch(function(){});
+  }
 }
 
 function switchCompteTab(tab,el){
@@ -2371,20 +2394,56 @@ function uploadProfilPhoto(){
   document.getElementById('profil-photo-input').click();
 }
 
+async function uploadToTelegramFull(file){
+  const fd=new FormData();
+  fd.append('chat_id',TG_CHAT);
+  fd.append('photo',file);
+  const r=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendPhoto`,{method:'POST',body:fd});
+  const d=await r.json();
+  if(!d.ok) throw new Error('Upload failed');
+  const fileId=d.result.photo[d.result.photo.length-1].file_id;
+  const fr=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/getFile?file_id=${fileId}`);
+  const fd2=await fr.json();
+  return {url:`https://api.telegram.org/file/bot${TG_TOKEN}/${fd2.result.file_path}`,fileId};
+}
+async function refreshTelegramUrl(fileId){
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/getFile?file_id=${fileId}`);
+    const d=await r.json();
+    if(!d.ok)return null;
+    return `https://api.telegram.org/file/bot${TG_TOKEN}/${d.result.file_path}`;
+  }catch(e){return null;}
+}
+function handleAvatarError(img,fileId){
+  if(!fileId)return;
+  img.onerror=null;
+  refreshTelegramUrl(fileId).then(function(newUrl){
+    if(!newUrl)return;
+    img.src=newUrl;
+    if(myBoutiques[activeBoutiqueIdx]){myBoutiques[activeBoutiqueIdx].profilPhoto=newUrl;}
+    try{localStorage.setItem('jiabyshop_boutiques',JSON.stringify(myBoutiques));}catch(e){}
+    const user=firebase.auth().currentUser;
+    if(user){try{window.fbDb.collection('boutiques').doc(user.uid).update({profilPhoto:newUrl});}catch(e){}}
+  });
+}
 async function handleProfilUpload(input){
   const file=input.files[0];
-  if(!file) return;
+  if(!file)return;
   showToast('⏳','Upload profil en cours...');
   try{
-    const url=await uploadToTelegram(file);
-    myBoutique.profilPhoto=url;
-    try{localStorage.setItem('jiabyshop_boutique',JSON.stringify(myBoutique));}catch(e){}
-    // Update avatar
+    const {url,fileId}=await uploadToTelegramFull(file);
+    const b=myBoutiques[activeBoutiqueIdx];
+    if(b){b.profilPhoto=url;b.profilFileId=fileId;}
+    try{localStorage.setItem('jiabyshop_boutiques',JSON.stringify(myBoutiques));}catch(e){}
+    const user=firebase.auth().currentUser;
+    if(user){
+      try{await window.fbDb.collection('boutiques').doc(user.uid).set({profilPhoto:url,profilFileId:fileId},{merge:true});}catch(e){}
+    }
     const av=document.getElementById('ca-avatar');
-    av.innerHTML=`<img src="${url}" class="profil-avatar-img"/>`;
+    av.innerHTML=`<img src="${url}" class="profil-avatar-img" onerror="handleAvatarError(this,'${fileId}')"/>`;
     showToast('✅','Photo de profil mise à jour !');
   }catch(e){
-    showToast('❌','Erreur upload');
+    console.error(e);showToast('❌','Erreur upload');
   }
 }
 
