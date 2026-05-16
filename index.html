@@ -878,7 +878,7 @@ firebase.auth().onAuthStateChanged(user => {
         </div>
         <div class="had-section-label" id="had-bq-label" style="display:none">Mes Boutiques</div>
         <div id="had-boutique-list"></div>
-        <div class="had-item" id="had-create-btn" onclick="closeAccountDropdown();openCreateModal()">
+        <div class="had-item" id="had-create-btn" onclick="closeAccountDropdown();openCreerBoutiqueModal()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 0 5px rgba(201,168,76,.8))"><line x1="12" y1="5" x2="12" y2="19" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/></svg>
           <span>Créer une boutique</span>
         </div>
@@ -1249,7 +1249,7 @@ firebase.auth().onAuthStateChanged(user => {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" placeholder="Rechercher une boutique..." id="boutiqueSearch" oninput="filterBoutiques(this.value)"/>
       </div>
-      <button class="btn-gold" style="margin-top:16px;position:relative;z-index:1" onclick="openCreateModal()">
+      <button class="btn-gold" style="margin-top:16px;position:relative;z-index:1" onclick="openCreerBoutiqueModal()">
         ✦ Créer votre Boutique
       </button>
     </div>
@@ -3261,7 +3261,9 @@ async function submitCreerBoutique(){
     closeCreerBoutiqueModal();
     alert('✅ Demande envoyée ! Validation sous 24–48h.');
   }catch(err){
-    console.error(err);alert('Erreur. Réessayez.');
+    console.error('submitCreerBoutique error:',err);
+    var msg=err&&err.message?err.message:'Erreur inconnue';
+    alert('Erreur: '+msg+'\nVérifiez votre connexion et réessayez.');
     btn.disabled=false;btn.textContent='Envoyer la demande';
   }
 }
