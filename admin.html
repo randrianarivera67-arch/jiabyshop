@@ -114,7 +114,19 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F0E8;min-height:100vh
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>const firebaseConfig = {
+  apiKey: "AIzaSyBIgfZKdpkYaJ2Vd0olgxTqFDiWuA4jmyQ",
+  authDomain: "jiabyshop.firebaseapp.com",
+  projectId: "jiabyshop",
+  storageBucket: "jiabyshop.firebasestorage.app",
+  messagingSenderId: "263859368911",
+  appId: "1:263859368911:web:50d576c4a9fa5e0a2998ba"
+};
+firebase.initializeApp(firebaseConfig);
+var db=firebase.firestore();
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script>
 firebase.initializeApp({
@@ -234,3 +246,352 @@ function openLb(url){document.getElementById('lbimg').src=url;document.getElemen
 </script>
 </body>
 </html>
+
+<div id="gate" class="gate-wrap">
+  <div class="gate">
+    <div class="gate-logo">JIABYSHOP</div>
+    <div class="gate-sub">Administration Panel</div>
+    <input type="password" id="sinp" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="gate-btn" onclick="checkGate()">ACCÉDER</button>
+    <div class="gate-err" id="gerr"></div>
+  </div>
+</div>
+<div id="panel" style="display:none">
+  <div class="adm-hdr">
+    <div class="hdr-brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 0 6px rgba(255,215,0,.8))"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFD700"/></svg>
+      <div class="hdr-logo">ADMIN</div>
+      <span class="hdr-badge">JiabyShop</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="ts" style="font-size:.68rem;color:rgba(255,255,255,.25)"></span>
+      <button class="rfr-btn" onclick="refreshAll()">↺ Actualiser</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="stabs">
+      <button class="stab active" id="stab-demandes" onclick="switchSec('demandes',this)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l1-6h16l1 6"/><path d="M3 9a2 2 0 004 0 2 2 0 004 0 2 2 0 004 0 2 2 0 004 0"/><path d="M5 9v12h14V9"/></svg>
+        Demandes
+      </button>
+      <button class="stab" id="stab-boutiques" onclick="switchSec('boutiques',this)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Boutiques
+      </button>
+      <button class="stab" id="stab-comptes" onclick="switchSec('comptes',this)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Comptes
+      </button>
+    </div>
+    <div class="srch-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="srch-inp" id="srch" type="text" placeholder="Rechercher..." oninput="handleSearch(this.value)">
+    </div>
+    <div id="sec-demandes">
+      <div class="stats">
+        <div class="stat"><div class="stat-n" id="s0" style="color:var(--ng);text-shadow:0 0 15px rgba(255,215,0,.4)">0</div><div class="stat-l">Total</div></div>
+        <div class="stat"><div class="stat-n" id="s1" style="color:#F59E0B;text-shadow:0 0 12px rgba(245,158,11,.4)">0</div><div class="stat-l">En attente</div></div>
+        <div class="stat"><div class="stat-n" id="s2" style="color:var(--gg);text-shadow:0 0 12px rgba(0,255,136,.3)">0</div><div class="stat-l">Approuvées</div></div>
+        <div class="stat"><div class="stat-n" id="s3" style="color:var(--rr);text-shadow:0 0 12px rgba(255,51,102,.3)">0</div><div class="stat-l">Rejetées</div></div>
+      </div>
+      <div class="filters">
+        <button class="fbtn active" onclick="filt('all',this)">Toutes</button>
+        <button class="fbtn" onclick="filt('pending',this)">⏳ En attente</button>
+        <button class="fbtn" onclick="filt('approved',this)">✅ Approuvées</button>
+        <button class="fbtn" onclick="filt('rejected',this)">❌ Rejetées</button>
+        <button class="fbtn" onclick="filt('blocked',this)">🚫 Bloquées</button>
+      </div>
+      <div id="req-list"><div class="empty"><div class="empty-ic">⏳</div>Chargement...</div></div>
+    </div>
+    <div id="sec-boutiques" style="display:none">
+      <div class="stats3">
+        <div class="stat"><div class="stat-n" id="sb0" style="color:var(--gg);text-shadow:0 0 12px rgba(0,255,136,.3)">0</div><div class="stat-l">Actives</div></div>
+        <div class="stat"><div class="stat-n" id="sb1" style="color:var(--oo);text-shadow:0 0 12px rgba(255,140,0,.3)">0</div><div class="stat-l">Bloquées</div></div>
+        <div class="stat"><div class="stat-n" id="sb2" style="color:var(--ng);text-shadow:0 0 12px rgba(255,215,0,.3)">0</div><div class="stat-l">Total</div></div>
+      </div>
+      <div id="bout-list"><div class="empty"><div class="empty-ic">🏪</div>Chargement...</div></div>
+    </div>
+    <div id="sec-comptes" style="display:none">
+      <div class="stats2">
+        <div class="stat"><div class="stat-n" id="sc0" style="color:var(--ng);text-shadow:0 0 12px rgba(255,215,0,.3)">0</div><div class="stat-l">Total comptes</div></div>
+        <div class="stat"><div class="stat-n" id="sc1" style="color:var(--gg);text-shadow:0 0 12px rgba(0,255,136,.3)">0</div><div class="stat-l">Ont une boutique</div></div>
+      </div>
+      <div id="users-list"><div class="empty"><div class="empty-ic">👥</div>Chargement...</div></div>
+    </div>
+  </div>
+</div>
+<div class="lb" id="lb" onclick="this.classList.remove('open')"><img id="lb-img" src="" alt=""></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>const firebaseConfig = {
+  apiKey: "AIzaSyBIgfZKdpkYaJ2Vd0olgxTqFDiWuA4jmyQ",
+  authDomain: "jiabyshop.firebaseapp.com",
+  projectId: "jiabyshop",
+  storageBucket: "jiabyshop.firebasestorage.app",
+  messagingSenderId: "263859368911",
+  appId: "1:263859368911:web:50d576c4a9fa5e0a2998ba"
+};
+firebase.initializeApp(firebaseConfig);
+var db=firebase.firestore();
+</script>
+<script>
+var SECRET='jiabyshop_admin_2025';
+var all=[],allBout=[],allUsers=[];
+var curFilt='all',curSec='demandes';
+var usersLoaded=false,boutLoaded=false;
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function checkGate(){
+  if(document.getElementById('sinp').value===SECRET){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('panel').style.display='block';
+    loadRequests();
+  }else{document.getElementById('gerr').textContent='❌ Clé incorrecte';document.getElementById('sinp').value='';}
+}
+function refreshAll(){
+  if(curSec==='demandes')loadRequests();
+  else if(curSec==='boutiques'){boutLoaded=false;loadBoutiques();}
+  else{usersLoaded=false;loadUsers();}
+}
+async function loadRequests(){
+  document.getElementById('req-list').innerHTML='<div class="empty"><div class="empty-ic">⏳</div>Chargement...</div>';
+  try{
+    var snap=await db.collection('boutique_requests').orderBy('createdAt','desc').get();
+    all=[];snap.forEach(function(d){all.push(Object.assign({id:d.id},d.data()));});
+    updateStats();renderList();
+    document.getElementById('ts').textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){document.getElementById('req-list').innerHTML='<div class="empty">Erreur: '+esc(e.message)+'</div>';}
+}
+function updateStats(){
+  document.getElementById('s0').textContent=all.length;
+  document.getElementById('s1').textContent=all.filter(function(r){return r.status==='pending';}).length;
+  document.getElementById('s2').textContent=all.filter(function(r){return r.status==='approved';}).length;
+  document.getElementById('s3').textContent=all.filter(function(r){return r.status==='rejected';}).length;
+}
+function filt(f,btn){curFilt=f;document.querySelectorAll('.fbtn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');renderList();}
+function renderList(){
+  var f=curFilt==='all'?all:all.filter(function(r){return r.status===curFilt;});
+  var el=document.getElementById('req-list');
+  if(!f.length){el.innerHTML='<div class="empty"><div class="empty-ic">📭</div>Aucune demande</div>';return;}
+  el.innerHTML=f.map(cardHtml).join('');
+}
+var cats={mode:'Mode',beaute:'Beauté',electronique:'Électronique',maison:'Maison',alimentation:'Alimentation',sport:'Sport',bijoux:'Bijoux',autre:'Autre'};
+function cardHtml(r){
+  var dt=r.createdAt?new Date(r.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+  var bl={pending:'En attente',approved:'Approuvée',rejected:'Rejetée',blocked:'Bloquée'}[r.status]||r.status;
+  var cR=r.cinRecto?'<img class="cinimg" src="'+esc(r.cinRecto)+'" onclick="openLb(this.src)">':"<div class='cinempty'>—</div>";
+  var cV=r.cinVerso?'<img class="cinimg" src="'+esc(r.cinVerso)+'" onclick="openLb(this.src)">':"<div class='cinempty'>—</div>";
+  var acts='';
+  if(r.status==='pending'){
+    acts='<div class="acts">'+
+      '<button class="btn-a b-ok" onclick="approveReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">✅ Valider</button>'+
+      '<button class="btn-a b-ko" onclick="rejectReq(''+r.id+'',this)">❌ Rejeter</button>'+
+    '</div>';
+  }else if(r.status==='approved'){
+    acts='<div class="note ok">✅ Approuvée le '+(r.approvedAt?new Date(r.approvedAt).toLocaleDateString('fr-FR'):'—')+'</div>'+
+    '<div class="acts">'+
+      '<button class="btn-a b-bl" onclick="blockReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🚫 Bloquer</button>'+
+      '<button class="btn-a b-del" onclick="deleteReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🗑️ Supprimer</button>'+
+    '</div>';
+  }else if(r.status==='blocked'){
+    acts='<div class="note bl">🚫 Bloquée'+(r.adminNote?' — '+esc(r.adminNote):'')+'</div>'+
+    '<div class="acts">'+
+      '<button class="btn-a b-ub" onclick="unblockReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">✅ Débloquer</button>'+
+      '<button class="btn-a b-del" onclick="deleteReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🗑️ Supprimer</button>'+
+    '</div>';
+  }else{
+    acts='<div class="note ko">❌ Rejetée'+(r.adminNote?' — '+esc(r.adminNote):'')+'</div>'+
+    '<div class="acts"><button class="btn-a b-del" onclick="deleteReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🗑️ Supprimer</button></div>';
+  }
+  return '<div class="card '+(r.status||'pending')+'">'+
+    '<div class="card-hdr"><div><div class="card-ttl">🏪 '+esc(r.boutiqueName||'Sans nom')+'</div><div class="card-dt">'+dt+'</div></div>'+
+    '<span class="badge '+esc(r.status)+'">'+bl+'</span></div>'+
+    '<div class="igrid">'+
+    '<div class="ic"><div class="il">Propriétaire</div><div class="iv">'+esc(r.userName||'—')+'</div></div>'+
+    '<div class="ic"><div class="il">Email</div><div class="iv">'+esc(r.userEmail||'—')+'</div></div>'+
+    '<div class="ic"><div class="il">Catégorie</div><div class="iv">'+(cats[r.boutiqueCategory]||esc(r.boutiqueCategory||'—'))+'</div></div>'+
+    '<div class="ic"><div class="il">UID</div><div class="iv" style="font-size:.58rem">'+esc(r.uid||r.id||'—')+'</div></div>'+
+    '</div><div class="cdesc">'+esc(r.boutiqueDesc||'—')+'</div>'+
+    '<div class="cinrow"><div><div class="cinlbl">CIN Recto</div>'+cR+'</div><div><div class="cinlbl">CIN Verso</div>'+cV+'</div></div>'+
+    acts+'</div>';
+}
+async function loadBoutiques(){
+  if(boutLoaded)return;
+  document.getElementById('bout-list').innerHTML='<div class="empty"><div class="empty-ic">⏳</div>Chargement...</div>';
+  try{
+    var snap=await db.collection('boutiques').get();
+    allBout=[];snap.forEach(function(d){allBout.push(Object.assign({id:d.id},d.data()));});
+    boutLoaded=true;
+    document.getElementById('sb0').textContent=allBout.filter(function(b){return b.status==='active';}).length;
+    document.getElementById('sb1').textContent=allBout.filter(function(b){return b.status==='blocked';}).length;
+    document.getElementById('sb2').textContent=allBout.length;
+    renderBoutiques(allBout);
+  }catch(e){document.getElementById('bout-list').innerHTML='<div class="empty">Erreur: '+esc(e.message)+'</div>';}
+}
+function renderBoutiques(list){
+  var el=document.getElementById('bout-list');
+  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">🏪</div>Aucune boutique</div>';return;}
+  el.innerHTML=list.map(function(b){
+    var av=b.profilPhoto?'<img src="'+esc(b.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent=\'🛍️\'">':'🛍️';
+    var isB=b.status==='blocked';
+    return '<div class="ucard" style="border-left:4px solid '+(isB?'var(--oo)':'var(--gg)')+'">'+
+      '<div class="uav" style="font-size:1.3rem">'+av+'</div>'+
+      '<div class="uinfo"><div class="uname">'+esc(b.boutiqueName||'—')+'</div>'+
+      '<div class="uemail">'+esc(b.ownerName||'')+(b.ownerEmail?' · '+esc(b.ownerEmail):'')+'</div>'+
+      '<div class="udate">'+esc(cats[b.boutiqueCategory]||b.boutiqueCategory||'')+'</div></div>'+
+      '<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">'+
+      '<span class="ubadge '+(isB?'no':'has')+'">'+(isB?'🚫 Bloquée':'✅ Active')+'</span>'+
+      (isB?'<button class="btn-a b-ub" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="unblockBout(''+b.id+'',this)">Débloquer</button>':
+           '<button class="btn-a b-bl" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="blockBout(''+b.id+'',this)">Bloquer</button>')+
+      '<button class="btn-a b-del" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="deleteBout(''+b.id+'',this)">🗑️</button>'+
+      '</div></div>';
+  }).join('');
+}
+async function loadUsers(){
+  if(usersLoaded)return;
+  document.getElementById('users-list').innerHTML='<div class="empty"><div class="empty-ic">⏳</div>Chargement...</div>';
+  try{
+    var snap=await db.collection('users').orderBy('createdAt','desc').get();
+    allUsers=[];snap.forEach(function(d){allUsers.push(Object.assign({id:d.id},d.data()));});
+    usersLoaded=true;
+    document.getElementById('sc0').textContent=allUsers.length;
+    db.collection('boutiques').where('status','==','active').get().then(function(bs){document.getElementById('sc1').textContent=bs.size;});
+    renderUsers(allUsers);
+  }catch(e){document.getElementById('users-list').innerHTML='<div class="empty">Erreur: '+esc(e.message)+'</div>';}
+}
+function renderUsers(list){
+  var el=document.getElementById('users-list');
+  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">📭</div>Aucun compte</div>';return;}
+  el.innerHTML=list.map(function(u){
+    var ini=(u.name||u.email||'?')[0].toUpperCase();
+    var av=u.profilPhoto?'<img src="'+esc(u.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent=\''+ini+'\'">' :ini;
+    var dt=u.createdAt?new Date(u.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}):'—';
+    var hb=all.some(function(r){return r.uid===u.uid&&(r.status==='approved'||r.status==='blocked');});
+    return '<div class="ucard">'+
+      '<div class="uav">'+av+'</div>'+
+      '<div class="uinfo"><div class="uname">'+esc(u.name||'—')+'</div>'+
+      '<div class="uemail">'+esc(u.email||'—')+'</div>'+
+      '<div class="udate">Inscrit le '+dt+'</div></div>'+
+      '<span class="ubadge '+(hb?'has':'no')+'">'+(hb?'🏪 Boutique':'Sans boutique')+'</span>'+
+    '</div>';
+  }).join('');
+}
+function switchSec(sec,btn){
+  curSec=sec;
+  document.querySelectorAll('.stab').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');
+  ['demandes','boutiques','comptes'].forEach(function(s){document.getElementById('sec-'+s).style.display=s===sec?'block':'none';});
+  document.getElementById('srch').value='';
+  var ph={demandes:'Rechercher demande, nom, email...',boutiques:'Rechercher boutique...',comptes:'Rechercher compte, nom, email...'};
+  document.getElementById('srch').placeholder=ph[sec]||'Rechercher...';
+  if(sec==='boutiques'&&!boutLoaded)loadBoutiques();
+  if(sec==='comptes'&&!usersLoaded)loadUsers();
+}
+function handleSearch(v){
+  v=v.toLowerCase().trim();
+  if(curSec==='demandes'){
+    if(!v){renderList();return;}
+    var f=all.filter(function(r){return(r.boutiqueName||'').toLowerCase().includes(v)||(r.userName||'').toLowerCase().includes(v)||(r.userEmail||'').toLowerCase().includes(v);});
+    document.getElementById('req-list').innerHTML=f.length?f.map(cardHtml).join(''):'<div class="empty"><div class="empty-ic">🔍</div>Aucun résultat</div>';
+  }else if(curSec==='boutiques'){
+    if(!v){renderBoutiques(allBout);return;}
+    renderBoutiques(allBout.filter(function(b){return(b.boutiqueName||'').toLowerCase().includes(v)||(b.ownerName||'').toLowerCase().includes(v)||(b.ownerEmail||'').toLowerCase().includes(v);}));
+  }else{
+    if(!v){renderUsers(allUsers);return;}
+    renderUsers(allUsers.filter(function(u){return(u.name||'').toLowerCase().includes(v)||(u.email||'').toLowerCase().includes(v);}));
+  }
+}
+async function approveReq(id,uid,btn){
+  if(!confirm('Valider cette boutique ?'))return;
+  btn.disabled=true;btn.textContent='⏳';
+  var r=all.find(function(x){return x.id===id;});if(!r)return;
+  try{
+    var b=db.batch();
+    b.update(db.collection('boutique_requests').doc(id),{status:'approved',approvedAt:new Date().toISOString()});
+    b.set(db.collection('boutiques').doc(uid),{uid:uid,boutiqueName:r.boutiqueName,boutiqueDesc:r.boutiqueDesc,boutiqueCategory:r.boutiqueCategory,ownerName:r.userName,ownerEmail:r.userEmail,status:'active',createdAt:new Date().toISOString()});
+    await b.commit();
+    var i=all.findIndex(function(x){return x.id===id;});if(i>=0){all[i].status='approved';all[i].approvedAt=new Date().toISOString();}
+    boutLoaded=false;updateStats();renderList();
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='✅ Valider';}
+}
+async function rejectReq(id,btn){
+  var note=prompt('Raison du rejet:');if(note===null)return;
+  btn.disabled=true;btn.textContent='⏳';
+  try{
+    await db.collection('boutique_requests').doc(id).update({status:'rejected',adminNote:note||'',rejectedAt:new Date().toISOString()});
+    var i=all.findIndex(function(x){return x.id===id;});if(i>=0){all[i].status='rejected';all[i].adminNote=note||'';}
+    updateStats();renderList();
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='❌ Rejeter';}
+}
+async function blockReq(id,uid,btn){
+  var note=prompt('Raison du blocage:');if(note===null)return;
+  btn.disabled=true;btn.textContent='⏳';
+  try{
+    var b=db.batch();
+    b.update(db.collection('boutique_requests').doc(id),{status:'blocked',adminNote:note||'',blockedAt:new Date().toISOString()});
+    b.update(db.collection('boutiques').doc(uid),{status:'blocked'}).catch(function(){});
+    await b.commit();
+    var i=all.findIndex(function(x){return x.id===id;});if(i>=0){all[i].status='blocked';all[i].adminNote=note||'';}
+    boutLoaded=false;updateStats();renderList();
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='🚫 Bloquer';}
+}
+async function unblockReq(id,uid,btn){
+  if(!confirm('Débloquer ?'))return;btn.disabled=true;btn.textContent='⏳';
+  try{
+    var b=db.batch();
+    b.update(db.collection('boutique_requests').doc(id),{status:'approved',adminNote:'',unblockedAt:new Date().toISOString()});
+    b.update(db.collection('boutiques').doc(uid),{status:'active'}).catch(function(){});
+    await b.commit();
+    var i=all.findIndex(function(x){return x.id===id;});if(i>=0){all[i].status='approved';all[i].adminNote='';}
+    boutLoaded=false;updateStats();renderList();
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='✅ Débloquer';}
+}
+async function deleteReq(id,uid,btn){
+  if(!confirm('⚠️ Supprimer définitivement ?'))return;btn.disabled=true;btn.textContent='⏳';
+  try{
+    var b=db.batch();
+    b.delete(db.collection('boutique_requests').doc(id));
+    b.delete(db.collection('boutiques').doc(uid));
+    await b.commit();
+    all=all.filter(function(x){return x.id!==id;});
+    boutLoaded=false;updateStats();renderList();
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='🗑️ Supprimer';}
+}
+async function blockBout(id,btn){
+  var note=prompt('Raison du blocage:');if(note===null)return;
+  btn.disabled=true;btn.textContent='⏳';
+  try{
+    await db.collection('boutiques').doc(id).update({status:'blocked',blockedAt:new Date().toISOString(),blockNote:note||''});
+    db.collection('boutique_requests').doc(id).update({status:'blocked',adminNote:note||''}).catch(function(){});
+    var i=allBout.findIndex(function(x){return x.id===id;});if(i>=0)allBout[i].status='blocked';
+    document.getElementById('sb0').textContent=allBout.filter(function(b){return b.status==='active';}).length;
+    document.getElementById('sb1').textContent=allBout.filter(function(b){return b.status==='blocked';}).length;
+    renderBoutiques(allBout);
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='Bloquer';}
+}
+async function unblockBout(id,btn){
+  if(!confirm('Débloquer ?'))return;btn.disabled=true;btn.textContent='⏳';
+  try{
+    await db.collection('boutiques').doc(id).update({status:'active',unblockedAt:new Date().toISOString()});
+    db.collection('boutique_requests').doc(id).update({status:'approved',adminNote:''}).catch(function(){});
+    var i=allBout.findIndex(function(x){return x.id===id;});if(i>=0)allBout[i].status='active';
+    document.getElementById('sb0').textContent=allBout.filter(function(b){return b.status==='active';}).length;
+    document.getElementById('sb1').textContent=allBout.filter(function(b){return b.status==='blocked';}).length;
+    renderBoutiques(allBout);
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='Débloquer';}
+}
+async function deleteBout(id,btn){
+  if(!confirm('⚠️ Supprimer définitivement la boutique ?'))return;btn.disabled=true;btn.textContent='⏳';
+  try{
+    var b=db.batch();
+    b.delete(db.collection('boutiques').doc(id));
+    b.delete(db.collection('boutique_requests').doc(id));
+    await b.commit();
+    allBout=allBout.filter(function(x){return x.id!==id;});
+    document.getElementById('sb0').textContent=allBout.filter(function(b){return b.status==='active';}).length;
+    document.getElementById('sb1').textContent=allBout.filter(function(b){return b.status==='blocked';}).length;
+    document.getElementById('sb2').textContent=allBout.length;
+    renderBoutiques(allBout);
+  }catch(e){alert('Erreur: '+e.message);btn.disabled=false;btn.textContent='🗑️';}
+}
+function openLb(url){document.getElementById('lb-img').src=url;document.getElementById('lb').classList.add('open');}
+</script></body></html>
