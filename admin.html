@@ -91,6 +91,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F0E8;min-height:100vh
       <button class="fbtn" onclick="filt('pending',this)">⏳ En attente</button>
       <button class="fbtn" onclick="filt('approved',this)">✅ Approuvées</button>
       <button class="fbtn" onclick="filt('rejected',this)">❌ Rejetées</button>
+      <button class="fbtn" onclick="filt('blocked',this)">🚫 Bloquées</button>
     </div>
     <div id="list"><div class="empty">⏳ Chargement...</div></div>
   </div>
@@ -151,6 +152,8 @@ function stats(){
   document.getElementById('s1').textContent=all.filter(function(r){return r.status==='pending';}).length;
   document.getElementById('s2').textContent=all.filter(function(r){return r.status==='approved';}).length;
   document.getElementById('s3').textContent=all.filter(function(r){return r.status==='rejected';}).length;
+  var blockedEl=document.getElementById('s-blocked');
+  if(blockedEl)blockedEl.textContent=all.filter(function(r){return r.status==='blocked';}).length;
 }
 
 function filt(f,btn){
@@ -167,7 +170,7 @@ function card(r){
   var dt=r.createdAt?new Date(r.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
   var cR=r.cinRecto?'<img class="cin-img" src="'+esc(r.cinRecto)+'" onclick="openLb(this.src)">':"<div class='cin-empty'>—</div>";
   var cV=r.cinVerso?'<img class="cin-img" src="'+esc(r.cinVerso)+'" onclick="openLb(this.src)">':"<div class='cin-empty'>—</div>";
-  var bLabel=r.status==='pending'?'En attente':r.status==='approved'?'Approuvée':'Rejetée';
+  var bLabel=r.status==='pending'?'En attente':r.status==='approved'?'Approuvée':r.status==='blocked'?'Bloquée':'Rejetée';
   var act='';
   if(r.status==='pending'){
     act='<div class="actions"><button class="btn-ok" onclick="approve(\''+r.id+'\',\''+esc(r.uid||r.id)+'\',this)">✅ Valider</button><button class="btn-ko" onclick="reject(\''+r.id+'\',this)">❌ Rejeter</button></div>';
