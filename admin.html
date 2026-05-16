@@ -285,7 +285,7 @@ function renderBoutiques(list){
   var el=document.getElementById('bout-list');
   if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">🏪</div>Aucune boutique</div>';return;}
   el.innerHTML=list.map(function(b){
-    var av=b.profilPhoto?'<img src="'+esc(b.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent=\'🛍️\'">':'🛍️';
+    var av=b.profilPhoto?'<img src="'+esc(b.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent='?'">':'🛍️';
     var isB=b.status==='blocked';
     return '<div class="ucard" style="border-left:4px solid '+(isB?'var(--oo)':'var(--gg)')+'">'+
       '<div class="uav" style="font-size:1.3rem">'+av+'</div>'+
@@ -317,7 +317,7 @@ function renderUsers(list){
   if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">📭</div>Aucun compte</div>';return;}
   el.innerHTML=list.map(function(u){
     var ini=(u.name||u.email||'?')[0].toUpperCase();
-    var av=u.profilPhoto?'<img src="'+esc(u.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent=\''+ini+'\'">' :ini;
+    var av=u.profilPhoto?'<img src="'+esc(u.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent='?'">' :ini;
     var dt=u.createdAt?new Date(u.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}):'—';
     var hb=all.some(function(r){return r.uid===u.uid&&(r.status==='approved'||r.status==='blocked');});
     return '<div class="ucard">'+
