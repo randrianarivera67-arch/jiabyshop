@@ -2350,10 +2350,9 @@ function createBoutique(){
 /* ════════════════════════════════════════════════════
    COMPTE BOUTIQUE
 ════════════════════════════════════════════════════ */
-function loadCompteBoutique(){
-  if(!myBoutiques.length) return;
-  const myBoutique=myBoutiques[activeBoutiqueIdx]||myBoutiques[0];
-  const catIcons={mode:'👗',elec:'📱',beaute:'💄',sport:'⚽',maison:'🏠'};
+function _renderCompteBoutique(myBoutique){
+  if(!myBoutique)return;
+  const catIcons={mode:'👗',elec:'📱',beaute:'💄',sport:'⚽',maison:'🏠',alimentation:'🍽️',bijoux:'💍',autre:'🛍️'};
   const _av=document.getElementById('ca-avatar');
   if(myBoutique.profilPhoto){
     const _fid=myBoutique.profilFileId||'';
@@ -2361,29 +2360,43 @@ function loadCompteBoutique(){
   }else{
     _av.textContent=catIcons[myBoutique.cat]||'🛍️';
   }
-  document.getElementById('ca-name').textContent=myBoutique.name;
-  document.getElementById('ca-cat').textContent=myBoutique.cat.toUpperCase();
+  document.getElementById('ca-name').textContent=myBoutique.name||'Ma Boutique';
+  document.getElementById('ca-cat').textContent=(myBoutique.cat||'').toUpperCase();
   document.getElementById('cs-products').textContent=myProducts.length;
-  document.getElementById('cs-ventes').textContent=Math.floor(Math.random()*50);
-  document.getElementById('cs-vues').textContent=Math.floor(Math.random()*500+100);
+  document.getElementById('cs-ventes').textContent=myBoutique.ventes||0;
+  document.getElementById('cs-vues').textContent=myBoutique.vues||0;
   switchCompteTab('produits',document.querySelector('.ctab'));
-  // Sync photo depuis Firestore
+}
+function loadCompteBoutique(){
   const _user=firebase.auth().currentUser;
-  if(_user){
-    window.fbDb.collection('boutiques').doc(_user.uid).get().then(function(doc){
-      if(!doc.exists)return;
-      const data=doc.data();
-      if(data.profilPhoto&&data.profilFileId){
-        const b=myBoutiques[activeBoutiqueIdx];
-        if(b){b.profilPhoto=data.profilPhoto;b.profilFileId=data.profilFileId;}
-        try{localStorage.setItem('jiabyshop_boutiques',JSON.stringify(myBoutiques));}catch(e){}
-        const _av2=document.getElementById('ca-avatar');
-        if(_av2&&data.profilPhoto){
-          _av2.innerHTML=`<img src="${data.profilPhoto}" class="profil-avatar-img" onerror="handleAvatarError(this,'${data.profilFileId}')"/>`;
-        }
-      }
-    }).catch(function(){});
-  }
+  // Affichage immediat depuis localStorage si dispo
+  if(myBoutiques.length){_renderCompteBoutique(myBoutiques[activeBoutiqueIdx]||myBoutiques[0]);}
+  if(!_user) return;
+  // Sync COMPLET depuis Firestore (nom, cat, desc, photo)
+  window.fbDb.collection('boutiques').doc(_user.uid).get().then(function(doc){
+    if(!doc.exists)return;
+    const d=doc.data();
+    const fsEntry={
+      name:d.boutiqueName||'Ma Boutique',
+      cat:d.boutiqueCategory||'autre',
+      desc:d.boutiqueDesc||'',
+      profilPhoto:d.profilPhoto||null,
+      profilFileId:d.profilFileId||null,
+      ventes:d.ventes||0,
+      vues:d.vues||0
+    };
+    if(myBoutiques.length>0){
+      Object.assign(myBoutiques[activeBoutiqueIdx],fsEntry);
+    }else{
+      myBoutiques=[fsEntry];
+      activeBoutiqueIdx=0;
+    }
+    try{localStorage.setItem('jiabyshop_boutiques',JSON.stringify(myBoutiques));}catch(e){}
+    _renderCompteBoutique(myBoutiques[activeBoutiqueIdx]);
+  }).catch(function(){
+    if(!myBoutiques.length)return;
+    _renderCompteBoutique(myBoutiques[activeBoutiqueIdx]||myBoutiques[0]);
+  });
 }
 
 function switchCompteTab(tab,el){
