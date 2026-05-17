@@ -2118,11 +2118,13 @@ async function loadBoutiquesFromFirestore(){
   if(boutiquesLoaded) return;
   const grid=document.getElementById('boutiqueGrid');
   if(grid) grid.innerHTML='<div style="text-align:center;padding:40px;color:#C9A84C;font-size:.9rem">⏳ Chargement des boutiques...</div>';
+  if(!window.fbDb){setTimeout(loadBoutiquesFromFirestore,800);return;}
   try{
-    const snap=await window.fbDb.collection('boutiques').where('status','==','active').get();
+    const snap=await window.fbDb.collection('boutiques').get();
     BOUTIQUES_FS=[];
     snap.forEach(function(doc){
       const d=doc.data();
+      if(d.status!=='active') return;
       BOUTIQUES_FS.push({
         id:doc.id,
         name:d.boutiqueName||'Sans nom',
@@ -2141,6 +2143,7 @@ async function loadBoutiquesFromFirestore(){
     boutiquesLoaded=true;
     _renderCurrentTab();
   }catch(e){
+    console.error('loadBoutiquesFromFirestore error:',e);
     boutiquesLoaded=true;
     _renderCurrentTab();
   }
