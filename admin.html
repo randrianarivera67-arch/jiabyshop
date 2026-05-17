@@ -237,24 +237,24 @@ function cardHtml(r){
   var acts='';
   if(r.status==='pending'){
     acts='<div class="acts">'+
-      '<button class="btn-a b-ok" onclick="approveReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">✅ Valider</button>'+
-      '<button class="btn-a b-ko" onclick="rejectReq(''+r.id+'',this)">❌ Rejeter</button>'+
+      '<button class="btn-a b-ok" onclick="approveReq('\''+r.id+'\'','\''+esc(r.uid||r.id)+'\'',this)">✅ Valider</button>'+
+      '<button class="btn-a b-ko" onclick="rejectReq('\''+r.id+'\'',this)">❌ Rejeter</button>'+
     '</div>';
   }else if(r.status==='approved'){
     acts='<div class="note ok">✅ Approuvée le '+(r.approvedAt?new Date(r.approvedAt).toLocaleDateString('fr-FR'):'—')+'</div>'+
     '<div class="acts">'+
-      '<button class="btn-a b-bl" onclick="blockReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🚫 Bloquer</button>'+
-      '<button class="btn-a b-del" onclick="deleteReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🗑️ Supprimer</button>'+
+      '<button class="btn-a b-bl" onclick="blockReq('\''+r.id+'\'','\''+esc(r.uid||r.id)+'\'',this)">🚫 Bloquer</button>'+
+      '<button class="btn-a b-del" onclick="deleteReq('\''+r.id+'\'','\''+esc(r.uid||r.id)+'\'',this)">🗑️ Supprimer</button>'+
     '</div>';
   }else if(r.status==='blocked'){
     acts='<div class="note bl">🚫 Bloquée'+(r.adminNote?' — '+esc(r.adminNote):'')+'</div>'+
     '<div class="acts">'+
-      '<button class="btn-a b-ub" onclick="unblockReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">✅ Débloquer</button>'+
-      '<button class="btn-a b-del" onclick="deleteReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🗑️ Supprimer</button>'+
+      '<button class="btn-a b-ub" onclick="unblockReq('\''+r.id+'\'','\''+esc(r.uid||r.id)+'\'',this)">✅ Débloquer</button>'+
+      '<button class="btn-a b-del" onclick="deleteReq('\''+r.id+'\'','\''+esc(r.uid||r.id)+'\'',this)">🗑️ Supprimer</button>'+
     '</div>';
   }else{
     acts='<div class="note ko">❌ Rejetée'+(r.adminNote?' — '+esc(r.adminNote):'')+'</div>'+
-    '<div class="acts"><button class="btn-a b-del" onclick="deleteReq(''+r.id+'',''+esc(r.uid||r.id)+'',this)">🗑️ Supprimer</button></div>';
+    '<div class="acts"><button class="btn-a b-del" onclick="deleteReq('\''+r.id+'\'','\''+esc(r.uid||r.id)+'\'',this)">🗑️ Supprimer</button></div>';
   }
   return '<div class="card '+(r.status||'pending')+'">'+
     '<div class="card-hdr"><div><div class="card-ttl">🏪 '+esc(r.boutiqueName||'Sans nom')+'</div><div class="card-dt">'+dt+'</div></div>'+
@@ -285,7 +285,7 @@ function renderBoutiques(list){
   var el=document.getElementById('bout-list');
   if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">🏪</div>Aucune boutique</div>';return;}
   el.innerHTML=list.map(function(b){
-    var av=b.profilPhoto?'<img src="'+esc(b.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent='?'">':'🛍️';
+    var av=b.profilPhoto?'<img src="'+esc(b.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" >':'🛍️';
     var isB=b.status==='blocked';
     return '<div class="ucard" style="border-left:4px solid '+(isB?'var(--oo)':'var(--gg)')+'">'+
       '<div class="uav" style="font-size:1.3rem">'+av+'</div>'+
@@ -294,9 +294,9 @@ function renderBoutiques(list){
       '<div class="udate">'+esc(cats[b.boutiqueCategory]||b.boutiqueCategory||'')+'</div></div>'+
       '<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">'+
       '<span class="ubadge '+(isB?'no':'has')+'">'+(isB?'🚫 Bloquée':'✅ Active')+'</span>'+
-      (isB?'<button class="btn-a b-ub" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="unblockBout(''+b.id+'',this)">Débloquer</button>':
-           '<button class="btn-a b-bl" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="blockBout(''+b.id+'',this)">Bloquer</button>')+
-      '<button class="btn-a b-del" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="deleteBout(''+b.id+'',this)">🗑️</button>'+
+      (isB?'<button class="btn-a b-ub" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="unblockBout('\''+b.id+'\'',this)">Débloquer</button>':
+           '<button class="btn-a b-bl" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="blockBout('\''+b.id+'\'',this)">Bloquer</button>')+
+      '<button class="btn-a b-del" style="font-size:.65rem;padding:5px 8px;min-width:0" onclick="deleteBout('\''+b.id+'\'',this)">🗑️</button>'+
       '</div></div>';
   }).join('');
 }
@@ -317,7 +317,7 @@ function renderUsers(list){
   if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ic">📭</div>Aucun compte</div>';return;}
   el.innerHTML=list.map(function(u){
     var ini=(u.name||u.email||'?')[0].toUpperCase();
-    var av=u.profilPhoto?'<img src="'+esc(u.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent='?'">' :ini;
+    var av=u.profilPhoto?'<img src="'+esc(u.profilPhoto)+'" style="width:100%;height:100%;object-fit:cover" >' :ini;
     var dt=u.createdAt?new Date(u.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}):'—';
     var hb=all.some(function(r){return r.uid===u.uid&&(r.status==='approved'||r.status==='blocked');});
     return '<div class="ucard">'+
